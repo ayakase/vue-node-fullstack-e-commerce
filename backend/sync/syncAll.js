@@ -15,7 +15,7 @@ const HotelBook = require('../models/HotelBookModel');
 const Passport = require('../models/PassportModel');
 const CableCar = require('../models/CableCarModel');
 const Notification = require('../models/NotificationModel')
-const createUser = require('../sync/userMaker');
+const createUser = require('./userMaker');
 async function syncModelsSequentially() {
     try {
         await sequelize.drop();
