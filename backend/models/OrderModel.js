@@ -31,6 +31,9 @@ const Order = sequelize.define('Order', {
     infant: {
         type: DataTypes.INTEGER
     },
+    price: {
+        type: DataTypes.INTEGER(11)
+    },
     note: {
         type: DataTypes.STRING(255)
     },

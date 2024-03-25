@@ -11,17 +11,23 @@
                     <h4 style="text-align: center;">Tổng số đặt tour</h4>
                     <count-up class="count-number" :end-val="orderCount" :duration="1"></count-up>
                 </div>
-                <div class="tour-number">
-                    <h4 style="text-align: center;">Tổng số tour</h4>
-                    <count-up class="count-number" :end-val="tourCount" :duration="1"></count-up>
-                </div>
                 <div class="advise-number">
                     <h4 style="text-align: center;">Tổng yêu cầu tư vấn</h4>
                     <count-up class="count-number" :end-val="adviseCount" :duration="1"></count-up>
                 </div>
             </div>
-            <div class="ratio-chart">
-                <Pie v-if="orderRatio" :data="orderRatio" :options="options"></Pie>
+            <div class="second-column">
+                <div class="revenue-number">
+                    <h4 style="text-align: center;">Tổng doanh thu</h4>
+                    <count-up class="count-number" :end-val="revenueCount" :duration="4"></count-up>
+                    <h4 style="text-align: center;color: red;">VNĐ</h4>
+
+                </div>
+                <div class="ratio-order-chart">
+                    <h4 style="text-align: center;margin-top: 1rem;">Tỉ lệ đặt tour, yêu cầu tư vấn/ lượt truy cập</h4>
+                    <Pie v-if="orderRatio" :data="orderRatio" :options="options"></Pie>
+                </div>
+
             </div>
             <div class="notification">
                 <div
@@ -42,28 +48,22 @@
                 <v-pagination @click="fetchNotification" v-model="notiPage" :length="notiTotalPage" :total-visible="3"
                     prev-icon="fa-solid fa-chevron-left" next-icon="fa-solid fa-chevron-right"></v-pagination>
             </div>
-            <!-- <div class="notification">
-                <div>
-                    <h4>Thong bao</h4>
-                </div>
-                <div class="noti-container">
-                    <div class="each-noti" v-for="item in 10" :key="item.id">
-                        <p class="action" style="font-weight: bold;">User x has done something</p>
-                        <p>vao luc a</p>
-                    </div>
-                </div>
-                <v-pagination @click="fetchNotification" v-model="notiPage" :length="notiTotalPage" :total-visible="3"
-                    prev-icon="fa-solid fa-chevron-left" next-icon="fa-solid fa-chevron-right"></v-pagination>
-            </div> -->
         </div>
         <div class="chart-container">
-            <div class="year-chart">
-                <Bar v-if="yeardata" :data="yeardata" :options="orderChartOption" />
+            <div class="day-chart">
+                <Bar v-if="daydata" :data="daydata" :options="orderChartOption" />
             </div>
-            <div class="week-chart">
-                <Line :data="weekdata" :options="orderChartOption" />
+            <div class="revenue-chart">
+                <Line v-if="revenuedata" :data="revenuedata" :options="orderChartOption" />
             </div>
 
+        </div>
+        <div class="lower-section">
+            <div class="ratio-guest-chart">
+                <h4 style="text-align: center;padding-top: 1rem;">Tệp khách hàng</h4>
+                <Doughnut v-if="guestRatio" :data="guestRatio" :options="options">
+                </Doughnut>
+            </div>
         </div>
     </div>
 </template>
@@ -86,17 +86,18 @@ import {
     ArcElement
 } from 'chart.js'
 import { onMounted, ref, watch } from 'vue';
-import { Bar, Line, Pie } from 'vue-chartjs'
+import { Bar, Line, Pie, Doughnut } from 'vue-chartjs'
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, LineElement, PointElement, ArcElement, Legend)
 let viewCount = ref(null)
 let orderCount = ref(null)
 let adviseCount = ref(null)
-let tourCount = ref()
+let revenueCount = ref()
 let notification = ref()
 let notiTotalPage = ref()
 let notiPage = ref(1)
-let yeardata = ref()
+let daydata = ref()
 const orderRatio = ref(null)
+const guestRatio = ref(null)
 watch([viewCount, orderCount, adviseCount], async ([newViewCount, newOrderCount, newAdviseCount], [oldViewCount, oldOrderCount, oldAdviseCount]) => {
     if (newViewCount !== null && newOrderCount !== null && adviseCount !== null) {
         orderRatio.value = {
@@ -120,7 +121,6 @@ watch([viewCount, orderCount, adviseCount], async ([newViewCount, newOrderCount,
                 hoverOffset: 4
             }]
         }
-        console.log(newViewCount, newOrderCount)
     }
 })
 function fetchNotification() {
@@ -144,8 +144,8 @@ function fetchCount() {
     }).catch((error) => {
         console.log(error)
     })
-    baseUrl.get('/admin/count/tour').then((response) => {
-        tourCount.value = response.data
+    baseUrl.get('/admin/count/revenue').then((response) => {
+        revenueCount.value = response.data
     }).catch((error) => {
         console.log(error)
     })
@@ -155,16 +155,73 @@ function fetchCount() {
         console.log(error)
     })
 }
-function fetchChart() {
-    baseUrl.get('/admin/chart/day').then((response) => {
+function fetchGuestType() {
+    baseUrl.get('/admin/chart/guest').then((response) => {
         console.log(response.data)
+        let guestNumber = Object.values(response.data)
+        guestRatio.value = {
+            labels: [
+                'Người lớn (Trên 12 tuổi)',
+                'Trẻ em(Từ 6 - 10 tuổi)',
+                'Trẻ em (Từ 2 - 5 tuổi)',
+                'Trẻ em (Dưới 2 tuổi)'
+            ],
+            datasets: [{
+                labels: [
+                    'Người lớn (Trên 12 tuổi)',
+                    'Trẻ em(Từ 6 - 10 tuổi)',
+                    'Trẻ em (Từ 2 - 5 tuổi)',
+                    'Trẻ em (Dưới 2 tuổi)'
+                ],
+                data: guestNumber,
+                backgroundColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(54, 162, 235)',
+                    'rgb(255, 205, 86)',
+                    '#41B883'
+                ],
+                hoverOffset: 4
+            }]
+        }
+    }).catch((error) => {
+        console.log(error)
+    })
+}
+let revenuedata = ref(null)
+function fetchRevenueChart() {
+    baseUrl.get('admin/chart/revenue').then((response) => {
+        console.log(response.data)
+        const days = [];
+        const revenue = [];
+        response.data.forEach(item => {
+            days.push(item.day);
+            revenue.push(item.sum);
+        });
+        revenuedata.value = {
+            labels: days.reverse(),
+            datasets: [
+                {
+                    backgroundColor: 'red',
+                    borderColor: 'rgba(255, 99, 132)',
+                    borderWidth: 4,
+                    data: revenue.reverse()
+                }
+            ]
+        }
+    }).catch((error) => {
+        console.log(error)
+    })
+}
+
+function fetchDayChart() {
+    baseUrl.get('/admin/chart/day').then((response) => {
         const days = [];
         const counts = [];
         response.data.forEach(item => {
             days.push(item.day);
             counts.push(item.order_count);
         });
-        yeardata.value = {
+        daydata.value = {
             labels: days.reverse(),
             datasets: [
                 {
@@ -196,17 +253,6 @@ function fetchChart() {
     })
 }
 
-let weekdata = ref({
-    labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
-    datasets: [
-        {
-            backgroundColor: 'red',
-            borderColor: 'rgba(255, 99, 132)',
-            borderWidth: 3,
-            data: [40]
-        }
-    ]
-})
 let options = {
     responsive: true,
 }
@@ -219,8 +265,10 @@ let orderChartOption = {
 }
 onMounted(() => {
     fetchCount()
+    fetchGuestType()
     fetchNotification()
-    fetchChart()
+    fetchDayChart()
+    fetchRevenueChart()
 })
 
 function formatDate(date) {
@@ -255,13 +303,17 @@ p {
 
 }
 
-.ratio-chart {
+.ratio-order-chart {
     background-color: #cdecde;
-    width: 35%;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     border-radius: 1rem;
+}
 
-
+.ratio-guest-chart {
+    width: 50%;
+    background-color: #cdecde;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 1rem;
 }
 
 .noti-container {
@@ -294,10 +346,10 @@ p {
 
 }
 
-.tour-number {
+.revenue-number {
     height: 10rem;
     background-color: #cdecde;
-    width: 10rem;
+    width: 100%;
     padding: 0.5rem;
     padding-top: 1.5rem;
     border-radius: 1rem;
@@ -323,8 +375,8 @@ p {
     color: red;
 }
 
-.year-chart,
-.week-chart {
+.day-chart,
+.revenue-chart {
     width: 49%;
     padding: 2rem;
     border-radius: 1rem;
@@ -355,5 +407,17 @@ p {
     overflow: hidden;
     /* text-overflow: ellipsis; */
     white-space: initial;
+}
+
+.second-column {
+    width: 35%;
+    height: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.lower-section {
+    margin-top: 2rem;
 }
 </style>

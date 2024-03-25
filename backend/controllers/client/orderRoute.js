@@ -19,7 +19,8 @@ router.post('/', upload.none(), (req, res) => {
         adult: req.body.adult,
         teenager: req.body.teenager,
         children: req.body.children,
-        infant: req.body.infant
+        infant: req.body.infant,
+        price: req.body.price,
     })
         .then(() => {
             res.json("done");

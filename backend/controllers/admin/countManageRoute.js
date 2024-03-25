@@ -21,9 +21,9 @@ router.get("/order", (req, res) => {
         console.log(err)
     })
 })
-router.get("/tour", (req, res) => {
-    Tour.count().then((count) => {
-        res.send(count.toString());
+router.get("/revenue", (req, res) => {
+    Order.sum("price").then((sum) => {
+        res.send(sum.toString());
     }).catch((err) => {
         console.log(err)
     })
@@ -35,4 +35,5 @@ router.get("/advise", (req, res) => {
         console.log(err)
     })
 })
+
 module.exports = router;

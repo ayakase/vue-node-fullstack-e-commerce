@@ -1,7 +1,7 @@
 <template>
     <div class="order-manage-container">
         <div class="sorting-container">
-            <div style="font-size: larger;">Bộ lọc:</div>
+            <div style="font-size: larger; width: 6rem">Bộ lọc:</div>
             <div class="sorting-button-container">
                 <form class="d-flex search-container">
                     <button class="btn btn-outline-success" @click.prevent=""><i class="fas fa-search"></i></button>
@@ -15,7 +15,8 @@
                         Trạng thái &nbsp; <i class="fa-solid fa-check-to-slot">: </i> {{ stateLabel }}
                     </button>
                     <div class="dropdown-menu">
-                        <button class="dropdown-item" @click="unsolved">Chưa xử lí &nbsp; <i class="fa-solid fa-xmark"></i>
+                        <button class="dropdown-item" @click="unsolved">Chưa xử lí &nbsp; <i
+                                class="fa-solid fa-xmark"></i>
                         </button>
                         <button class="dropdown-item" @click="solved">Đã xử lí &nbsp;<i
                                 class="fa-solid fa-check"></i></button>
@@ -32,43 +33,102 @@
             style="width: 80vw;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
             <thead>
                 <tr>
-                    <th style="vertical-align: top;" scope="col">Tên tour</th>
-                    <th style="vertical-align: top;" scope="col">Khách hàng</th>
-                    <th style="vertical-align: top;" scope="col">SĐT</th>
-                    <th style="vertical-align: top;" scope="col">Ngày đặt</th>
-                    <th style="vertical-align: top;" scope="col">Email</th>
-                    <th style="vertical-align: top;" scope="col">Trẻ em (dưới 5)</th>
-                    <th style="vertical-align: top;" scope="col">Trẻ em (5-11) tuổi</th>
-                    <th style="vertical-align: top;" scope="col"> Người lớn (trên 12 tuổi) </th>
-                    <th style="vertical-align: top;" scope="col"> Ghi chú</th>
+                    <th style="vertical-align: top;" scope="col">Tour</th>
+                    <th style="vertical-align: top;" scope="col">Tên khách hàng</th>
+                    <th style="vertical-align: top;" scope="col">Đặt lúc</th>
+                    <th>Chi tiết</th>
                     <th style="vertical-align: top;" scope="col">Hành động</th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="order in orderTable" :key="order" class="each-tour-row">
-                    <td @click="router.push({ path: '/order/' + order.id })">{{ order.Tour.title }}</td>
+                    <td>{{ order.Tour.title }}</td>
                     <td>{{ order.name }}</td>
-                    <td>{{ order.phone }}</td>
                     <td>{{ formatDate(order.createdAt) }}</td>
-                    <td>{{ order.email }}</td>
-                    <td>{{ order.children }}</td>
-                    <td>{{ order.teenager }}</td>
+                    <td>
+                        <v-dialog max-width="500">
+                            <template v-slot:activator="{ props: activatorProps }">
+                                <a class="detail-popup" v-bind="activatorProps">
+                                    Xem &nbsp; <i class="fa-solid fa-circle-info"></i>
+                                </a>
+                            </template>
+                            <template v-slot:default="{ isActive }">
+                                <v-card title="Thông tin chi tiết" color="#d1e7dd"
+                                    prepend-icon="fa-solid fa-circle-info">
+                                    <v-divider :thickness="2"></v-divider>
+                                    <v-card-text>Khách hàng: {{ order.name }}</v-card-text>
+                                    <v-card-text>Số điện thoại: {{ order.phone }}</v-card-text>
+                                    <v-card-text>
+                                        Đặt lúc: {{ formatDate(order.createdAt) }}
+                                    </v-card-text>
+                                    <v-card-text>
+                                        Email: {{ order.email }}
+                                    </v-card-text>
+                                    <v-card-text>
+                                        Ghi chú: {{ order.note }}
+                                    </v-card-text>
+                                    <v-card-item>
+                                        <v-table density="compact" style="background:none;">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-left">
+                                                        Loại khách
+                                                    </th>
+                                                    <th class="text-left">
+                                                        Số lượng
+                                                    </th>
+                                                </tr>
+                                            </thead>
+            <tbody>
+                <tr>
+                    <td>Người lớn (Trên 12 tuổi)</td>
                     <td>{{ order.adult }}</td>
-                    <td>{{ order.note }}</td>
-                    <td v-if="order.solved == 0" style="vertical-align: middle;"> <button class="solve-btn"
-                            @click="solveOrder(order.id)"><i class="fa-regular fa-circle-check fa-lg"></i></button>
-                    </td>
-                    <td v-else style="vertical-align: middle;"> <button class="solve-btn" @click="solveOrder(order.id)"><i
-                                class="fa-regular fa-circle-xmark fa-lg"></i></button>
-                    </td>
                 </tr>
+                <tr>
+                    <td>Trẻ em(Từ 6 - 10 tuổi)
 
+                    </td>
+                    <td>{{ order.teenager }}</td>
+                </tr>
+                <tr>
+                    <td>Trẻ em (Từ 2 - 5 tuổi)</td>
+                    <td>{{ order.children }}</td>
+                </tr>
+                <tr>
+                    <td>Trẻ em (Dưới 2 tuổi)
+
+                    </td>
+                    <td>{{ order.infant }}</td>
+                </tr>
             </tbody>
-        </table>
-        <TableLoading v-else></TableLoading>
-        <v-pagination @click="getOrderbyPage" v-model="pageNumber" :length="totalPage" :total-visible="5"
-            prev-icon="fa-solid fa-chevron-left" next-icon="fa-solid fa-chevron-right"></v-pagination>
-    </div>
+            </v-table>
+            <v-divider></v-divider>
+            <v-card-title>Đơn giá tour: <span style="color: orangered;">
+                    {{ order.price }} VNĐ
+                </span></v-card-title>
+            </v-card-item>
+            <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn text="Thoát" @click="isActive.value = false"></v-btn>
+            </v-card-actions>
+            </v-card>
+</template>
+</v-dialog>
+</td>
+<td v-if="order.solved == 0" style="vertical-align: middle;"> <button class="solve-btn" @click="solveOrder(order.id)"><i
+            class="fa-regular fa-circle-check fa-lg"></i></button>
+</td>
+<td v-else style="vertical-align: middle;"> <button class="solve-btn" @click="solveOrder(order.id)"><i
+            class="fa-regular fa-circle-xmark fa-lg"></i></button>
+</td>
+</tr>
+
+</tbody>
+</table>
+<TableLoading v-else></TableLoading>
+<v-pagination @click="getOrderbyPage" v-model="pageNumber" :length="totalPage" :total-visible="5"
+    prev-icon="fa-solid fa-chevron-left" next-icon="fa-solid fa-chevron-right"></v-pagination>
+</div>
 </template>
 
 <script setup>
@@ -172,10 +232,10 @@ table {
 }
 
 .sorting-button-container {
-    width: 90%;
+    width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
 }
 
@@ -190,5 +250,11 @@ table {
 
 .solve-btn:hover {
     color: white;
+}
+
+.detail-popup {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
 }
 </style>

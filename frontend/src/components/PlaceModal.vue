@@ -2,8 +2,8 @@
     <LoadingOverlay v-if="showOverlay"></LoadingOverlay>
 
     <div style="z-index: 9999;">
-        <div style="margin-top: 0rem;" class="modal fade" id="placeModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
+        <div style="margin-top: 0rem;" class="modal fade" id="placeModal" tabindex="-1"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" style="background-color: F1FAF4;">
                 <div class="modal-content" style="background-color: #F1FAF4;">
                     <div class="modal-header">
@@ -31,22 +31,24 @@
                                 <input type="number" style="height: 3rem;width: 8rem;" class="form-control" id=""
                                     placeholder="" v-model="adult">
                                 <p style="margin: 0;padding: 0;color: orangered"> x {{
-                                    numeralFormat(props.adultPrice) }}</p>
+        numeralFormat(props.adultPrice) }}</p>
                             </div>
                             <div class="teenager"
                                 style="display: flex; align-items: center; justify-content: space-between;margin-bottom: 1rem;">
                                 <p style="margin: 0;padding: 0;">Trẻ em(Từ 6 - 10 tuổi)</p>
                                 <input type="number" style="height: 3rem;width: 8rem;" class="form-control" id=""
                                     placeholder="" v-model="teenager">
-                                <p style="margin: 0;padding: 0;color: orangered;"> x {{ numeralFormat(props.teenagerPrice)
-                                }}</p>
+                                <p style="margin: 0;padding: 0;color: orangered;"> x {{
+        numeralFormat(props.teenagerPrice)
+    }}</p>
                             </div>
                             <div class="children"
                                 style="display: flex; align-items: center; justify-content: space-between;margin-bottom: 1rem;">
                                 <p style="margin: 0;padding: 0;">Trẻ em (Từ 2 - 5 tuổi) </p>
                                 <input type="number" style="height: 3rem;width: 8rem;" class="form-control" id=""
                                     placeholder="" v-model="children">
-                                <p style="margin: 0;padding: 0;color: orangered"> x {{ numeralFormat(props.childPrice) }}
+                                <p style="margin: 0;padding: 0;color: orangered"> x {{ numeralFormat(props.childPrice)
+                                    }}
                                 </p>
                             </div>
                             <div class="infant"
@@ -54,11 +56,12 @@
                                 <p style="margin: 0;padding: 0;">Trẻ em (Dưới 2 tuổi) </p>
                                 <input type="number" style="height: 3rem;width: 8rem;" class="form-control" id=""
                                     placeholder="" v-model="infant">
-                                <p style="margin: 0;padding: 0;color: orangered"> x {{ numeralFormat(props.infantPrice) }}
+                                <p style="margin: 0;padding: 0;color: orangered"> x {{ numeralFormat(props.infantPrice)
+                                    }}
                                 </p>
                             </div>
                             <h4 class="mb-4">Tổng số tiền: <span style="color: chocolate;">{{ numeralFormat(totalPrice)
-                            }} &nbsp;VNĐ </span></h4>
+                                    }} &nbsp;VNĐ </span></h4>
                             <div style="display: flex; flex-direction: row;gap: 1rem; font-size: 1.5rem;">
                                 <!-- <p>Tổng số tiền:</p> <span style="color: orangered;"><count-up class="count-number"
                                         :end-val=totalPrice :duration="1"></count-up></span> -->
@@ -73,7 +76,8 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <a class="btn" style="background-color: #97CBB4;" target="_blank" @click="sendOrder">Đặt Tour</a>
+                        <a class="btn" style="background-color: #97CBB4;" target="_blank" @click="sendOrder">Đặt
+                            Tour</a>
                     </div>
                 </div>
             </div>
@@ -127,6 +131,7 @@ function sendOrder() {
             teenager: teenager.value,
             children: children.value,
             infant: infant.value,
+            price: totalPrice.value,
             note: note.value
         }
         baseUrl.post("/client/order", orderData)

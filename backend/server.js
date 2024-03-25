@@ -6,7 +6,7 @@ const cors = require("cors");
 const cookieParser = require('cookie-parser');
 const routes = require('./routes');
 const morgan = require('morgan');
-// const cron = require('./cron-jobs/test');
+// const cron = require('./crons/test');
 app.use(morgan('tiny'));
 
 require("dotenv").config();
