@@ -18,6 +18,7 @@ This project is a web application built with Node.js, MySQL, Sequelize, Vue.js, 
 ## Run the project:
 With docker-compose: 
 
+```
 version: '3'
 services:
   mysql:
@@ -68,4 +69,5 @@ services:
       - "5173:5173"
 volumes:
   mysql_data:
-
+```
+after all the containers have successfully been launched, run `sudo docker ps` and find the backend container, grab its id, and then run `sudo docker exec -it 'backend-container-id' npm run sync` to initiate database
