@@ -19,7 +19,7 @@
             <div class="second-column">
                 <div class="revenue-number">
                     <h4 style="text-align: center;">Tổng doanh thu</h4>
-                    <count-up class="count-number" :end-val="revenueCount" :duration="4"></count-up>
+                    <count-up class="count-number" :end-val="revenueCount" :duration="2"></count-up>
                     <h4 style="text-align: center;color: red;">VNĐ</h4>
 
                 </div>
@@ -286,13 +286,14 @@ p {
 .first-section {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    gap: 2rem;
+    justify-content: flex-start;
+    flex-wrap: wrap;
 }
 
 .notification {
-    /* width: 40rem; */
     height: 51rem;
-    width: 45rem;
+    max-width: 45rem;
     background-color: #cdecde;
     border-radius: 1rem;
     overflow: hidden;
@@ -402,7 +403,7 @@ p {
 }
 
 .each-noti p:first-child {
-    width: 33rem;
+    /* width: 33rem; */
     white-space: nowrap;
     overflow: hidden;
     /* text-overflow: ellipsis; */

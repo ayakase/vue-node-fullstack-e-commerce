@@ -104,7 +104,7 @@
             </v-table>
             <v-divider></v-divider>
             <v-card-title>Đơn giá tour: <span style="color: orangered;">
-                    {{ order.price }} VNĐ
+                    {{ numeralFormat(order.price) }} VNĐ
                 </span></v-card-title>
             </v-card-item>
             <v-card-actions>

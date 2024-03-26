@@ -6,16 +6,6 @@
             <label for="" class="form-label">Tiêu đề tour</label>
             <input type="text" class="form-control" id="" placeholder="" v-model="tourTitle" />
         </div>
-        <div style="
-        width: 12rem;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-      ">
-            <v-switch v-model="publishState" label="Xuất bản luôn" color="info" style="margin-right: 1rem"
-                hide-details></v-switch>
-            <i v-if="publishState" style="color: rgb(0, 102, 255)" class="fa-regular fa-paper-plane"></i>
-        </div>
         <div class="mb-3 thumbnail">
             <label for="formFile" class="form-label">Hình thu nhỏ</label>
             <input class="form-control" accept="image/*" type="file" id="formFile" @change="processImg" />
@@ -130,8 +120,9 @@
                 </select>
             </div>
             <i class="fa-solid fa-caret-right" style="font-size: 2rem;padding-top: 0.5rem;" v-if="selectRegion"></i>
-            <p v-if="selectLocation" style="margin: 0;padding-top: 8px;font-size: large;font-weight: bolder;color: red;">{{
-                selectLocation.name }}
+            <p v-if="selectLocation"
+                style="margin: 0;padding-top: 8px;font-size: large;font-weight: bolder;color: red;">{{
+        selectLocation.name }}
             </p>
         </div>
         <div class="category-type-from">
@@ -172,32 +163,19 @@
         </div>
         <div class="mb-3 w-50">
             <label for="" class="form-label">Di chuyển:
-                <span v-for="transport in tourTransport" :key="transport">
-                    {{ transport }},
+                <span>
+                    {{ tourTransport }}
                 </span></label>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="Máy bay" id="plane-check" v-model="tourTransport" />
-                <label class="form-check-label" for="plane-check"> Máy bay </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="Ô tô" id="car-check" v-model="tourTransport" />
-                <label class="form-check-label" for="car-check"> Ô tô </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="Tàu hỏa" id="train-check" v-model="tourTransport" />
-                <label class="form-check-label" for="train-check"> Tàu hỏa </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="Xe máy" id="motor-check" v-model="tourTransport" />
-                <label class="form-check-label" for="motor-check"> Xe máy </label>
-            </div>
+            <input type="text" class="form-control" id="" placeholder="" v-model="tourTransport" />
         </div>
         <div class="recommend-container" style="width: 60%; display: flex; flex-direction: row">
             <label for="customRange2" class="form-label" style="width: 10rem">Mức độ đề xuất:</label>
-            <p style="width: 2rem; margin-right: 1rem; color: red; font-weight: bold" :style="{ color: recommendColor }">
+            <p style="width: 2rem; margin-right: 1rem; color: red; font-weight: bold"
+                :style="{ color: recommendColor }">
                 {{ recommendText }}
             </p>
-            <input type="range" class="form-range" min="0" max="10" id="customRange2" step="0.5" v-model="recommendText" />
+            <input type="range" class="form-range" min="0" max="10" id="customRange2" step="0.5"
+                v-model="recommendText" />
         </div>
         <div class="age-price">
             <div class="mb-3 w-20">
@@ -230,13 +208,13 @@
                 </h2>
                 <div id="accordion-special" class="accordion-collapse collapse show">
                     <Editor v-model="tourSpecial" api-key="8gzqmdnsiplu2pd33s0doas4xo8735024fznwlgttd4ldri6" :init="{
-                        plugins:
-                            '  lists advlist link image table code help wordcount autosave emoticons',
-                        toolbar:
-                            ' forecolor backcolor | undo redo | styleselect | bold italic | ' +
-                            'alignleft aligncenter alignright alignjustify | ' +
-                            'outdent indent | numlist bullist | emoticons',
-                    }" />
+        plugins:
+            '  lists advlist link image table code help wordcount autosave emoticons',
+        toolbar:
+            ' forecolor backcolor | undo redo | styleselect | bold italic | ' +
+            'alignleft aligncenter alignright alignjustify | ' +
+            'outdent indent | numlist bullist | emoticons',
+    }" />
                 </div>
             </div>
             <div class="accordion-item">
@@ -248,13 +226,13 @@
                 </h2>
                 <div id="accordion-bonus" class="accordion-collapse collapse">
                     <Editor v-model="tourBonus" api-key="8gzqmdnsiplu2pd33s0doas4xo8735024fznwlgttd4ldri6" :init="{
-                        plugins:
-                            '  lists advlist link image table code help wordcount autosave emoticons',
-                        toolbar:
-                            ' forecolor backcolor | undo redo | styleselect | bold italic | ' +
-                            'alignleft aligncenter alignright alignjustify | ' +
-                            'outdent indent | numlist bullist | emoticons',
-                    }" />
+        plugins:
+            '  lists advlist link image table code help wordcount autosave emoticons',
+        toolbar:
+            ' forecolor backcolor | undo redo | styleselect | bold italic | ' +
+            'alignleft aligncenter alignright alignjustify | ' +
+            'outdent indent | numlist bullist | emoticons',
+    }" />
                 </div>
             </div>
             <div class="accordion-item">
@@ -266,13 +244,13 @@
                 </h2>
                 <div id="accordion-visa" class="accordion-collapse collapse">
                     <Editor v-model="tourVisa" api-key="8gzqmdnsiplu2pd33s0doas4xo8735024fznwlgttd4ldri6" :init="{
-                        plugins:
-                            '  lists advlist link image table code help wordcount autosave emoticons',
-                        toolbar:
-                            ' forecolor backcolor | undo redo | styleselect | bold italic | ' +
-                            'alignleft aligncenter alignright alignjustify | ' +
-                            'outdent indent | numlist bullist | emoticons',
-                    }" />
+        plugins:
+            '  lists advlist link image table code help wordcount autosave emoticons',
+        toolbar:
+            ' forecolor backcolor | undo redo | styleselect | bold italic | ' +
+            'alignleft aligncenter alignright alignjustify | ' +
+            'outdent indent | numlist bullist | emoticons',
+    }" />
                 </div>
             </div>
             <div class="accordion-item">
@@ -284,13 +262,13 @@
                 </h2>
                 <div id="accordion-detail" class="accordion-collapse collapse">
                     <Editor v-model="tourDetail" api-key="8gzqmdnsiplu2pd33s0doas4xo8735024fznwlgttd4ldri6" :init="{
-                        plugins:
-                            '  lists advlist link image table code help wordcount autosave emoticons',
-                        toolbar:
-                            ' forecolor backcolor | undo redo | styleselect | bold italic | ' +
-                            'alignleft aligncenter alignright alignjustify | ' +
-                            'outdent indent | numlist bullist | emoticons',
-                    }" />
+        plugins:
+            '  lists advlist link image table code help wordcount autosave emoticons',
+        toolbar:
+            ' forecolor backcolor | undo redo | styleselect | bold italic | ' +
+            'alignleft aligncenter alignright alignjustify | ' +
+            'outdent indent | numlist bullist | emoticons',
+    }" />
                 </div>
             </div>
             <div class="accordion-item">
@@ -303,13 +281,13 @@
                 </h2>
                 <div id="accordion-price-service" class="accordion-collapse collapse">
                     <Editor v-model="tourPriceService" api-key="8gzqmdnsiplu2pd33s0doas4xo8735024fznwlgttd4ldri6" :init="{
-                        plugins:
-                            ' lists advlist link image table code help wordcount autosave emoticons',
-                        toolbar:
-                            ' forecolor backcolor | undo redo | styleselect | bold italic | ' +
-                            'alignleft aligncenter alignright alignjustify | ' +
-                            'outdent indent | numlist bullist | emoticons',
-                    }" />
+        plugins:
+            ' lists advlist link image table code help wordcount autosave emoticons',
+        toolbar:
+            ' forecolor backcolor | undo redo | styleselect | bold italic | ' +
+            'alignleft aligncenter alignright alignjustify | ' +
+            'outdent indent | numlist bullist | emoticons',
+    }" />
                 </div>
             </div>
             <div class="accordion-item">
@@ -321,13 +299,13 @@
                 </h2>
                 <div id="accordion-guide" class="accordion-collapse collapse">
                     <Editor v-model="tourGuide" api-key="8gzqmdnsiplu2pd33s0doas4xo8735024fznwlgttd4ldri6" :init="{
-                        plugins:
-                            '  lists advlist link image table code help wordcount autosave emoticons',
-                        toolbar:
-                            ' forecolor backcolor | undo redo | styleselect | bold italic | ' +
-                            'alignleft aligncenter alignright alignjustify | ' +
-                            'outdent indent | numlist bullist | emoticons',
-                    }" />
+        plugins:
+            '  lists advlist link image table code help wordcount autosave emoticons',
+        toolbar:
+            ' forecolor backcolor | undo redo | styleselect | bold italic | ' +
+            'alignleft aligncenter alignright alignjustify | ' +
+            'outdent indent | numlist bullist | emoticons',
+    }" />
                 </div>
             </div>
         </div>
@@ -373,12 +351,12 @@ let adultPrice = ref(0);
 let teenagerPrice = ref(0);
 let childPrice = ref(0);
 let infantPrice = ref(0)
-let tourSpecial = ref();
-let tourBonus = ref();
-let tourVisa = ref();
-let tourDetail = ref();
-let tourPriceService = ref();
-let tourGuide = ref();
+let tourSpecial = ref('');
+let tourBonus = ref('');
+let tourVisa = ref('');
+let tourDetail = ref('');
+let tourPriceService = ref('');
+let tourGuide = ref('');
 let recommendText = ref(0);
 let isDiscount = ref(false);
 let originalPrice = ref(0);

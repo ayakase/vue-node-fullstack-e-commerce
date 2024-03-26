@@ -19,6 +19,7 @@ const Region = require('../../models/RegionModel');
 const Location = require('../../models/LocationModel');
 const { Op } = require('sequelize');
 
+
 router.post('/', upload.single('tourThumbnail'), (req, res) => {
 
     let slug = slugify(req.body.slug, {
@@ -71,6 +72,7 @@ router.post('/', upload.single('tourThumbnail'), (req, res) => {
 //         cb(null, file.originalname);
 //     },
 // });
+
 router.get('/choose-category', (req, res) => {
     Category.findAll({
         include: {
@@ -104,6 +106,17 @@ router.get('/:order/:page/', (req, res) => {
         console.error(error);
     })
 })
+router.get('/:id', (req, res) => {
+    console.log(req.params.id)
+    Tour.findOne({
+        where: { id: req.params.id }
+    }).then((result) => {
+        res.send(result);
+    }).catch((error) => {
+        console.log(error);
+    })
+})
+
 router.delete('/:id', (req, res) => {
     Tour.destroy({ where: { id: req.params.id } })
         .then((result) => {

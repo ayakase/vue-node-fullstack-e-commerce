@@ -89,7 +89,7 @@
 import baseUrl from '../connect';
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import LoadingOverlay from "./LoadingOverlay.vue";
 
 const props = defineProps(['tourId', 'childPrice', 'adultPrice', 'teenagerPrice', 'infantPrice', 'tourTitle'],)
@@ -111,15 +111,44 @@ let teenager = ref(0)
 let children = ref(0)
 let infant = ref(0)
 let note = ref("")
+watch(adult, (newValue, oldValue) => {
+    if (newValue < 1) {
+        adult.value = 1
+    }
+})
+watch(teenager, (newValue, oldValue) => {
+    if (newValue < 0 || !newValue) {
+        teenager.value = 0
+    }
+})
+watch(children, (newValue, oldValue) => {
+    if (newValue < 0 || !newValue) {
+        children.value = 0
+    }
+})
+watch(infant, (newValue, oldValue) => {
+    if (newValue < 0 || !newValue) {
+        infant.value = 0
+    }
+})
+
+
 const showOverlay = ref(false)
 function sendOrder() {
-    if (!name.value || !phone.value || !email.value || !adult.value || !note.value) {
+    if (!name.value || !phone.value || !email.value || !note.value) {
         toast.error("Bạn cần điền đầy đủ thông tin đặt tour", {
             autoClose: 1000,
             theme: "dark",
             position: toast.POSITION.BOTTOM_RIGHT,
         });
     } else {
+        // if (adult.value + teenager.value + children.value + infant.value < 1) {
+        //     toast.error("Số người để đặt tour phải có ít nhất 1", {
+        //         autoClose: 1000,
+        //         theme: "dark",
+        //         position: toast.POSITION.BOTTOM_RIGHT,
+        //     });
+        // }
         showOverlay.value = true
         const orderData = {
             tourId: props.tourId,

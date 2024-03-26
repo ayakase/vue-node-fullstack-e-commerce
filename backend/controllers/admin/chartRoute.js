@@ -12,7 +12,7 @@ router.get("/day", (req, res) => {
             [sequelize.fn('count', sequelize.col('*')), 'order_count']
         ],
         group: [sequelize.fn('DATE', sequelize.col('createdAt'))],
-        limit: 10,
+        limit: 7,
         // offset: 1,
         order: [[sequelize.fn('DATE', sequelize.col('createdAt')), 'DESC']]
     })
@@ -34,7 +34,7 @@ router.get("/revenue", (req, res) => {
             [sequelize.fn('sum', sequelize.col('price')), 'sum']
         ],
         group: [sequelize.fn('DATE', sequelize.col('createdAt'))],
-        limit: 10,
+        limit: 7,
         // offset: 1,
         order: [[sequelize.fn('DATE', sequelize.col('createdAt')), 'DESC']]
     })

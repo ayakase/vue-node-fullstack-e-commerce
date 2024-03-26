@@ -121,7 +121,10 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
-      component: () => import('../views/admin/LoginView.vue')
+      component: () => import('../views/admin/LoginView.vue'),
+      meta: {
+        hideNavbar: true,
+      },
     },
     {
       path: '/admin',

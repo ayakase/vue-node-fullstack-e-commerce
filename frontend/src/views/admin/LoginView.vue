@@ -1,37 +1,35 @@
 <template>
-    <div class="login-container">
-        <h3> Đăng nhập</h3>
-        <div class="form-outline mb-4">
-            <input v-model="username" type="username" id="form2Example1" class="form-control" />
-            <label class="form-label" for="form2Example1">username</label>
-        </div>
 
-        <!-- Password input -->
-        <div class="form-outline mb-4">
-            <input v-model="password" type="password" id="form2Example2" class="form-control" />
-            <label class="form-label" for="form2Example2">Password</label>
-        </div>
+    <section class="">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                    <div class="card shadow-2-strong" style="border-radius: 1rem;">
+                        <div class="card-body p-5 text-center">
+                            <h3 class="mb-5">Đăng nhập</h3>
+                            <div class="form-outline mb-4">
+                                <input type="text" v-model="username" id="username" class="form-control" />
+                                <label class="form-label" for="username">Username</label>
+                            </div>
+                            <div class="form-outline mb-4">
+                                <input type="password" v-model="password" id="form2Example2" class="form-control" />
+                                <label class="form-label" for="">Password</label>
+                            </div>
+                            <hr class="my-4">
+                            <button type="button" @click="login" class="btn btn-success btn-block mb-4">Sign in</button>
 
-        <!-- 2 column grid layout for inline styling -->
-        <div class="row mb-4">
-            <div class="col">
-                <!-- Simple link -->
+
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <!-- Submit button -->
-        <button type="button" @click="login" class="btn btn-success btn-block mb-4">Sign in</button>
-
-        <!-- Register buttons -->
-
-    </div>
+    </section>
 </template>
-
 <script setup>
 import baseUrl from '../../connect';
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
-import LoadingOverlay from "../../components/LoadingOverlay.vue";
 import { ref } from 'vue';
 import { useLoginStore } from '../../stores/loginstate';
 import { useCookies } from "vue3-cookies";
