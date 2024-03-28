@@ -85,7 +85,7 @@ router.get('/choose-category', (req, res) => {
         res.send(result)
     })
 })
-router.get('/:order/:page/', (req, res) => {
+router.get('/fetch/:order/:page/', (req, res) => {
 
     Tour.findAndCountAll({
         where: {
@@ -106,8 +106,9 @@ router.get('/:order/:page/', (req, res) => {
         console.error(error);
     })
 })
-router.get('/:id', (req, res) => {
-    console.log(req.params.id)
+router.get('/load/:id', (req, res) => {
+    // console.log(req.params.id)
+    console.log("requested")
     Tour.findOne({
         where: { id: req.params.id }
     }).then((result) => {
@@ -116,8 +117,53 @@ router.get('/:id', (req, res) => {
         console.log(error);
     })
 })
-
-router.delete('/:id', (req, res) => {
+router.get('/locations', (req, res) => {
+    console.log("hehe")
+    Location.findAll().then((locations) => {
+        res.send(locations)
+    }).catch((error) => {
+        console.log(error);
+    })
+})
+router.put('/edit/:id', upload.none(), (req, res) => {
+    let slug = slugify(req.body.slug, {
+        locale: 'vi',
+        lower: true,
+    })
+    Tour.update({
+        title: req.body.tourTitle,
+        images: req.body.images,
+        slug: slug,
+        tik_tok_id: req.body.tiktokId,
+        schedule: req.body.tourSchedule,
+        location_id: req.body.tourLocation,
+        tourtype: req.body.tourType,
+        departure: req.body.tourFrom,
+        days: req.body.tourLength,
+        ishottour: req.body.isHot,
+        isdiscount: req.body.tourDiscount,
+        recommend: req.body.recommend,
+        transportation: req.body.tourTransport,
+        original_price: req.body.originalPrice,
+        adult_price: req.body.adultPrice,
+        teenager_price: req.body.teenagerPrice,
+        child_price: req.body.childPrice,
+        infant_price: req.body.infantPrice,
+        special: req.body.tourSpecial,
+        bonus: req.body.tourBonus,
+        visa: req.body.tourVisa,
+        detail: req.body.tourDetail,
+        priceservice: req.body.tourPriceService,
+        guide: req.body.tourGuide,
+    }, {
+        where: {
+            id: req.params.id
+        }
+    }).then((result) => {
+        res.send("1");
+    })
+})
+router.delete('/delete/:id', (req, res) => {
     Tour.destroy({ where: { id: req.params.id } })
         .then((result) => {
             res.send("done")

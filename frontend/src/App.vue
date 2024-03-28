@@ -40,20 +40,12 @@ function searchSend() {
 const domesticMenu = ref()
 const foreignMenu = ref()
 onMounted(() => {
-  // cookies.set('abuse_interstitial', 'dinosaur-just-ghost.ngrok-free.app', {
-  //   domain: 'dinosaur-just-ghost.ngrok-free.app',
-  //   path: '/',
-  //   expires: new Date('2024-12-31'), 
-  //   secure: true,
-  //   samesite: 'None',
-  // });
+
   loginStore.checkLogin()
-  console.log(loginStore.login)
   baseUrl.post("/client/initial/count")
   baseUrl
     .get("/client/initial/menu").then((response) => {
       domesticMenu.value = response.data[0]
-      console.log(domesticMenu.value.Regions)
       foreignMenu.value = response.data[1]
       // tourCategory.value = response.data
     })

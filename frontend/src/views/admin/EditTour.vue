@@ -6,13 +6,13 @@
             <label for="" class="form-label">Tiêu đề tour</label>
             <input type="text" class="form-control" id="" placeholder="" v-model="tourTitle" />
         </div>
-        <div class="mb-3 thumbnail">
+        <!-- <div class="mb-3 thumbnail">
             <label for="formFile" class="form-label">Hình thu nhỏ</label>
             <input class="form-control" accept="image/*" type="file" id="formFile" @change="processImg" />
             <div style="width: 20rem; margin-top: 1rem">
                 <img :src="thumbnailSrc" alt="" style="width: 100%" />
             </div>
-        </div>
+        </div> -->
         <div class="form-label">Thư viện ảnh</div>
         <button style="color: white;margin-bottom: 2rem;" class="btn btn-success" @click="toggleGallery">Mở thư
             viện</button>
@@ -126,8 +126,6 @@
             </p>
         </div>
         <div class="category-type-from">
-
-
             <div class="mb-3 w-25">
                 <label for="" class="form-label">Loại tour </label>
                 <select class="form-select mb-3" aria-label="Small select example" v-model="tourType">
@@ -310,8 +308,8 @@
             </div>
         </div>
         <div class="mt-10 mb-2"></div>
-        <div @click="addTour" class="btn btn-success" style="margin-top: 1rem; right: 0; float: right">
-            Add Tour
+        <div @click="editTour" class="btn btn-success" style="margin-top: 1rem; right: 0; float: right">
+            Submit
         </div>
     </div>
 </template>
@@ -377,7 +375,7 @@ let selectCategory = ref()
 let selectRegion = ref()
 let selectLocation = ref()
 function getTourbyId() {
-    baseUrl.get('/admin/tour/' + route.query.id).then((response) => {
+    baseUrl.get('/admin/tour/load/' + route.query.id).then((response) => {
         console.log(response.data);
         tourTitle.value = response.data.title
         tourSchedule.value = response.data.schedule
@@ -394,11 +392,40 @@ function getTourbyId() {
         tourDetail.value = response.data.detail
         tourPriceService.value = response.data.priceservice
         tourGuide.value = response.data.guide
+        // selectLocation.value.id = response.data.location_id
+        thumbnailSrc.value = response.data.thumbnail
+        // console.log(thumbnailSrc.value)
+        isHot.value = response.data.ishottour
+        isDiscount.value = response.data.isdiscount
+        if (response.data.images) {
+            imageArray.value = response.data.images.split(',')
+        }
+        tourTransport.value = response.data.transportation
+        locationArray.value.forEach(location => {
+            if (location.id == response.data.location_id) {
+                selectLocation.value = location
+            }
+        });
+        recommendText.value = response.data.recommend
+        slug.value = response.data.slug
     })
+}
+const locationArray = ref([])
+async function loadSelector() {
+    try {
+        const category = await baseUrl.get("/admin/tour/choose-category");
+        tourCategory.value = category.data;
+        console.log(tourCategory.value);
+        const location = await baseUrl.get('/admin/tour/locations');
+        locationArray.value = location.data;
+        console.log(locationArray.value);
+        getTourbyId()
+    } catch (error) {
+        console.error("Error fetching tour category:", error);
+    }
 }
 onMounted(() => {
     showOverlay.value = true
-    getTourbyId()
     baseUrl.get('/admin/library')
         .then((response) => {
             showOverlay.value = false
@@ -409,11 +436,8 @@ onMounted(() => {
         }).catch((error) => {
             console.log(error)
         })
-    baseUrl
-        .get("/admin/tour/choose-category").then((response) => {
+    loadSelector()
 
-            tourCategory.value = response.data
-        })
 })
 let recommendColor = computed(() => {
     if (recommendText.value >= 0 && recommendText.value <= 3) {
@@ -434,12 +458,12 @@ function processImg(event) {
     }
     tourThumbnail.value = event.target.files[0];
 }
-function addTour() {
+function editTour() {
     if (selectLocation.value) {
         showOverlay.value = true;
         const tourData = new FormData();
         tourData.append("tourTitle", tourTitle.value);
-        tourData.append("tourThumbnail", tourThumbnail.value);
+        // tourData.append("tourThumbnail", tourThumbnail.value);
         tourData.append("slug", slug.value)
         tourData.append("tourSchedule", tourSchedule.value);
         tourData.append("tourLocation", selectLocation.value.id);
@@ -449,7 +473,7 @@ function addTour() {
         tourData.append("tourLength", tourLength.value);
         tourData.append("isHot", isHot.value);
         tourData.append("recommend", recommendText.value);
-        tourData.append("tourTransport", tourTransport.value.toString());
+        tourData.append("tourTransport", tourTransport.value);
         tourData.append("originalPrice", originalPrice.value);
         tourData.append("adultPrice", adultPrice.value);
         tourData.append("teenagerPrice", teenagerPrice.value);
@@ -463,7 +487,7 @@ function addTour() {
         tourData.append("tourGuide", tourGuide.value);
         tourData.append("tourDiscount", isDiscount.value);
         baseUrl
-            .put("/admin/tour", tourData, {
+            .put("/admin/tour/edit/" + route.query.id, tourData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },

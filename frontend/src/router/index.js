@@ -205,9 +205,7 @@ const router = createRouter({
         await new Promise(resolve => {
           (function checkLoginState() {
             const loginState = loginStore.login;
-            console.log(loginState);
             if (loginState !== null) {
-              console.log(loginState);
               if (loginState) {
                 next();
               } else {

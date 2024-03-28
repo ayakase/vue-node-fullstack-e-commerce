@@ -117,7 +117,7 @@ function unpublished() {
 }
 function fetchTour() {
     tourTable.value = null
-    baseUrl.get("/admin/tour/" + sortOrder.value + "/" + pageNumber.value, { params: { keyword: searchTerm.value } })
+    baseUrl.get("/admin/tour/fetch/" + sortOrder.value + "/" + pageNumber.value, { params: { keyword: searchTerm.value } })
         .then(response => {
 
             tourTable.value = response.data.rows
@@ -136,7 +136,7 @@ function getTourbyPage() {
 function deleteTour(id) {
     let text = "Bạn có chắc chắn muốn xóa Tour " + id;
     if (confirm(text) == true) {
-        baseUrl.delete("/admin/tour/" + id)
+        baseUrl.delete("/admin/tour/delete/" + id)
             .then(response => {
                 toast.info("Đã xóa", {
                     autoClose: 2000,
