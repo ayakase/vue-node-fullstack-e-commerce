@@ -30,13 +30,13 @@
     <div>
       <Editor style="height: 50rem" v-model="postContent" api-key="8gzqmdnsiplu2pd33s0doas4xo8735024fznwlgttd4ldri6"
         :init="{
-                  plugins:
-                    '  lists advlist link image table code help wordcount autosave emoticons',
-                  toolbar:
-                    ' forecolor backcolor | undo redo | styleselect | bold italic | ' +
-                    'alignleft aligncenter alignright alignjustify | ' +
-                    'outdent indent | numlist bullist | emoticons',
-                }" />
+    plugins:
+      '  lists advlist link image table code help wordcount autosave emoticons',
+    toolbar:
+      ' forecolor backcolor | undo redo | styleselect | bold italic | ' +
+      'alignleft aligncenter alignright alignjustify | ' +
+      'outdent indent | numlist bullist | emoticons',
+  }" />
     </div>
     <div class="mt-10 mb-2"></div>
     <div @click="addpost" class="btn btn-success" style="margin-top: 1rem; right: 0; float: right">
@@ -71,7 +71,7 @@ watch(postTitle, (newValue) => {
   slug.value = turnSlug(newValue)
 })
 function processImg(event) {
-  
+
   if (event.target.files.length) {
     thumbnailSrc.value = URL.createObjectURL(event.target.files[0]);
   }
@@ -93,23 +93,26 @@ function addpost() {
       },
     })
     .then((response) => {
-      
-      toast.info(response.data, {
-        autoClose: 2000,
-        theme: "colored",
-        position: toast.POSITION.BOTTOM_RIGHT,
-      });
-      showOverlay.value = false;
+      if (response.status == 200) {
+        toast.info("Thêm bài viết thành công", {
+          autoClose: 2000,
+          theme: "colored",
+          position: toast.POSITION.BOTTOM_RIGHT,
+        });
+        showOverlay.value = false;
+      } else if (response.status == 201) {
+        console.log(response.status)
+        console.log("thieu thumbnail")
+      }
     })
     .catch((error) => {
-      console.error(error);
       showOverlay.value = false;
       toast.error(
         "Lỗi " +
         error +
         " , đảm bảo là bạn đã điền đủ thông tin, hãy đợi 1p rồi submit lại hoặc là reload lại trang",
         {
-          autoClose: 2000,
+          autoClose: 1000,
           theme: "colored",
           position: toast.POSITION.BOTTOM_RIGHT,
         }

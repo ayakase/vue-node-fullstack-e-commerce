@@ -6,13 +6,13 @@
             <label for="" class="form-label">Tiêu đề tour</label>
             <input type="text" class="form-control" id="" placeholder="" v-model="tourTitle" />
         </div>
-        <!-- <div class="mb-3 thumbnail">
+        <div class="mb-3 thumbnail">
             <label for="formFile" class="form-label">Hình thu nhỏ</label>
             <input class="form-control" accept="image/*" type="file" id="formFile" @change="processImg" />
             <div style="width: 20rem; margin-top: 1rem">
                 <img :src="thumbnailSrc" alt="" style="width: 100%" />
             </div>
-        </div> -->
+        </div>
         <div class="form-label">Thư viện ảnh</div>
         <button style="color: white;margin-bottom: 2rem;" class="btn btn-success" @click="toggleGallery">Mở thư
             viện</button>
@@ -463,7 +463,7 @@ function editTour() {
         showOverlay.value = true;
         const tourData = new FormData();
         tourData.append("tourTitle", tourTitle.value);
-        // tourData.append("tourThumbnail", tourThumbnail.value);
+        tourData.append("tourThumbnail", tourThumbnail.value);
         tourData.append("slug", slug.value)
         tourData.append("tourSchedule", tourSchedule.value);
         tourData.append("tourLocation", selectLocation.value.id);
@@ -496,7 +496,7 @@ function editTour() {
 
                 showOverlay.value = false;
                 if (response.data == "1") {
-                    toast.success("Thêm tour mới thành công", {
+                    toast.success("Cập nhật thành công", {
                         autoClose: 2000,
                         theme: "colored",
                         position: toast.POSITION.BOTTOM_RIGHT,

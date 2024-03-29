@@ -14,17 +14,21 @@ const storage = new CloudinaryStorage({
 const upload = multer({ storage: storage });
 const Slider = require("../../models/SliderModel");
 router.post("/", upload.single("image"), (req, res) => {
-    Slider.create({
-        title: req.body.title,
-        image_src: req.file.path,
-        tour_url: req.body.url,
-    })
-        .then(() => {
-            res.json("done");
+    if (!req.file) {
+        res.sendStatus(404)
+    } else {
+        Slider.create({
+            title: req.body.title,
+            image_src: req.file.path,
+            tour_url: req.body.url,
         })
-        .catch((err) => {
-            console.error(err);
-        });
+            .then(() => {
+                res.json("done");
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    }
 });
 
 router.get("/", (req, res) => {
@@ -39,14 +43,13 @@ router.get("/", (req, res) => {
             console.error(error);
         });
 });
-// router.delete("/:id", (req, res) => {
-//     post
-//         .destroy({ where: { id: req.params.id } })
-//         .then((result) => {
-//             res.send("done");
-//         })
-//         .catch((error) => {
-//             console.error(error);
-//         });
-// });
+router.delete("/:id", (req, res) => {
+    Slider.destroy({ where: { id: req.params.id } })
+        .then((result) => {
+            res.send("done");
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+});
 module.exports = router;

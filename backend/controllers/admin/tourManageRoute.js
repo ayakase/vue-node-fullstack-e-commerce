@@ -55,11 +55,13 @@ router.post('/', upload.single('tourThumbnail'), (req, res) => {
         guide: req.body.tourGuide,
     })
         .then(() => {
-            res.send("1");
+            res.sendStatus(200);
         })
         .catch((err) => {
             if (err.original && err.original.errno === 1062) {
-                res.send("2")
+                res.status(400).send("SlugConflict");
+            } else {
+                res.status(500).send("Server error"); 
             }
         })
 
@@ -125,12 +127,12 @@ router.get('/locations', (req, res) => {
         console.log(error);
     })
 })
-router.put('/edit/:id', upload.none(), (req, res) => {
+router.put('/edit/:id', upload.single('tourThumbnail'), (req, res) => {
     let slug = slugify(req.body.slug, {
         locale: 'vi',
         lower: true,
     })
-    Tour.update({
+    const newTourData = {
         title: req.body.tourTitle,
         images: req.body.images,
         slug: slug,
@@ -155,7 +157,11 @@ router.put('/edit/:id', upload.none(), (req, res) => {
         detail: req.body.tourDetail,
         priceservice: req.body.tourPriceService,
         guide: req.body.tourGuide,
-    }, {
+    }
+    if (req.file) {
+        newTourData.thumbnail = req.file.path
+    }
+    Tour.update(newTourData, {
         where: {
             id: req.params.id
         }

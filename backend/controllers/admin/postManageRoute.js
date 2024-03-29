@@ -15,62 +15,52 @@ const upload = multer({ storage: storage });
 const Post = require("../../models/PostModel");
 const Category = require("../../models/CategoryModel");
 router.post("/", upload.single("postThumbnail"), (req, res) => {
-  Post.create({
-    title: req.body.postTitle,
-    thumbnail: req.file.path,
-    content: req.body.postContent,
-    publish: req.body.publishState,
-    slug: req.body.postSlug,
-  })
-    .then(() => {
-      res.json("done");
-    })
-    .catch((err) => {
-      console.error(err);
-      if (err.original.errno === 1062) {
-        res.send("Slug bị trùng, vui lòng đổi")
-      }
-    });
-});
-router.put("/edit/:id", upload.single("postThumbnail"), (req, res) => {
-  if (req.file) {
-    Post.update({
+  if (!req.file) {
+    res.sendStatus(201)
+  } else {
+    Post.create({
       title: req.body.postTitle,
       thumbnail: req.file.path,
       content: req.body.postContent,
       publish: req.body.publishState,
       slug: req.body.postSlug,
-    }, {
-      where: {
-        id: req.params.id,
-      }
-    }
-    )
+    })
       .then(() => {
-        res.json("done");
+        res.sendStatus(200);
       })
       .catch((err) => {
-        console.error(err);
-      });
-  } else if (!req.file) {
-    Post.update({
-      title: req.body.postTitle,
-      content: req.body.postContent,
-      publish: req.body.publishState,
-      slug: req.body.postSlug,
-    }, {
-      where: {
-        id: req.params.id,
-      }
-    }
-    )
-      .then(() => {
-        res.json("done");
-      })
-      .catch((err) => {
-        console.error(err);
+        if (err.original && err.original.errno === 1062) {
+          res.status(400).send("SlugConflict");
+        } else {
+          res.status(500).send("Server error");
+        }
       });
   }
+
+});
+router.put("/edit/:id", upload.single("postThumbnail"), (req, res) => {
+  const updateData = {
+    title: req.body.postTitle,
+    content: req.body.postContent,
+    publish: req.body.publishState,
+    slug: req.body.postSlug,
+  }
+  if (req.file) {
+    updateData.thumbnail = req.file.path
+  }
+  Post.update(updateData, {
+    where: {
+      id: req.params.id,
+    }
+  }
+  )
+    .then(() => {
+      res.json("done");
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+
 });
 
 router.get("/:publish/:order/:page", (req, res) => {

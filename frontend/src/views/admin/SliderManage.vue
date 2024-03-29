@@ -6,6 +6,8 @@
         <div class="slider-list">
             <div class="slider-item" v-for="(slide, index) in slideItem" :key="index">
                 <div class="slider-item-img">
+                    <button @click="deleteSlide(slide.id)" type="button" class="btn btn-danger delete-btn"><i
+                            class="fa-solid fa-xmark"></i></button>
                     <v-img class="slider-img" :src="slide.image_src" alt="" style="width: 100%;"></v-img>
                 </div>
                 <div class="slider-content">
@@ -24,13 +26,26 @@ import { useRouter } from 'vue-router';
 import baseUrl from '../../connect';
 let router = useRouter()
 let slideItem = ref()
-onMounted(() => {
+function deleteSlide(id) {
+    let text = "Bạn có chắc chắn muốn xóa Tour " + id;
+    if (confirm(text) == true) {
+        baseUrl.delete('/admin/slider/' + id).then((response) => {
+            getSlider()
+        }).catch((error) => {
+            console.error(error)
+        })
+    }
+}
+function getSlider() {
     baseUrl.get('/admin/slider').then((response) => {
         console.log(response.data.rows)
         slideItem.value = response.data.rows
     }).catch((error) => {
         console.log(error)
     })
+}
+onMounted(() => {
+    getSlider()
 })
 </script>
 
@@ -63,10 +78,20 @@ onMounted(() => {
     width: 20rem;
     height: 10rem;
     overflow: hidden;
+    position: relative;
 }
 
 .slider-img {
+
     border-radius: 1rem;
     object-fit: cover;
+}
+
+.delete-btn {
+    position: absolute;
+    z-index: 100;
+    top: 0;
+    right: 0;
+    border-radius: 100%;
 }
 </style>

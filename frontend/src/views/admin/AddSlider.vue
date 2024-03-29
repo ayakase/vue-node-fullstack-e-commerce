@@ -26,7 +26,7 @@
         </div>
     </div>
 </template>
-  
+
 <script setup>
 
 import LoadingOverlay from "../../components/LoadingOverlay.vue";
@@ -40,7 +40,7 @@ let slideUrl = ref()
 let slideImage = ref()
 let slideImageSrc = ref()
 function processImg(event) {
-    
+
     if (event.target.files.length) {
         slideImageSrc.value = URL.createObjectURL(event.target.files[0]);
     }
@@ -52,7 +52,7 @@ function addSlide() {
     slideData.append("title", slideTitle.value);
     slideData.append("url", slideUrl.value);
     slideData.append("image", slideImage.value);
-    
+
     baseUrl
         .post("/admin/slider", slideData, {
             headers: {
@@ -60,13 +60,16 @@ function addSlide() {
             },
         })
         .then((response) => {
-            
-            showOverlay.value = false;
-            toast.success("Đã nhận thông tin", {
-                autoClose: 2000,
-                theme: "colored",
-                position: toast.POSITION.BOTTOM_RIGHT,
-            });
+            if (response.status == 200) {
+                showOverlay.value = false;
+                toast.success("Đã nhận thông tin", {
+                    autoClose: 2000,
+                    theme: "colored",
+                    position: toast.POSITION.BOTTOM_RIGHT,
+                });
+            } else if (response.status == 404) {
+                throw new Error(response.status)
+            }
         })
         .catch((error) => {
             console.error(error);
@@ -84,7 +87,7 @@ function addSlide() {
         });
 }
 </script>
-  
+
 <style scoped>
 .add-container {
     width: 75vw;
@@ -112,4 +115,3 @@ function addSlide() {
     color: rgb(75, 75, 75);
 }
 </style>
-  

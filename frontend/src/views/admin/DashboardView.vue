@@ -1,35 +1,5 @@
 <template>
         <div class="admin-container">
-                <!-- <div class="admin-side-nav">
-            <RouterLink class="admin-side-item" to="/admin/tai-khoan-admin">Tài khoản<i class="fa-solid fa-user"></i>
-            </RouterLink>
-            <RouterLink class="admin-side-item" to="/admin/thong-ke"><span>Thống kê</span> <i
-                    class="fa-solid fa-chart-line"></i>
-            </RouterLink>
-            
-
-            <RouterLink class="admin-side-item" to="/admin/dat-tour">Đặt Tour<i class="fa-solid fa-box-archive"></i>
-            </RouterLink>
-            <RouterLink class="admin-side-item" to="/admin/dang-ky-tu-van">Đăng ký tư vấn<i
-                    class="fa-solid fa-headset"></i>
-            </RouterLink>
-            <RouterLink class="admin-side-item" to="/admin/quan-ly-tour">Quản Lí Tour <i
-                    class="fa-regular fa-paper-plane"></i></RouterLink>
-            <RouterLink class="admin-side-item" to="/admin/quan-ly-khu-vuc">Qlý khu vực<i class="fa-solid fa-map"></i>
-            </RouterLink>
-            <RouterLink class="admin-side-item" to="/admin/quan-ly-dia-diem">Qlý địa điểm<i
-                    class="fa-solid fa-location-dot"></i>
-            </RouterLink>
-            <RouterLink class="admin-side-item" to="/admin/quan-ly-hot-tour">Tour Hot <i class="fa-solid fa-fire"></i>
-            </RouterLink>
-            <RouterLink class="admin-side-item" to="/admin/thu-vien">Thư viện ảnh<i class="fa-regular fa-image"></i>
-            </RouterLink>
-            <RouterLink class="admin-side-item" to="/admin/quan-ly-slider">Ảnh Slider<i
-                    class="fa-solid fa-photo-film"></i>
-            </RouterLink>
-            <RouterLink class="admin-side-item" to="/admin/bai-viet">Bài viết<i class="fa-regular fa-newspaper"></i>
-            </RouterLink>
-        </div> -->
                 <v-card style="z-index: 999;">
                         <v-layout>
                                 <v-navigation-drawer style="background-color: #97CBB4" v-model="drawer" permanent
@@ -60,12 +30,7 @@
                                                 <RouterLink class="admin-side-item" to="/admin/quan-ly-dia-diem">Qlý địa
                                                         điểm<i class="fa-solid fa-location-dot"></i>
                                                 </RouterLink>
-                                                <RouterLink class="admin-side-item" to="/admin/quan-ly-hot-tour">Tour
-                                                        Hot <i class="fa-solid fa-fire"></i>
-                                                </RouterLink>
-                                                <RouterLink class="admin-side-item" to="/admin/thu-vien">Thư viện ảnh<i
-                                                                class="fa-regular fa-image"></i>
-                                                </RouterLink>
+                                              
                                                 <RouterLink class="admin-side-item" to="/admin/quan-ly-slider">Ảnh
                                                         Slider<i class="fa-solid fa-photo-film"></i>
                                                 </RouterLink>

@@ -448,7 +448,7 @@ function addTour() {
             .then((response) => {
 
                 showOverlay.value = false;
-                if (response.data == "1") {
+                if (response.status == 200) {
                     toast.success("Thêm tour mới thành công", {
                         autoClose: 2000,
                         theme: "colored",

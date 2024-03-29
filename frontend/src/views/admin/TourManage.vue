@@ -12,7 +12,7 @@
                     <input @keydown.enter.prevent="fetchTour" class="form-control me-2 search-box" type="search"
                         placeholder="Tìm kiếm theo tên" aria-label="Search" v-model="searchTerm">
                 </form>
-                <div class="btn-group">
+                <!-- <div class="btn-group">
                     <button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false" style="color: white">
                         Trạng thái &nbsp; <i class="fa-solid fa-book"> :</i>
@@ -26,12 +26,14 @@
                             Chưa xuất bản &nbsp; <i class="fa-solid fa-flag"></i>
                         </button>
                     </div>
+                </div> -->
+                <div style="width: 30%; display: flex;justify-content: space-between;"> <button
+                        class="sort-button btn btn-success" @click="Newest">Mới
+                        nhất &nbsp; <i class="fa-solid fa-arrow-up-wide-short"></i></button>
+                    <button class="sort-button btn btn-success" @click="Oldest">Cũ nhất &nbsp; <i
+                            class="fa-solid fa-arrow-down-wide-short"></i></button>
+                    <button class="btn btn-success" @click="fetchTour"><i class="fa-solid fa-rotate-right"></i></button>
                 </div>
-                <button class="sort-button btn btn-success" @click="Newest">Mới nhất &nbsp; <i
-                        class="fa-solid fa-arrow-up-wide-short"></i></button>
-                <button class="sort-button btn btn-success" @click="Oldest">Cũ nhất &nbsp; <i
-                        class="fa-solid fa-arrow-down-wide-short"></i></button>
-                <button class="btn btn-success" @click="fetchTour"><i class="fa-solid fa-rotate-right"></i></button>
 
             </div>
         </div>
@@ -73,10 +75,10 @@
                     </td>
                     <td @click="router.push({ path: '/tour/' + tour.slug })" v-else> Không</td>
                     <td @click="router.push({ path: '/tour/' + tour.slug })">{{ tour.transportation
-                    }}</td>
+                        }}</td>
                     <td @click="router.push({ path: '/tour/' + tour.slug })">{{
-                        formatDate(tour.createdAt)
-                    }}</td>
+            formatDate(tour.createdAt)
+        }}</td>
                     <td> <button
                             @click="router.push({ path: '/admin/quan-ly-tour/chinh-sua-tour', query: { id: tour.id } })"
                             class="edit-button"><i class=" fa-solid fa-pen-to-square"></i></button>
@@ -236,5 +238,9 @@ table {
 .each-tour-row:hover {
     color: aliceblue !important;
     cursor: pointer;
+}
+
+.search-container {
+    width: 50%
 }
 </style>
