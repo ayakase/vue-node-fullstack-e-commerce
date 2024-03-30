@@ -16,7 +16,7 @@ const Post = require("../../models/PostModel");
 const Category = require("../../models/CategoryModel");
 router.post("/", upload.single("postThumbnail"), (req, res) => {
   if (!req.file) {
-    res.sendStatus(201)
+    res.sendStatus(404)
   } else {
     Post.create({
       title: req.body.postTitle,

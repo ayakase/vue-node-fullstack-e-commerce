@@ -40,7 +40,6 @@
                     <th scope="col">Tên khu vực</th>
                     <th scope="col">Slug</th>
                     <th scope="col">Note</th>
-                    <th scope="col" style="text-align: center;"> Chỉnh sửa </th>
                     <th scope="col"> Xóa</th>
                 </tr>
             </thead>
@@ -50,64 +49,7 @@
                     <td>{{ region.name }}</td>
                     <td>{{ region.slug }}</td>
                     <td>{{ region.note }}</td>
-                    <td>
-                        <div class="text-center">
 
-                            <v-dialog max-width="600">
-                                <template v-slot:activator="{ props: activatorProps }">
-                                    <a class="detail-popup" v-bind="activatorProps">
-                                        Chỉnh sửa &nbsp; <i class="fa-solid fa-pen-to-square"></i>
-                                    </a>
-                                </template>
-                                <template v-slot:default="{ isActive }">
-                                    <v-card title="Chỉnh sửa" color="#d1e7dd" prepend-icon="fa-solid fa-circle-info">
-                                        <v-divider :thickness="2"></v-divider>
-                                        <div
-                                            style="display: flex; align-items: center;justify-content: space-between;flex-direction: row">
-                                            <v-card-item>
-                                                <p>Tên khu vực</p>
-                                                <h5>{{ region.name }}</h5>
-                                                <p>Slug</p>
-                                                <h5>{{ region.slug }}</h5>
-                                                <p>Note</p>
-                                                <h5>{{ region.note }}</h5>
-                                                <v-divider></v-divider>
-
-                                            </v-card-item>
-                                            <i class="fa-solid fa-arrow-right"></i>
-                                            <v-card-item>
-                                                <div class="">
-                                                    <label for="exampleInputEmail1" class="form-label">Tên khu
-                                                        vực</label>
-                                                    <input type="email" class="form-control" id="exampleInputEmail1"
-                                                        aria-describedby="emailHelp">
-                                                </div>
-                                                <div class="">
-                                                    <label for="exampleInputEmail1" class="form-label">Slug</label>
-                                                    <input type="email" class="form-control" id="exampleInputEmail1"
-                                                        aria-describedby="emailHelp">
-                                                </div>
-                                                <div class="">
-                                                    <label for="exampleInputEmail1" class="form-label">Note</label>
-                                                    <input type="email" class="form-control" id="exampleInputEmail1"
-                                                        aria-describedby="emailHelp">
-                                                </div>
-                                                <v-divider></v-divider>
-
-                                            </v-card-item>
-                                        </div>
-                                        <v-card-actions>
-                                            <v-spacer></v-spacer>
-                                            <v-btn text="Thoát" @click="isActive.value = false"></v-btn>
-                                            <v-btn text="Cập nhật" @click="isActive.value = false"></v-btn>
-
-                                        </v-card-actions>
-                                    </v-card>
-                                </template>
-                            </v-dialog>
-                        </div>
-
-                    </td>
                     <td> <button class="delete-button" @click="deleteRegion(region.id)"><i
                                 class="fa-solid fa-trash"></i></button></td>
                 </tr>
@@ -289,6 +231,7 @@ table {
 }
 
 .delete-button {
+    text-align: start;
     width: 100%;
 }
 

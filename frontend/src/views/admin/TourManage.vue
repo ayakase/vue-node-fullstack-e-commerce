@@ -68,15 +68,15 @@
                     <td @click="router.push({ path: '/' + tour.slug })">{{ tour.schedule }}</td>
                     <!-- <td @click="router.push({ path: '/tour/' + tour.slug })">{{ tour.Category.name }}
                     </td> -->
-                    <td @click="router.push({ path: '/tour/' + tour.slug })">{{ tour.departure }}
+                    <td @click="router.push({ path: '/' + tour.slug })">{{ tour.departure }}
                     </td>
-                    <td @click="router.push({ path: '/tour/' + tour.slug })">{{ tour.days }}</td>
-                    <td @click="router.push({ path: '/tour/' + tour.slug })" v-if="tour.ishottour == 1"> Có
+                    <td @click="router.push({ path: '/' + tour.slug })">{{ tour.days }}</td>
+                    <td @click="router.push({ path: '/' + tour.slug })" v-if="tour.ishottour == 1"> Có
                     </td>
-                    <td @click="router.push({ path: '/tour/' + tour.slug })" v-else> Không</td>
-                    <td @click="router.push({ path: '/tour/' + tour.slug })">{{ tour.transportation
+                    <td @click="router.push({ path: '/' + tour.slug })" v-else> Không</td>
+                    <td @click="router.push({ path: '/' + tour.slug })">{{ tour.transportation
                         }}</td>
-                    <td @click="router.push({ path: '/tour/' + tour.slug })">{{
+                    <td @click="router.push({ path: '/' + tour.slug })">{{
             formatDate(tour.createdAt)
         }}</td>
                     <td> <button

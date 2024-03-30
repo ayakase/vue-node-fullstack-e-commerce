@@ -446,7 +446,6 @@ function addTour() {
                 },
             })
             .then((response) => {
-
                 showOverlay.value = false;
                 if (response.status == 200) {
                     toast.success("Thêm tour mới thành công", {
@@ -454,34 +453,42 @@ function addTour() {
                         theme: "colored",
                         position: toast.POSITION.BOTTOM_RIGHT,
                     });
-                } else if (response.data == "3") {
-                    toast.error("Chưa điền đầy đủ thông tin", {
+                }
+            })
+            .catch((error) => {
+                showOverlay.value = false;
+                if (error.response.status == 400) {
+                    toast.error("Trung slug", {
                         autoClose: 2000,
                         theme: "colored",
                         position: toast.POSITION.BOTTOM_RIGHT,
                     });
-                } else if (response.data == "2") {
+                } else if (error.response.status == 432) {
                     toast.error("Slug bị trùng với một tour khác, vui lòng thay đổi", {
                         autoClose: 2000,
                         theme: "colored",
                         position: toast.POSITION.BOTTOM_RIGHT,
                     });
-                }
-            })
-            .catch((error) => {
-                console.error(error);
-                showOverlay.value = false;
-                toast.error(
-                    "Lỗi " +
-                    error +
-                    " , đảm bảo là bạn đã điền đủ thông tin, hãy đợi 1p rồi submit lại hoặc là reload lại trang",
-                    {
+                } else if (error.response.status == 433) {
+                    toast.error("Vui lòng upload ảnh thumbnail", {
                         autoClose: 2000,
                         theme: "colored",
                         position: toast.POSITION.BOTTOM_RIGHT,
-                    }
-                );
+                    });
+                } else {
+                    toast.error(
+                        "Lỗi " +
+                        error +
+                        " , đảm bảo là bạn đã điền đủ thông tin, hãy đợi 1p rồi submit lại hoặc là reload lại trang",
+                        {
+                            autoClose: 2000,
+                            theme: "colored",
+                            position: toast.POSITION.BOTTOM_RIGHT,
+                        }
+                    );
+                }
             });
+
     }
     else {
         toast.error("Vui lòng chọn địa điểm cho tour", {

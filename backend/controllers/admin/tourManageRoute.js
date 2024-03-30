@@ -21,50 +21,51 @@ const { Op } = require('sequelize');
 
 
 router.post('/', upload.single('tourThumbnail'), (req, res) => {
-
-    let slug = slugify(req.body.slug, {
-        locale: 'vi',
-        lower: true,
-    })
-
-    Tour.create({
-        title: req.body.tourTitle,
-        thumbnail: req.file.path,
-        images: req.body.images,
-        slug: slug,
-        tik_tok_id: req.body.tiktokId,
-        schedule: req.body.tourSchedule,
-        location_id: req.body.tourLocation,
-        tourtype: req.body.tourType,
-        departure: req.body.tourFrom,
-        days: req.body.tourLength,
-        ishottour: req.body.isHot,
-        isdiscount: req.body.tourDiscount,
-        recommend: req.body.recommend,
-        transportation: req.body.tourTransport,
-        original_price: req.body.originalPrice,
-        adult_price: req.body.adultPrice,
-        teenager_price: req.body.teenagerPrice,
-        child_price: req.body.childPrice,
-        infant_price: req.body.infantPrice,
-        special: req.body.tourSpecial,
-        bonus: req.body.tourBonus,
-        visa: req.body.tourVisa,
-        detail: req.body.tourDetail,
-        priceservice: req.body.tourPriceService,
-        guide: req.body.tourGuide,
-    })
-        .then(() => {
-            res.sendStatus(200);
+    if (!req.file) {
+        res.sendStatus(433)
+    } else {
+        let slug = slugify(req.body.slug, {
+            locale: 'vi',
+            lower: true,
         })
-        .catch((err) => {
-            if (err.original && err.original.errno === 1062) {
-                res.status(400).send("SlugConflict");
-            } else {
-                res.status(500).send("Server error"); 
-            }
+        Tour.create({
+            title: req.body.tourTitle,
+            thumbnail: req.file.path,
+            images: req.body.images,
+            slug: slug,
+            tik_tok_id: req.body.tiktokId,
+            schedule: req.body.tourSchedule,
+            location_id: req.body.tourLocation,
+            tourtype: req.body.tourType,
+            departure: req.body.tourFrom,
+            days: req.body.tourLength,
+            ishottour: req.body.isHot,
+            isdiscount: req.body.tourDiscount,
+            recommend: req.body.recommend,
+            transportation: req.body.tourTransport,
+            original_price: req.body.originalPrice,
+            adult_price: req.body.adultPrice,
+            teenager_price: req.body.teenagerPrice,
+            child_price: req.body.childPrice,
+            infant_price: req.body.infantPrice,
+            special: req.body.tourSpecial,
+            bonus: req.body.tourBonus,
+            visa: req.body.tourVisa,
+            detail: req.body.tourDetail,
+            priceservice: req.body.tourPriceService,
+            guide: req.body.tourGuide,
         })
-
+            .then(() => {
+                res.sendStatus(200);
+            })
+            .catch((err) => {
+                if (err.original && err.original.errno === 1062) {
+                    res.status(432).send("Trùng slug với tour khác");
+                } else {
+                    res.status(500).send("Server error");
+                }
+            })
+    }
 });
 // const storage1 = multer.diskStorage({
 //     destination: function (req, file, cb) {

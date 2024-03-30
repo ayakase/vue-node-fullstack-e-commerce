@@ -100,9 +100,8 @@ function addpost() {
           position: toast.POSITION.BOTTOM_RIGHT,
         });
         showOverlay.value = false;
-      } else if (response.status == 201) {
-        console.log(response.status)
-        console.log("thieu thumbnail")
+      } else if (response.status == 404) {
+        throw new Error(response.status)
       }
     })
     .catch((error) => {

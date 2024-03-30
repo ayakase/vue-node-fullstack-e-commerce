@@ -71,8 +71,8 @@
             <div style="display: flex; flex-direction: row; justify-content: space-between;">
               <div>
                 <h5 v-if="tour.isdiscount"><span style="color: orange;text-decoration: line-through;">{{
-                  numeralFormat(tour.original_price)
-                }} VNĐ</span></h5>
+        numeralFormat(tour.original_price)
+      }} VNĐ</span></h5>
                 <h5><span style="color: red;">{{ numeralFormat(tour.adult_price) }} VNĐ</span></h5>
               </div>
               <div style="display: flex;gap: 0.7rem;font-size: 1.5rem;">
@@ -100,8 +100,8 @@
             <div style="display: flex; flex-direction: row; justify-content: space-between;">
               <div>
                 <h5 v-if="tour.isdiscount"><span style="color: orange;text-decoration: line-through;">{{
-                  numeralFormat(tour.original_price)
-                }} VNĐ</span></h5>
+        numeralFormat(tour.original_price)
+      }} VNĐ</span></h5>
                 <h5><span style="color: red;">{{ numeralFormat(tour.adult_price) }} VNĐ</span></h5>
               </div>
               <div style="display: flex;gap: 0.7rem;font-size: 1.5rem;">
@@ -139,8 +139,8 @@
             <div style="display: flex; flex-direction: row; justify-content: space-between;">
               <div>
                 <h5 v-if="tour.isdiscount"><span style="color: orange;text-decoration: line-through;">{{
-                  numeralFormat(tour.original_price)
-                }} VNĐ</span></h5>
+        numeralFormat(tour.original_price)
+      }} VNĐ</span></h5>
                 <h5><span style="color: red;">{{ numeralFormat(tour.adult_price) }} VNĐ</span></h5>
               </div>
               <div style="display: flex;gap: 0.7rem;font-size: 1.5rem;">
@@ -168,8 +168,8 @@
             <div style="display: flex; flex-direction: row; justify-content: space-between;">
               <div>
                 <h5 v-if="tour.isdiscount"><span style="color: orange;text-decoration: line-through;">{{
-                  numeralFormat(tour.original_price)
-                }} VNĐ</span></h5>
+        numeralFormat(tour.original_price)
+      }} VNĐ</span></h5>
                 <h5><span style="color: red;">{{ numeralFormat(tour.adult_price) }} VNĐ</span></h5>
               </div>
               <div style="display: flex;gap: 0.7rem;font-size: 1.5rem;">
@@ -205,8 +205,8 @@
             <div style="display: flex; flex-direction: row; justify-content: space-between;">
               <div>
                 <h5 v-if="tour.isdiscount"><span style="color: orange;text-decoration: line-through;">{{
-                  numeralFormat(tour.original_price)
-                }} VNĐ</span></h5>
+        numeralFormat(tour.original_price)
+      }} VNĐ</span></h5>
                 <h5><span style="color: red;">{{ numeralFormat(tour.adult_price) }} VNĐ</span></h5>
               </div>
               <div style="display: flex;gap: 0.7rem;font-size: 1.5rem;">
@@ -234,8 +234,8 @@
             <div style="display: flex; flex-direction: row; justify-content: space-between;">
               <div>
                 <h5 v-if="tour.isdiscount"><span style="color: orange;text-decoration: line-through;">{{
-                  numeralFormat(tour.original_price)
-                }} VNĐ</span></h5>
+        numeralFormat(tour.original_price)
+      }} VNĐ</span></h5>
                 <h5><span style="color: red;">{{ numeralFormat(tour.adult_price) }} VNĐ</span></h5>
               </div>
               <div style="display: flex;gap: 0.7rem;font-size: 1.5rem;">
@@ -272,8 +272,8 @@
             <div style="display: flex; flex-direction: row; justify-content: space-between;">
               <div>
                 <h5 v-if="tour.isdiscount"><span style="color: orange;text-decoration: line-through;">{{
-                  numeralFormat(tour.original_price)
-                }} VNĐ</span></h5>
+        numeralFormat(tour.original_price)
+      }} VNĐ</span></h5>
                 <h5><span style="color: red;">{{ numeralFormat(tour.adult_price) }} VNĐ</span></h5>
               </div>
               <div style="display: flex;gap: 0.7rem;font-size: 1.5rem;">
@@ -301,8 +301,8 @@
             <div style="display: flex; flex-direction: row; justify-content: space-between;">
               <div>
                 <h5 v-if="tour.isdiscount"><span style="color: orange;text-decoration: line-through;">{{
-                  numeralFormat(tour.original_price)
-                }} VNĐ</span></h5>
+        numeralFormat(tour.original_price)
+      }} VNĐ</span></h5>
                 <h5><span style="color: red;">{{ numeralFormat(tour.adult_price) }} VNĐ</span></h5>
               </div>
               <div style="display: flex;gap: 0.7rem;font-size: 1.5rem;">
@@ -314,7 +314,7 @@
         </Splide>
       </div>
     </div>
-    <div v-if="posts && posts.length > 0">
+    <div v-if="posts && posts.length >= 6">
       <h2 class="section-title" @click="router.push('/cam-nang')">Cẩm
         nang &nbsp;<i class="fa-solid fa-book"></i>
       </h2>
@@ -339,7 +339,7 @@
           <img style="height: 100%;width: 100%;object-fit: cover;" :src=posts[4].thumbnail alt="">
           <h4>{{ posts[4].title }}</h4>
         </div>
-        <div @click="router.push({ path: '/bai-viet/' + posts[5].slug })" class="post-6" v-if="posts[5].thumbnail">
+        <div @click="router.push({ path: '/bai-viet/' + posts[5].slug })" class="post-6" v-if=" posts[5].thumbnail ">
           <img style="height: 100%;width: 100%;object-fit: cover;" :src=posts[5].thumbnail alt="">
           <h4>{{ posts[5].title }}</h4>
         </div>
@@ -436,7 +436,7 @@ export default {
 }
 </script>
 
-<style >
+<style>
 .slide {
   width: 60%;
   height: 25rem;

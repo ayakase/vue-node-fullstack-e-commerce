@@ -271,7 +271,7 @@ function logout() {
             </li>
             <li class="nav-item hotline">
               <a class="nav-link active" to="/" aria-current="page" href="tel:0124 3.855.158">HOTLINE: <span
-                  style="color: rgb(255, 208, 0);">02143855158</span>
+                  style="color: rgb(255, 208, 0);">01212121212</span>
                 <img src="./assets/call-center.png" alt="" class="call-icon">
               </a>
             </li>

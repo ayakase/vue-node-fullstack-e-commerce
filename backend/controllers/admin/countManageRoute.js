@@ -21,6 +21,13 @@ router.get("/order", (req, res) => {
         console.log(err)
     })
 })
+router.get("/advisory", (req, res) => {
+    Advisory.count().then((count) => {
+        res.send(count.toString());
+    }).catch((err) => {
+        console.log(err)
+    })
+})
 router.get("/revenue", (req, res) => {
     Order.sum("price").then((sum) => {
         res.send(sum.toString());

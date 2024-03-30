@@ -18,14 +18,12 @@ router.get("/day", (req, res) => {
     })
         .then(result => {
             result.forEach(element => {
-                console.log(element.dataValues)
             });
             res.send(result)
         })
         .catch(err => {
             console.error('Error:', err);
         });
-    console.log("request")
 });
 router.get("/revenue", (req, res) => {
     Order.findAll({
@@ -40,14 +38,12 @@ router.get("/revenue", (req, res) => {
     })
         .then(result => {
             result.forEach(element => {
-                console.log(element.dataValues)
             });
             res.send(result)
         })
         .catch(err => {
             console.error('Error:', err);
         });
-    console.log("request")
 });
 router.get("/guest", async (req, res) => {
     try {
