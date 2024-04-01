@@ -54,7 +54,6 @@
           <th scope="col">Slug</th>
           <th scope="col">Ngày đăng</th>
           <th scope="col">Chỉnh sửa</th>
-          <th scope="col">Hành động</th>
           <th scope="col">Xóa</th>
         </tr>
       </thead>
@@ -79,11 +78,7 @@
               <i class="fa-regular fa-circle-check fa-lg"></i>
             </button>
           </td>
-          <td v-else style="vertical-align: middle">
-            <button class="solve-btn" @click="publishPost(post.id)">
-              <i class="fa-regular fa-circle-xmark fa-lg"></i>
-            </button>
-          </td>
+        
           <td>
             <button class="delete-button" @click="deleteTour(post.id)">
               <i class="fa-solid fa-trash"></i>

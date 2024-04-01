@@ -13,8 +13,9 @@ const router = createRouter({
       component: HomeView
     },
     {
-      path: '/tim-kiem/:searchText',
+      path: '/tim-kiem',
       name: 'tim-kiem',
+      // query: { keyword },
       component: () => import('../views/client/SearchView.vue')
     },
     {
@@ -81,37 +82,6 @@ const router = createRouter({
         { path: 'bao-hiem-dich-vu', component: () => import('../views/about/InsuranceView.vue') },
         { path: 'quy-trinh', component: () => import('../views/about/ProcedureView.vue') },
       ]
-    },
-
-    {
-      path: '/dich-vu',
-      name: 'dich vu',
-      component: () => import('../views/client/ServiceView.vue')
-    },
-    {
-      path: '/dat-ve-may-bay',
-      name: 'dat ve may bay',
-      component: () => import('../views/client/PlaneTicket.vue')
-    },
-    {
-      path: '/thue-xe',
-      name: 'thue xe',
-      component: () => import('../views/client/CarBooking.vue')
-    },
-    {
-      path: '/dich-vu-ho-chieu',
-      name: 'dich vu ho chieu',
-      component: () => import('../views/client/PassportService.vue')
-    },
-    {
-      path: '/dat-phong-khach-san',
-      name: 'dat phong khach san',
-      component: () => import('../views/client/HotelBooking.vue')
-    },
-    {
-      path: '/dat-ve-cap-treo',
-      name: 'dat ve cap treo',
-      component: () => import('../views/client/CableCar.vue')
     },
     {
       path: '/cam-nang',
@@ -213,7 +183,7 @@ const router = createRouter({
               }
               resolve();
             } else {
-              setTimeout(checkLoginState, 500);
+              setTimeout(checkLoginState, 1000);
             }
           })()
         });

@@ -7,22 +7,9 @@
                 <li class="breadcrumb-item">Tìm kiếm</li>
             </ol>
         </nav>
-        <!-- <h2 style="color: #ff6b00;">Du lịch trong nước</h2> -->
         <h3> Hiển thị kết quả cho <span style="color: #ff6b00;">{{ searchText }}</span></h3>
         <div class="section-container">
             <div class="side-bar-container">
-                <!-- <div v-if="categoryList" class="category-list">
-                    <div
-                        style="display: flex;align-items: center; height: 3rem; padding-left: 1rem; font-size: 20px;font-weight: bold;">
-                        Địa điểm &nbsp; <span style="color:#ff6b00;">HOT</span> &nbsp; trong
-                        nước</div>
-                    <div v-if="categoryList.Regions" v-for="region in categoryList.Regions" :key="region">
-                        <div class="region-list">{{ region.name }}</div>
-                        <div v-if="region.Locations" v-for="location in region.Locations">
-                            <div class="location-list">{{ location.name }}</div>
-                        </div>
-                    </div>
-                </div> -->
                 <div class="hot-tour">
                     <h2 v-if="hotTour" style="padding-left: 1rem;">Tour hot</h2>
                     <div v-for="tour in hotTour" @click="router.push({ path: '/' + tour.slug })" class="card"
@@ -31,7 +18,7 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ tour.title }}</h5>
                             <p>Giá: <span style="font-weight: bold; color: #ff6b00;">{{ numeralFormat(tour.adult_price)
-                            }}</span>
+                                    }}</span>
                                 VNĐ </p>
                             <hr class="hr" />
                         </div>
@@ -56,8 +43,6 @@
                 </div>
                 <div v-if="tourList" v-for="tour in  tourList " :key="tour" class="tour-individual">
                     <div class="image-container" @click="router.push({ path: '/' + tour.slug })">
-                        <!-- <img src="https://www.state.gov/wp-content/uploads/2023/07/shutterstock_245773270v2.jpg"
-                            style="width: 100%;" alt=""> -->
                         <v-img style="height: 100%;" cover :width="50" class="thumbnail" :src=tour.thumbnail>
                             <template v-slot:placeholder>
                                 <div class="d-flex align-center justify-center fill-height">
@@ -67,14 +52,16 @@
                     </div>
                     <div class="tour-detail-container">
                         <div class="title" @click="router.push({ path: '/' + tour.slug })"> {{
-                            tour.title }}</div>
+            tour.title }}</div>
                         <div class="below-section" style="">
                             <div class="schedule"><b>Mức độ đề xuất: </b><span style="color: orange;">{{ tour.recommend
-                            }}</span>
+                                    }}</span>
                             </div>
-                            <div class="schedule"><b>Lịch trình: </b><span style="color: orange;">{{ tour.schedule }}</span>
+                            <div class="schedule"><b>Lịch trình: </b><span style="color: orange;">{{ tour.schedule
+                                    }}</span>
                             </div>
-                            <div class="tourtype"><b>Loại tour: </b> <span style="color: green;">{{ tour.tourtype }} </span>
+                            <div class="tourtype"><b>Loại tour: </b> <span style="color: green;">{{ tour.tourtype }}
+                                </span>
                             </div>
                             <div class="days"><b>Thời gian: </b>{{ tour.days }}N{{ tour.days - 1 }}Đ</div>
                             <div class="departure"><b>Khởi hành: </b>{{ tour.departure }}</div>
@@ -82,8 +69,8 @@
                         </div>
                     </div>
                     <div class="price"><span style="font-size: x-large; color: orangered;"><b>{{
-                        numeralFormat(tour.adult_price)
-                    }} </b></span>
+            numeralFormat(tour.adult_price)
+        }} </b></span>
                         <span style="color: orangered; font-weight: 100;"> VNĐ</span>
                     </div>
                 </div>
@@ -105,14 +92,12 @@ import { onMounted, ref, computed, watch } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 const router = useRouter();
 const route = useRoute();
+let searchText = ref("")
 watch(
-    () => route.params.searchText,
+    () => route.query.keyword,
     (newValue, oldValue) => {
-        if (newValue !== '') {
-            searchText.value = newValue
-            fetchTour()
-        } else {
-        }
+        searchText.value = newValue
+        fetchTour()
     }
 
 )
@@ -122,7 +107,6 @@ let pageNumber = ref(1)
 let tourList = ref()
 let orderBy = ref("createdAt")
 let sortOrder = ref("DESC")
-let searchText = ref(route.params.searchText)
 function orderASC() {
     sortOrder.value = 'ASC'
     fetchTour()
