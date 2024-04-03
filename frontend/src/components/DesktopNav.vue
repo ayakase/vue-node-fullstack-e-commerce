@@ -124,7 +124,7 @@
                         <li class="nav-item hotline">
                             <a class="nav-link active" to="/" aria-current="page" href="tel:0124 3.855.158">HOTLINE:
                                 <span style="color: rgb(255, 208, 0);">01212121212</span>
-                                <img src="./assets/call-center.png" alt="" class="call-icon">
+                                <img src="../assets/call-center.png" alt="" class="call-icon">
                             </a>
                         </li>
 
@@ -143,25 +143,17 @@ import 'vue3-toastify/dist/index.css';
 import { ref, onMounted } from 'vue';
 import baseUrl from '../connect';
 import { useLoginStore } from '../stores/loginstate';
+const loginStore = useLoginStore()
 import { useRouter, useRoute } from 'vue-router';
 const route = useRoute()
 const router = useRouter();
 import { useCookies } from "vue3-cookies";
-const loginStore = useLoginStore()
 let { cookies } = useCookies()
 let searchText = ref("")
-function searchSend() {
-    toast.success("Đang tìm kiếm " + searchText.value, {
-        autoClose: 5000,
-        theme: "dark",
-        position: toast.POSITION.BOTTOM_RIGHT,
-    });
-}
 const domesticMenu = ref()
 const foreignMenu = ref()
 onMounted(() => {
-
-    loginStore.checkLogin()
+    // loginStore.checkLogin()
     baseUrl
         .get("/client/initial/menu").then((response) => {
             domesticMenu.value = response.data[0]
@@ -192,7 +184,6 @@ function logout() {
             console.error(error)
         });
         loginStore.toggleButton(response.data.state)
-
     })
 }
 </script>

@@ -66,19 +66,14 @@
           <td>{{ formatDate(post.createdAt) }}</td>
           <td>
             <button @click="
-                          router.push({
-                            path: '/admin/bai-viet/chinh-sua-bai-viet/' + post.slug
-                          })
-                          " class="edit-button">
+      router.push({
+        path: '/admin/bai-viet/chinh-sua-bai-viet/' + post.slug
+      })
+      " class="edit-button">
               <i class="fa-solid fa-pen-to-square"></i>
             </button>
           </td>
-          <td v-if="post.publish == 1" style="vertical-align: middle">
-            <button class="solve-btn" @click="publishPost(post.id)">
-              <i class="fa-regular fa-circle-check fa-lg"></i>
-            </button>
-          </td>
-        
+
           <td>
             <button class="delete-button" @click="deleteTour(post.id)">
               <i class="fa-solid fa-trash"></i>
@@ -118,7 +113,7 @@ function fetchPost() {
       pageNumber.value
     )
     .then((response) => {
-      
+
       postTable.value = response.data.rows;
       totalPage.value = response.data.count / 10 + 1;
     })
@@ -133,13 +128,13 @@ function getTourbyPage() {
   fetchPost();
 }
 function deleteTour(id) {
-  
+
   let text = "Bạn có chắc chắn muốn xóa Tour " + id;
   if (confirm(text) == true) {
     baseUrl
       .delete("/admin/post/" + id)
       .then((response) => {
-        
+
         toast.info("Đã xóa", {
           autoClose: 2000,
           theme: "colored",

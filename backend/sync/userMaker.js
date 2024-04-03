@@ -1,6 +1,5 @@
 const bcrypt = require('bcrypt');
-const User = require('../models/UserModel'); // Assuming you have a User model
-// const sequelize = require('../connect');
+const User = require('../models/UserModel');
 
 const createAdminUser = async () => {
     const plainTextPassword = 'admin';

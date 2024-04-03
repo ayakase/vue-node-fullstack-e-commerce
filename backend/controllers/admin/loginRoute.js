@@ -23,11 +23,9 @@ router.post('/info', (req, res) => {
                     if (passwordMatch) {
                         const token = jwt.sign({ id: result.id }, 'secret', { expiresIn: '20d' })
                         res.cookie('token', token, {
-                            // httpOnly: true,
                             maxAge: 1728000000,
                             secure: true,
                             sameSite: 'None',
-                            // domain: process.env.FE_URL
                         });
                         res.json({ state: true, message: "Login thành công" })
 
@@ -46,18 +44,27 @@ router.post('/info', (req, res) => {
 });
 router.post('/state', (req, res) => {
     const token = req.cookies.token
-
     if (!token) {
         res.send(false)
     } else {
         jwt.verify(token, 'secret', (err, decoded) => {
             if (err) {
                 console.log(err)
-                res.send(false);
+                res.send({ state: false });
+
             } else {
-                if (decoded.id == 1) {
-                    res.send(true)
-                }
+                User.findOne({ where: { id: decoded.id }, attributes: { exclude: ['password'] } }).then((user) => {
+                    if (user) {
+                        console.log(user)
+                        res.json({ state: true, userInfo: user });
+                    } else {
+                        res.send({ state: false });
+                    }
+                }).catch((err) => {
+                    console.log(err);
+                    res.send({ state: false });
+
+                });
             }
         });
     }

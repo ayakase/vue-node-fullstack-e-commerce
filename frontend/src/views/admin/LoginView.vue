@@ -46,7 +46,6 @@ function login() {
         password: password.value
     }
     baseUrl.post('/admin/login/info', loginData).then((response) => {
-        // cookies.set('token', response.data.token);
         toast.info(response.data.message,
             {
                 autoClose: 2000,

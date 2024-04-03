@@ -45,7 +45,7 @@
                     </div>
                     <TableLoading v-else></TableLoading>
                 </div>
-                <v-pagination @click="fetchNotification" v-model="notiPage" :length="notiTotalPage" :total-visible="3"
+                <v-pagination @click="fetchNotification" v-model="notiPage" :length=notiTotalPage :total-visible="3"
                     prev-icon="fa-solid fa-chevron-left" next-icon="fa-solid fa-chevron-right"></v-pagination>
             </div>
         </div>
@@ -126,7 +126,6 @@ watch([viewCount, orderCount, adviseCount], async ([newViewCount, newOrderCount,
 function fetchNotification() {
     notification.value = null
     baseUrl.get('/admin/notification/' + notiPage.value).then((response) => {
-
         notification.value = response.data.rows
         notiTotalPage.value = response.data.count / 10 + 1
     }).catch((error) => {

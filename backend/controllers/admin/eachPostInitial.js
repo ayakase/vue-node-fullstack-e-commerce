@@ -8,6 +8,8 @@ router.get('/:slug', (req, res) => {
         },
     }).then((result) => {
         res.send(result);
+    }).catch((err) => {
+        console.error(err);
     });
 })
 module.exports = router;

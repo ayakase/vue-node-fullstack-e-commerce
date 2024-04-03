@@ -30,7 +30,7 @@
                                                 <RouterLink class="admin-side-item" to="/admin/quan-ly-dia-diem">Qlý địa
                                                         điểm<i class="fa-solid fa-location-dot"></i>
                                                 </RouterLink>
-                                              
+
                                                 <RouterLink class="admin-side-item" to="/admin/quan-ly-slider">Ảnh
                                                         Slider<i class="fa-solid fa-photo-film"></i>
                                                 </RouterLink>
@@ -80,7 +80,8 @@ function logout() {
                 });
                 loginStore.toggleButton(response.data.state)
                 router.push('/')
-
+        }).catch((error) => {
+                console.error(error)
         })
 }
 </script>

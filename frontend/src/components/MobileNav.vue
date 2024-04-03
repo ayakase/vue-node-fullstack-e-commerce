@@ -2,7 +2,7 @@
 
     <div class="mobile-nav-container">
         <div style="position: relative;" class="mobile-nav">
-            <div class="logo-container" @click="router.push('/')"><img src="./assets/logo.png" alt=""
+            <div class="logo-container" @click="router.push('/')"><img src="../assets/logo.png" alt=""
                     class="mobile-logo">
             </div>
             <button class="btn mobile-btn" @click="toggleNav"><i class="fa-solid fa-bars"></i></button>
@@ -76,17 +76,14 @@
 
 <script setup>
 import { RouterLink } from 'vue-router'
-import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 import { ref, onMounted } from 'vue';
 import baseUrl from '../connect';
-import { useLoginStore } from '../stores/loginstate';
 import { useRouter } from 'vue-router';
 const router = useRouter();
 const showNav = ref(false)
 const showDomestic = ref(false)
 const showForeign = ref(false)
-const loginStore = useLoginStore()
 function toggleNav() {
     showNav.value = !showNav.value
 }
