@@ -5,9 +5,16 @@ const Category = require('../../models/CategoryModel');
 const Region = require('../../models/RegionModel');
 const Location = require('../../models/LocationModel');
 const Count = require("../../models/CountModel");
+const client = require('../../redisClient');
 
 router.post("/count", (req, res) => {
-    Count.increment('count', { by: 1, where: { id: 1 } })
+    client.incr("count", (err, value) => {
+        if (err) {
+            console.error('Error incrementing key:', err);
+        } else {
+            console.log(`value ${value}`);
+        }
+    })
 });
 router.get("/connect", (req, res) => {
     res.send("Connected to Backend");

@@ -55,7 +55,6 @@ router.post('/state', (req, res) => {
             } else {
                 User.findOne({ where: { id: decoded.id }, attributes: { exclude: ['password'] } }).then((user) => {
                     if (user) {
-                        console.log(user)
                         res.json({ state: true, userInfo: user });
                     } else {
                         res.send({ state: false });

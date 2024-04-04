@@ -5,9 +5,9 @@ const PORT = 3000;
 const cors = require("cors");
 const cookieParser = require('cookie-parser');
 const routes = require('./routes');
-const morgan = require('morgan');
-// const cron = require('./crons/test');
-app.use(morgan('tiny'));
+// const morgan = require('morgan');
+require('./cronjobs/countAdd')
+// app.use(morgan('tiny'));
 
 require("dotenv").config();
 
@@ -25,7 +25,6 @@ var corsOptions = {
   },
   credentials: true
 }
-// app.use(cors(corsOptions))
 app.use(cookieParser());
 app.set("trust proxy", true);
 app.get("/", (req, res) => {

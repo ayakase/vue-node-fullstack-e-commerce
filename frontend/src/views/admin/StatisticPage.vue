@@ -286,13 +286,13 @@ p {
     display: flex;
     flex-direction: row;
     gap: 2rem;
-    justify-content: flex-start;
+    justify-content: space-between;
     flex-wrap: wrap;
 }
 
 .notification {
     height: 51rem;
-    max-width: 45rem;
+    width: 45%;
     background-color: #cdecde;
     border-radius: 1rem;
     overflow: hidden;

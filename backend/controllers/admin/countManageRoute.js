@@ -1,9 +1,7 @@
 const express = require("express");
-const router = express.Router();
-
+const router = express.Router()
 const Count = require("../../models/CountModel");
 const Order = require("../../models/OrderModel");
-const Tour = require("../../models/TourModel");
 const Advisory = require("../../models/AdvisoryModel");
 router.get("/view", (req, res) => {
     Count.findOne({

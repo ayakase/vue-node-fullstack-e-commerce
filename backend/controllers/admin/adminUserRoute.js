@@ -7,8 +7,6 @@ router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 router.post('/request-change', (req, res) => {
     const token = req.cookies.token
-    console.log(req.body)
-    console.log(req.cookies.token)
     if (!token) {
         res.send({ allow: false, message: "Thiếu thông tin" })
     } else {
@@ -23,7 +21,6 @@ router.post('/request-change', (req, res) => {
                     User.findOne({ where: { id: decoded.id }, }).then(async (user) => {
                         if (user) {
                             const passwordMatch = await bcrypt.compare(req.body.password, user.password);
-                            console.log(passwordMatch)
                             if (passwordMatch) {
                                 res.send({ allow: true, message: "Xác nhận mật khẩu thành công" });
                             } else {
@@ -69,7 +66,7 @@ router.post('/save-change', async (req, res) => {
                     res.sendStatus(200)
                 }).catch((err) => {
                     console.log(err);
-                    
+
                 });
             }
         });

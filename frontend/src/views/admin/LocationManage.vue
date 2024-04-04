@@ -14,7 +14,7 @@
                         <button class="dropdown-item" @click="chooseRegion('', 'Tất cả')">Tất cả</button>
                         <button v-for="region in regionList" class="dropdown-item"
                             @click="chooseRegion(region.slug, region.name)">{{
-                                region.name }}</button>
+        region.name }}</button>
                     </div>
                 </div>
                 <p>{{ regionSlug }}</p>
@@ -29,22 +29,18 @@
                     <th scope="col">Tên khu vực</th>
                     <th scope="col">Slug</th>
                     <th scope="col">Note</th>
-                    <th scope="col"> Chỉnh sửa </th>
-                    <th scope="col"> Xóa</th>
+                    <th scope="col" style="text-align: center;"> Xóa</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="location in locationTable" :key="location" class="each-tour-row">
+                <tr v-for=" location in locationTable" :key="location" class="each-tour-row">
                     <td>{{ location.id }}</td>
                     <td>{{ location.name }}</td>
                     <td>{{ location.slug }}</td>
                     <td>{{ location.note }}</td>
-                    <td> <button
-                            @click="router.push({ path: '/admin/quan-ly-tour/chinh-sua-tour', query: { id: tour.id } })"
-                            class="edit-button"><i class=" fa-solid fa-pen-to-square"></i></button>
-                    </td>
-                    <td> <button class="delete-button" @click="deleteLocation(location.id)"><i
-                                class="fa-solid fa-trash"></i></button></td>
+
+                    <td style="text-align: center;"> <button class="delete-button"
+                            @click="deleteLocation(location.id)"><i class="fa-solid fa-trash"></i></button></td>
                 </tr>
 
             </tbody>
@@ -62,14 +58,14 @@
                 <input v-model="newNote" type="text" class="form-control" id="" placeholder="Note">
             </div>
             <div class="btn-group">
-                <button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false" style="color: white;">
+                <button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false" style="color: white;">
                     Địa điểm &nbsp; <i class="fa-solid fa-book"> :</i> {{ addLabel }}
                 </button>
                 <div class="dropdown-menu">
                     <button v-for="region in regionList" class="dropdown-item"
                         @click="chooseAddRegion(region.id, region.name)">{{
-                            region.name }}</button>
+        region.name }}</button>
                 </div>
             </div>
             <button @click="addLocation" class="btn btn-success">
