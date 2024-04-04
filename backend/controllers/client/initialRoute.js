@@ -1,10 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const Tour = require('../../models/TourModel')
 const Category = require('../../models/CategoryModel');
 const Region = require('../../models/RegionModel');
 const Location = require('../../models/LocationModel');
-const Count = require("../../models/CountModel");
 const client = require('../../redisClient');
 
 router.post("/count", (req, res) => {
@@ -20,15 +18,35 @@ router.get("/connect", (req, res) => {
     res.send("Connected to Backend");
 });
 router.get('/menu', (req, res) => {
-    Category.findAll({
-        include: {
-            model: Region,
-            include: {
-                model: Location
-            }
+    client.exists('menu', (err, result) => {
+        if (err) {
+            console.error('Error:', err);
+            return;
         }
-    }).then((result) => {
-        res.send(result)
-    })
+        if (result === 1) {
+            console.log(`exist in ređis`);
+            client.get('menu', (err, result) => {
+                res.send(JSON.parse(result));
+            })
+        } else {
+            console.log(`does not exist in redis`);
+            Category.findAll({
+                include: {
+                    model: Region,
+                    include: {
+                        model: Location
+                    }
+                }
+            }).then((result) => {
+                client.set('menu', JSON.stringify(result), (err, reply) => {
+                    if (err) {
+                        console.error(err);
+                    }
+                })
+                res.send(result)
+            })
+        }
+    });
+
 })
 module.exports = router;

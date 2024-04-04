@@ -158,7 +158,6 @@ onMounted(() => {
         .get("/client/initial/menu").then((response) => {
             domesticMenu.value = response.data[0]
             foreignMenu.value = response.data[1]
-            // tourCategory.value = response.data
         }).catch((error) => {
             console.log(error)
         })
