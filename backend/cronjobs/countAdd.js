@@ -1,8 +1,7 @@
 const cron = require('node-cron');
 const Count = require("../models/CountModel");
 const client = require('../redisClient');
-
-cron.schedule('*/15 * * * * *', () => {
+cron.schedule('1 */4 * * *', () => {
     client.get('count', (err, value) => {
         if (err) {
             console.error("Error occurred:", err);
@@ -16,4 +15,3 @@ cron.schedule('*/15 * * * * *', () => {
         }
     })
 });
-module.exports = cron;

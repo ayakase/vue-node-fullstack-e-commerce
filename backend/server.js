@@ -5,10 +5,8 @@ const PORT = 3000;
 const cors = require("cors");
 const cookieParser = require('cookie-parser');
 const routes = require('./routes');
-// const morgan = require('morgan');
-require('./cronjobs/countAdd')
-// app.use(morgan('tiny'));
-
+require('./cronjobs/countAdd.js')
+require('./cronjobs/fetchMenu.js')
 require("dotenv").config();
 
 var whitelist = [process.env.FE_URL, process.env.FE_LOCAL_URL, process.env.FE_NGINX_URL]
