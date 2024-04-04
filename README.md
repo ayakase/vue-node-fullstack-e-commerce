@@ -12,10 +12,11 @@ This project is a web application built with Node.js, MySQL, Sequelize, Vue.js, 
 
 ## Technologies Used
 
+- Vue.js
 - Node.js
 - MySQL
+- Redis
 - Sequelize
-- Vue.js
 - Cloudinary
 - Pinia
 - Vue-chartjs

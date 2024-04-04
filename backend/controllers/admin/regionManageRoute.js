@@ -8,6 +8,7 @@ router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 const Region = require('../../models/RegionModel')
 const Category = require('../../models/CategoryModel')
+const updateMenu = require('../../utils/updateMenu')
 router.post('/', upload.none(), (req, res) => {
     if (!req.body.name || !req.body.slug || !req.body.note) {
         res.send("Chua dien day du thong tin");
@@ -23,7 +24,9 @@ router.post('/', upload.none(), (req, res) => {
             category_id: req.body.category_id,
         }).then((response) => {
             res.send("Đã thêm khu vực")
+            updateMenu()
         }).catch((err) => {
+            console.error(err);
             if (err.original.errno === 1062) {
                 res.send("Slug bị trùng, vui lòng đổi")
             }
@@ -48,6 +51,7 @@ router.get('/:category', (req, res) => {
 router.delete('/:id', (req, res) => {
     Region.destroy({ where: { id: req.params.id } })
         .then((result) => {
+            updateMenu()
             res.send("done")
         }).catch((error) => {
             console.error(error);

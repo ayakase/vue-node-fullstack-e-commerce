@@ -97,15 +97,11 @@ function toggleForeign(event) {
 }
 const domesticMenu = ref()
 const foreignMenu = ref()
+const props = defineProps(['menuData'])
 onMounted(() => {
-    baseUrl
-        .get("/client/initial/menu").then((response) => {
-            domesticMenu.value = response.data[0]
-            foreignMenu.value = response.data[1]
-            // tourCategory.value = response.data
-        }).catch((error) => {
-            console.log(error)
-        })
+    // loginStore.checkLogin()
+    domesticMenu.value = props.menuData[0]
+    foreignMenu.value = props.menuData[1]
     // notify()
 })
 // let chatBoxValue = ref(false)

@@ -152,15 +152,19 @@ let { cookies } = useCookies()
 let searchText = ref("")
 const domesticMenu = ref()
 const foreignMenu = ref()
+const props = defineProps(['menuData'])
+
 onMounted(() => {
     // loginStore.checkLogin()
-    baseUrl
-        .get("/client/initial/menu").then((response) => {
-            domesticMenu.value = response.data[0]
-            foreignMenu.value = response.data[1]
-        }).catch((error) => {
-            console.log(error)
-        })
+    domesticMenu.value = props.menuData[0]
+    foreignMenu.value = props.menuData[1]
+    // baseUrl
+    //     .get("/client/initial/menu").then((response) => {
+    //         domesticMenu.value = response.data[0]
+    //         foreignMenu.value = response.data[1]
+    //     }).catch((error) => {
+    //         console.log(error)
+    //     })
     showChatbox = false;
     // notify()
 })

@@ -1,7 +1,7 @@
 <script setup>
 import { RouterView } from 'vue-router'
 import 'vue3-toastify/dist/index.css';
-import { onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import PageFooter from './components/PageFooter.vue'
 import MessengerBtn from './components/MessengerBtn.vue'
 import DesktopNav from './components/DesktopNav.vue';
@@ -12,12 +12,18 @@ import baseUrl from './connect';
 import { toast } from 'vue3-toastify';
 const route = useRoute()
 const loginStore = useLoginStore()
-
+const menuData = ref()
 onMounted(() => {
   loginStore.checkLogin()
   baseUrl.post("/client/initial/count").then(() => { }).catch((error) => {
     console.log(error)
   })
+  baseUrl
+    .get("/client/initial/menu").then((response) => {
+      menuData.value = response.data
+    }).catch((error) => {
+      console.log(error)
+    })
   baseUrl.get("client/initial/connect")
     .then((response) => {
       toast.success("Đã kết nối với server", {
@@ -38,8 +44,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <MobileNav></MobileNav>
-  <DesktopNav></DesktopNav>
+  <MobileNav v-if="menuData" :menuData="menuData"></MobileNav>
+  <DesktopNav v-if="menuData" :menuData="menuData"></DesktopNav>
   <div class="content-container">
     <RouterView />
   </div>

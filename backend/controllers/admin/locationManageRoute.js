@@ -8,6 +8,8 @@ router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 const Location = require('../../models/LocationModel')
 const Region = require('../../models/RegionModel')
+const updateMenu = require('../../utils/updateMenu')
+
 router.post('/', upload.none(), (req, res) => {
     if (!req.body.name || !req.body.slug) {
         res.send("Chua dien day du thong tin");
@@ -22,7 +24,9 @@ router.post('/', upload.none(), (req, res) => {
             note: req.body.note,
             region_id: req.body.region_id,
         }).then((response) => {
+            updateMenu()
             res.send("Đã thêm địa điểm")
+
         }).catch((err) => {
             (err);
             if (err.original.errno === 1062) {
@@ -61,6 +65,7 @@ router.get('/region', (req, res) => {
 router.delete('/:id', (req, res) => {
     Location.destroy({ where: { id: req.params.id } })
         .then((result) => {
+            updateMenu()
             res.send("done")
         }).catch((error) => {
             console.error(error);
