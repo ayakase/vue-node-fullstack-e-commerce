@@ -31,7 +31,7 @@
                         <img :src=tour.thumbnail style="height: 10rem;" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">{{ tour.title }}</h5>
-                            <p>Giá: <span style="font-weight: bold; color: #ff6b00;">{{ numeralFormat(tour.adultprice)
+                            <p>Giá: <span style="font-weight: bold; color: #ff6b00;">{{ numeralFormat(tour.adult_price)
                             }}</span>
                                 VNĐ </p>
                         </div>

@@ -1,6 +1,7 @@
 <template>
-    <div class="heart-container">
-        <div class="lds-heart">
+    <div style="display: flex;flex-direction: row;justify-content: center;">
+        <div class="lds-ripple">
+            <div></div>
             <div></div>
         </div>
     </div>
@@ -12,76 +13,61 @@ export default {
 }
 </script>
 <style scoped>
-.heart-container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
+.lds-ripple,
+.lds-ripple div {
+    box-sizing: border-box;
 }
 
-.lds-heart {
-    margin: auto;
-    padding: auto;
+.lds-ripple {
     display: inline-block;
     position: relative;
     width: 80px;
     height: 80px;
-    transform: rotate(45deg);
-    transform-origin: 40px 40px;
 }
 
-.lds-heart div {
-    top: 32px;
-    left: 32px;
+.lds-ripple div {
     position: absolute;
-    width: 32px;
-    height: 32px;
-    background: #045B48;
-    animation: lds-heart 1.2s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+    border: 4px solid currentColor;
+    opacity: 1;
+    border-radius: 50%;
+    animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
 }
 
-.lds-heart div:after,
-.lds-heart div:before {
-    content: " ";
-    position: absolute;
-    display: block;
-    width: 32px;
-    height: 32px;
-    background: #045B48;
+.lds-ripple div:nth-child(2) {
+    animation-delay: -0.5s;
 }
 
-.lds-heart div:before {
-    left: -24px;
-    border-radius: 50% 0 0 50%;
-}
-
-.lds-heart div:after {
-    top: -24px;
-    border-radius: 50% 50% 0 0;
-}
-
-@keyframes lds-heart {
+@keyframes lds-ripple {
     0% {
-        transform: scale(0.95);
+        top: 36px;
+        left: 36px;
+        width: 8px;
+        height: 8px;
+        opacity: 0;
+    }
+
+    4.9% {
+        top: 36px;
+        left: 36px;
+        width: 8px;
+        height: 8px;
+        opacity: 0;
     }
 
     5% {
-        transform: scale(1.1);
-    }
-
-    39% {
-        transform: scale(0.85);
-    }
-
-    45% {
-        transform: scale(1);
-    }
-
-    60% {
-        transform: scale(0.95);
+        top: 36px;
+        left: 36px;
+        width: 8px;
+        height: 8px;
+        opacity: 1;
     }
 
     100% {
-        transform: scale(0.9);
+        top: 0;
+        left: 0;
+        width: 80px;
+        height: 80px;
+        opacity: 0;
     }
 }
 </style>

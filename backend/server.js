@@ -23,12 +23,12 @@ var corsOptions = {
   },
   credentials: true
 }
+app.use('/', cors(corsOptions), routes)
 app.use(cookieParser());
 app.set("trust proxy", true);
 app.get("/", (req, res) => {
   res.send("Server running")
 })
-app.use('/', cors(corsOptions), routes)
 app.timeout = 60000;
 app.listen(PORT, () => {
   console.log(

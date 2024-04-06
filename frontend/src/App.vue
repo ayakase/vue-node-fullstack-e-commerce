@@ -54,6 +54,8 @@ onMounted(() => {
 </template>
 
 <style scoped>
+.content-container {}
+
 .bounce-enter-active {
   animation: bounce-in 0.5s;
 }

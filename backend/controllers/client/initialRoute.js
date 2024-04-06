@@ -6,13 +6,25 @@ const Location = require('../../models/LocationModel');
 const client = require('../../redisClient');
 
 router.post("/count", (req, res) => {
-    client.incr("count", (err, value) => {
+    client.exists('count', (err, result) => {
         if (err) {
-            console.error('Error incrementing key:', err);
-        } else {
-            console.log(`value ${value}`);
+            console.error('Error:', err);
+            return;
         }
-    })
+        if (result === 1) {
+            client.incr("count", (err, value) => {
+                if (err) {
+                    console.error('Error incrementing key:', err);
+                } else {
+                    console.log(`count: ${value}`);
+                }
+            })
+        } else {
+            console.log('no count in redis')
+            client.set('count', 1)
+        }
+    });
+
 });
 router.get("/connect", (req, res) => {
     res.send("Connected to Backend");
@@ -24,12 +36,12 @@ router.get('/menu', (req, res) => {
             return;
         }
         if (result === 1) {
-            console.log(`exist in ređis`);
+            console.log(`menu exist in ređis`);
             client.get('menu', (err, result) => {
                 res.send(JSON.parse(result));
             })
         } else {
-            console.log(`does not exist in redis`);
+            console.log(`no menu in redis`);
             Category.findAll({
                 include: {
                     model: Region,
