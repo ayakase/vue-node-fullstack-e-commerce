@@ -72,9 +72,7 @@ img {
 }
 
 @media screen and (max-width: 1136px) {
-    .mobile-slide {
-        display: block;
-    }
+
 
     .home-first-section {
         display: none;

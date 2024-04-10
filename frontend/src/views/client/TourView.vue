@@ -1,4 +1,4 @@
-<script setup >
+<script setup>
 import PlaceModal from '../../components/PlaceModal.vue'
 import AdvisoryModal from '../../components/AdvisoryModal.vue';
 import { onMounted, ref } from 'vue';
@@ -26,6 +26,8 @@ const options = {
     rewind: true,
     perMove: 1,
     autoplay: true,
+    type: 'loop',
+    lazyLoad: 'nearby',
     focus: 'center',
 };
 const headOption = {
@@ -87,22 +89,15 @@ let tabSec2 = ref()
     <div v-if="tourDetail" class="content-container-outer">
         <div class="main-content">
             <h2 class="tour-title">{{ tourDetail.title }}</h2>
-            <div>
-                <!-- <div class="iframe_container" v-if=tiktokId>
-                    <iframe :src=tiktokUrl class="iframe" allowfullscreen scrolling="no" allow="encrypted-media;"></iframe>
-                </div> -->
-                <div class="slide" v-if="imageArray && imageArray[0] != ''">
-                    <Splide :options=options aria-label="">
-                        <SplideSlide v-for=" slide  in  imageArray " :key="slide">
-                            <a>
-                                <v-img class="slide-image" :src="slide"></v-img>
-                            </a>
-                        </SplideSlide>
-                    </Splide>
-                </div>
-            </div>
+            <Splide class="slide-container " v-if="imageArray && imageArray[0] != ''" :options=options aria-label="">
+                <SplideSlide v-for=" slide  in  imageArray " :key="slide">
+                    <a>
+                        <v-img class="slide-image" :src="slide"></v-img>
+                    </a>
+                </SplideSlide>
+            </Splide>
 
-            <v-card class="first-section" elevation="0"
+            <v-card class="first-section"
                 v-if="(tourDetail.special != 'undefined' && tourDetail.bonus != 'undefined' && tourDetail.visa != 'undefined')">
                 <v-tabs class="tab-slider" v-model="tabSec1" color="white" align-tabs="start">
                     <v-tab class="each-tab" value="one" v-if="tourDetail.special != 'undefined'">Điểm khác biệt</v-tab>
@@ -126,16 +121,19 @@ let tabSec2 = ref()
                     </v-window>
                 </v-card-text>
             </v-card>
-            <v-card class="second-section" elevation="0"
+
+            <v-card class="second-section"
                 v-if="(tourDetail.detail != 'undefined' && tourDetail.priceservice != 'undefined' && tourDetail.guide != 'undefined')">
                 <v-tabs class="tab-slider" v-model="tabSec2" color="white" align-tabs="start">
-                    <v-tab class="each-tab" value="one" v-if="tourDetail.detail != 'undefined'">Lịch trình chi tiết</v-tab>
+                    <v-tab class="each-tab" value="one" v-if="tourDetail.detail != 'undefined'">Lịch trình chi
+                        tiết</v-tab>
                     <p class="separator"></p>
                     <v-tab class="each-tab" value="two" v-if="tourDetail.priceservice != 'undefined'">Bảng giá và dịch
                         vụ</v-tab>
                     <p class="separator"></p>
 
-                    <v-tab class="each-tab" value="three" v-if="tourDetail.guide != 'undefined'">Lưu ý và hướng dẫn</v-tab>
+                    <v-tab class="each-tab" value="three" v-if="tourDetail.guide != 'undefined'">Lưu ý và hướng
+                        dẫn</v-tab>
                 </v-tabs>
 
                 <v-card-text>
@@ -183,7 +181,7 @@ let tabSec2 = ref()
                     <div class="card-body">
                         <h5 class="card-title">{{ tour.title }}</h5>
                         <p>Giá: <span style="font-weight: bold; color: #ff6b00;">{{ numeralFormat(tour.adult_price)
-                        }}</span>
+                                }}</span>
                             VNĐ </p>
                     </div>
                 </div>
@@ -238,6 +236,7 @@ let tabSec2 = ref()
     background-color: #DBEBE1;
     padding: 2rem;
     box-sizing: border-box;
+
 }
 
 .second-section {
@@ -245,6 +244,7 @@ let tabSec2 = ref()
     background-color: #DBEBE1;
     padding: 2rem;
     box-sizing: border-box;
+
 }
 
 .tab-slider {
@@ -265,6 +265,7 @@ let tabSec2 = ref()
     width: 75%;
     display: flex;
     flex-direction: column;
+    justify-content: flex-start
 }
 
 .choose-plan {
@@ -310,8 +311,9 @@ let tabSec2 = ref()
     background-color: #DBEBE1;
     padding: 1rem;
     border-radius: 4px;
-    border: 2px solid rgb(138, 138, 138);
     margin-bottom: 4rem;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
 }
 
 .action-button {
@@ -335,37 +337,13 @@ let tabSec2 = ref()
     color: white;
 }
 
-.iframe_container {
-    left: 0;
-    /* width: 100%; */
-    height: 50rem;
-    position: relative;
-
-}
-
-.iframe {
-    top: 0;
-    left: 0;
-    /* width: 100%; */
-    height: 100%;
-    position: absolute;
-    border: 0;
-}
-
-
-.slide {
-    width: 100%;
-    height: 50rem;
-    margin: auto;
+.slide-container {
     margin-bottom: 2rem;
-    padding: auto;
 }
 
 .slide-image {
     border-radius: 1rem;
     height: 50rem;
-    /* background-position: center center;
-    background-repeat: no-repeat; */
 }
 
 .tour-title {
@@ -374,21 +352,6 @@ let tabSec2 = ref()
     font-size: 2.5rem;
     margin-top: 2rem;
     margin-bottom: 3rem;
-    animation: change-color 3s infinite;
-}
-
-@keyframes change-color {
-    0% {
-        color: #1f8726;
-    }
-
-    50% {
-        color: #ff6600;
-    }
-
-    100% {
-        color: #1f8726;
-    }
 }
 
 .separator {
@@ -409,8 +372,9 @@ let tabSec2 = ref()
         display: none;
     }
 
-    .slide {
-        display: none;
+
+    .slide-image {
+        height: 20rem;
     }
 
     .content-container-outer {
@@ -424,6 +388,7 @@ let tabSec2 = ref()
     .first-section,
     .second-section {
         padding: 0;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     }
 
     .each-tab {

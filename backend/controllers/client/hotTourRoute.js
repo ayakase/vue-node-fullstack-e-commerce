@@ -5,7 +5,6 @@ const Category = require('../../models/CategoryModel')
 const Location = require('../../models/LocationModel')
 const Region = require('../../models/RegionModel')
 router.get('/:orderby/:order/:page', (req, res) => {
-    // 
     Tour.findAndCountAll({
         where: { ishottour: 1 },
         include: {
@@ -30,5 +29,18 @@ router.get('/:orderby/:order/:page', (req, res) => {
         console.error(error);
     })
 })
-
+router.get('/hot-sidebar', (req, res) => {
+    Tour.findAndCountAll({
+        where: {
+            ishottour: 1
+        },
+        order: [['createdAt', 'DESC']],
+        limit: 4,
+    }).then((result) => {
+        const { count, rows } = result;
+        res.send(result)
+    }).catch((error) => {
+        console.error(error);
+    })
+})
 module.exports = router;

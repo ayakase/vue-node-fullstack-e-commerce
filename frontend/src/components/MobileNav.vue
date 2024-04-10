@@ -44,7 +44,7 @@
                     </div>
                 </div>
                 <div style="display: flex;justify-content: space-between;">
-                    <RouterLink style="width: 18rem;" class="mobile-nav-item" to="/danh-muc/du-lich-trong-nuoc"
+                    <RouterLink style="width: 18rem;" class="mobile-nav-item" to="/danh-muc/du-lich-quoc-te"
                         aria-current="page" href="#">
                         Du lịch
                         quốc tế
@@ -224,48 +224,6 @@ nav {
 .nav-link:hover {
     border-right: 5px solid #ff6600;
     color: white;
-}
-
-.search-box {
-    background: none;
-    margin-left: 1rem;
-    border: #0aa886 1px solid;
-}
-
-.search-container {
-    margin-left: 2rem;
-}
-
-.hotline {
-    position: absolute;
-    right: 5rem;
-}
-
-@media screen and (max-width: 1214px) {
-    .company-name {
-        font-size: 3em;
-    }
-}
-
-@media screen and (max-width: 860px) {
-    .company-name {
-        font-size: 2em;
-    }
-}
-
-@media screen and (max-width: 992px) {
-    .header-container {
-        display: none;
-    }
-
-    .banner {
-        display: none;
-    }
-}
-
-
-.home-breadcrumb {
-    text-decoration: none !important;
 }
 
 .admin-button {
@@ -451,7 +409,7 @@ ul.nav-menu li:hover>.drop-one {
     overflow: scroll;
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 1225px) {
     .mobile-nav-container {
         display: block;
     }

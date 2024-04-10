@@ -31,7 +31,7 @@
                         <img :src=tour.thumbnail style="height: 10rem;" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">{{ tour.title }}</h5>
-                            <p>Giá: <span style="font-weight: bold; color: #ff6b00;">{{ numeralFormat(tour.adul_tprice)
+                            <p>Giá: <span style="font-weight: bold; color: #ff6b00;">{{ numeralFormat(tour.adultprice)
                                     }}</span>
                                 VNĐ </p>
                         </div>
@@ -61,7 +61,7 @@
                     <div class="image-container" @click="router.push({ path: '/' + tour.slug })">
                         <!-- <img src="https://www.state.gov/wp-content/uploads/2023/07/shutterstock_245773270v2.jpg"
                             style="width: 100%;" alt=""> -->
-                        <v-img style="height: 100%;" cover :width="50" class="thumbnail" :src=tour.thumbnail>
+                        <v-img style="height: 12rem;" cover :width="50" class="thumbnail" :src=tour.thumbnail>
                             <template v-slot:placeholder>
                                 <div class="d-flex align-center justify-center fill-height">
                                     <v-progress-circular color="grey-lighten-4" indeterminate></v-progress-circular>
@@ -183,7 +183,7 @@ function getTourbyPage() {
 }
 function fetchList() {
     baseUrl.get("/client/region/side-bar-list/" + route.params.slug).then(response => {
-
+        console.log(response.data);
         categoryList.value = response.data
     })
 }

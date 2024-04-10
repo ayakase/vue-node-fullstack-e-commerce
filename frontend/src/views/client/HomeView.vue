@@ -393,12 +393,13 @@ img {
 
 .mobile-slide {
   display: none;
+  margin-bottom: 1rem;
   width: 100%;
 }
 
 .mobile-slide-image {
   width: 100%;
-  /* height: 10rem; */
+  height: 15rem;
 }
 
 

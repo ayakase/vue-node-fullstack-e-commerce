@@ -138,7 +138,7 @@
             </div>
             <div class="w-25" style="margin-right: 5rem">
                 <label for="" class="form-label">Thời gian: {{ tourLength }}N{{ tourLength - 1 }}Đ</label>
-                <input type="number" class="form-control" id="" placeholder="" v-model="tourLength" />
+                <input min="1" max="20" type="number" class="form-control" id="" placeholder="" v-model="tourLength" />
             </div>
             <div class="mb-3 w-25">
                 <label for="" class="form-label">Khởi hành từ</label>
@@ -346,7 +346,7 @@ let tourType = ref("");
 let tourFrom = ref("");
 let tourLength = ref(1);
 let isHot = ref(false);
-let tourTransport = ref([]);
+let tourTransport = ref();
 let adultPrice = ref(0);
 let teenagerPrice = ref(0);
 let childPrice = ref(0);

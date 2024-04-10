@@ -1,5 +1,5 @@
 <template>
-    <div class="discount-container">
+    <div class="hot-container">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><i class="fa-solid fa-house"></i> <a href="/" class="home-breadcrumb">Trang
@@ -7,11 +7,28 @@
                 <li class="breadcrumb-item">Tour Hot</li>
             </ol>
         </nav>
-        <h2 style="color: #ff6b00;">Tour đang Hot</h2>
+        <h2 style="color: #ff6b00;" class="hot-title">Địa điểm đang Hot</h2>
         <div class="section-container">
+            <div class="side-bar-container">
+                <div v-if="categoryList" class="category-list">
+                    <div
+                        style="display: flex;align-items: center; height: 3rem; padding-left: 1rem; font-size: 20px;font-weight: bold;">
+                        Địa điểm &nbsp; <span style="color:#ff6b00;">HOT</span> &nbsp; trong
+                        nước</div>
+                    <div v-if="categoryList.Regions" v-for="region in categoryList.Regions" :key="region">
+                        <div class="region-list" @click="router.push({ path: '/khu-vuc/' + region.slug })">{{
+                    region.name }}
+                        </div>
+                        <div v-if="region.Locations" v-for="location in region.Locations">
+                            <div class="location-list" @click="router.push({ path: '/dia-diem/' + location.slug })">{{
+                    location.name }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="tour-container">
                 <div class="sort-container">
-                    <p>Sắp xếp theo: </p>
+                    <p class="sort-text">Sắp xếp theo: </p>
                     <div class="sort-types">
                         <div class="sort-type" @click="recommend">Hoàng Hà đề xuất</div>
                         <div class="sort-type" @click="newest">Mới nhất</div>
@@ -27,7 +44,7 @@
                     <div class="image-container" @click="router.push({ path: '/tourdetail', query: { id: tour.id } })">
                         <!-- <img src="https://www.state.gov/wp-content/uploads/2023/07/shutterstock_245773270v2.jpg"
                             style="width: 100%;" alt=""> -->
-                        <v-img cover :width="50" class="thumbnail" :src=tour.thumbnail style="height: 100%;">
+                        <v-img style="height: 12rem;" cover :width="50" class="thumbnail" :src=tour.thumbnail>
                             <template v-slot:placeholder>
                                 <div class="d-flex align-center justify-center fill-height">
                                     <v-progress-circular color="grey-lighten-4" indeterminate></v-progress-circular>
@@ -35,12 +52,18 @@
                             </template></v-img>
                     </div>
                     <div class="tour-detail-container">
-                        <div class="title" @click="router.push({ path: '/' + tour.slug })"> {{
-                            tour.title }}</div>
+                        <div class="title" @click="router.push({ path: '/tourdetail', query: { id: tour.id } })"> {{
+                    tour.title }}</div>
                         <div class="below-section" style="">
-                            <div class="schedule"><b>Lịch trình: </b><span style="color: orange;">{{ tour.schedule }}</span>
+                            <div class="schedule"><b>Mức độ đề xuất: </b><span style="color: orange;">{{ tour.recommend
+                                    }}</span>
                             </div>
-                            <div class="tourtype"><b>Loại tour: </b> <span style="color: green;">{{ tour.tourtype }} </span>
+                            <!-- <div> <b>Danh mục: </b> <span style="color: green;">{{ tour.Category.name }} </span> </div> -->
+                            <div class="schedule"><b>Lịch trình: </b><span style="color: orange;">{{ tour.schedule
+                                    }}</span>
+                            </div>
+                            <div class="tourtype"><b>Loại tour: </b> <span style="color: green;">{{ tour.tourtype }}
+                                </span>
                             </div>
                             <div class="days"><b>Thời gian: </b>{{ tour.days }}N{{ tour.days - 1 }}Đ</div>
                             <div class="departure"><b>Khởi hành: </b>{{ tour.departure }}</div>
@@ -51,7 +74,8 @@
                         <div class="hot-and-discount">
                             <div v-if="tour.isdiscount"><i style="color: #1f8726;"
                                     class="fa-solid fa-tags fa-beat-fade "></i></div>
-                            <div v-if="tour.ishottour"><i style="color: orangered;" class="fa-solid fa-fire fa-bounce"></i>
+                            <div v-if="tour.ishottour"><i style="color: orangered;"
+                                    class="fa-solid fa-fire fa-bounce"></i>
                             </div>
                         </div>
                         <div class="price-container">
@@ -60,8 +84,8 @@
                                 {{ numeralFormat(tour.original_price) }} VNĐ</div>
                             <span class="real-price" style="font-size: x-large; color: orangered;">
                                 <b>{{
-                                    numeralFormat(tour.adult_price)
-                                }} </b>
+                    numeralFormat(tour.adult_price)
+                }} </b>
                                 <span style="color: orangered; font-weight: 200;"> VNĐ</span>
                             </span>
                         </div>
@@ -112,7 +136,7 @@ function recommend() {
 
 }
 function price() {
-    orderBy.value = 'adultprice'
+    orderBy.value = 'adult_price'
     sortOrder.value = 'ASC'
     fetchTour()
 
@@ -123,12 +147,24 @@ function duration() {
     fetchTour()
 
 }
+const categoryList = ref()
 onMounted(() => {
     fetchTour()
+    baseUrl.get("/client/category/hot-sidebar")
+        .then(response => {
+
+            hotTour.value = response.data.rows
+        }).catch((error) => {
+            console.error(error);
+        });
+    baseUrl.get("/client/category/side-bar-list/" + 1).then(response => {
+        categoryList.value = response.data
+    })
 })
 function getTourbyPage() {
     fetchTour()
 }
+
 function fetchTour() {
     tourList.value = null;
     baseUrl.get("/client/discount/" + "/" + orderBy.value + "/" + sortOrder.value + "/" + pageNumber.value)
@@ -154,7 +190,7 @@ function fetchTour() {
 
 }
 
-.discount-container {
+.hot-container {
     padding-top: 2rem;
     width: 90%;
     margin: auto;
@@ -226,6 +262,7 @@ p {
 .tour-individual {
     width: 100%;
     height: 15rem;
+
     display: flex;
     justify-content: space-between;
     gap: 2rem;
@@ -383,6 +420,10 @@ p {
     }
 
     .sort-text {
+        display: none;
+    }
+
+    .hot-title {
         display: none;
     }
 

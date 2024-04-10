@@ -1,105 +1,48 @@
 <template>
-    <div class="fingerprint-spinner">
-        <div class="spinner-ring"></div>
-        <div class="spinner-ring"></div>
-        <div class="spinner-ring"></div>
-        <div class="spinner-ring"></div>
-        <div class="spinner-ring"></div>
-        <div class="spinner-ring"></div>
-        <div class="spinner-ring"></div>
-        <div class="spinner-ring"></div>
-        <div class="spinner-ring"></div>
+    <div class="loading-container">
+        <div class="lds-dual-ring"></div>
     </div>
 </template>
 
 <script>
-export default {
-    name: 'LoadingComponent',
-}
+
 </script>
 
 <style scoped>
-.fingerprint-spinner,
-.fingerprint-spinner * {
+.loading-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.lds-dual-ring,
+.lds-dual-ring:after {
     box-sizing: border-box;
 }
 
-.fingerprint-spinner {
-    height: 30rem;
-    width: 100%;
-    padding: 2px;
-    overflow: hidden;
-    position: relative;
+.lds-dual-ring {
+    display: inline-block;
+    width: 80px;
+    height: 80px;
 }
 
-.fingerprint-spinner .spinner-ring {
-    position: absolute;
+.lds-dual-ring:after {
+    content: " ";
+    display: block;
+    width: 64px;
+    height: 64px;
+    margin: 8px;
     border-radius: 50%;
-    border: 2px solid transparent;
-    border-top-color: #045b48;
-    animation: fingerprint-spinner-animation 1500ms cubic-bezier(0.680, -0.750, 0.265, 1.750) infinite forwards;
-    margin: auto;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    top: 0;
+    border: 6.4px solid #128c72;
+    border-color: #128c72 transparent #128c72 transparent;
+    animation: lds-dual-ring 1.2s linear infinite;
 }
 
-.fingerprint-spinner .spinner-ring:nth-child(1) {
-    height: calc(60px / 9 + 0 * 60px / 9);
-    width: calc(60px / 9 + 0 * 60px / 9);
-    animation-delay: calc(50ms * 1);
-}
+@keyframes lds-dual-ring {
+    0% {
+        transform: rotate(0deg);
+    }
 
-.fingerprint-spinner .spinner-ring:nth-child(2) {
-    height: calc(60px / 9 + 1 * 60px / 9);
-    width: calc(60px / 9 + 1 * 60px / 9);
-    animation-delay: calc(50ms * 2);
-}
-
-.fingerprint-spinner .spinner-ring:nth-child(3) {
-    height: calc(60px / 9 + 2 * 60px / 9);
-    width: calc(60px / 9 + 2 * 60px / 9);
-    animation-delay: calc(50ms * 3);
-}
-
-.fingerprint-spinner .spinner-ring:nth-child(4) {
-    height: calc(60px / 9 + 3 * 60px / 9);
-    width: calc(60px / 9 + 3 * 60px / 9);
-    animation-delay: calc(50ms * 4);
-}
-
-.fingerprint-spinner .spinner-ring:nth-child(5) {
-    height: calc(60px / 9 + 4 * 60px / 9);
-    width: calc(60px / 9 + 4 * 60px / 9);
-    animation-delay: calc(50ms * 5);
-}
-
-.fingerprint-spinner .spinner-ring:nth-child(6) {
-    height: calc(60px / 9 + 5 * 60px / 9);
-    width: calc(60px / 9 + 5 * 60px / 9);
-    animation-delay: calc(50ms * 6);
-}
-
-.fingerprint-spinner .spinner-ring:nth-child(7) {
-    height: calc(60px / 9 + 6 * 60px / 9);
-    width: calc(60px / 9 + 6 * 60px / 9);
-    animation-delay: calc(50ms * 7);
-}
-
-.fingerprint-spinner .spinner-ring:nth-child(8) {
-    height: calc(60px / 9 + 7 * 60px / 9);
-    width: calc(60px / 9 + 7 * 60px / 9);
-    animation-delay: calc(50ms * 8);
-}
-
-.fingerprint-spinner .spinner-ring:nth-child(9) {
-    height: calc(60px / 9 + 8 * 60px / 9);
-    width: calc(60px / 9 + 8 * 60px / 9);
-    animation-delay: calc(50ms * 9);
-}
-
-@keyframes fingerprint-spinner-animation {
     100% {
         transform: rotate(360deg);
     }

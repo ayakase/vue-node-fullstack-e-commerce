@@ -15,11 +15,11 @@
                         Địa điểm &nbsp; <span style="color:#ff6b00;">HOT</span> &nbsp;</div>
                     <div v-if="categoryList">
                         <div class="region-list" @click="router.push({ path: '/khu-vuc/' + region.slug })">{{
-                            categoryList.name }}
+                    categoryList.name }}
                         </div>
                         <div v-if="categoryList.Locations" v-for="location in categoryList.Locations">
                             <div class="location-list" @click="router.push({ path: '/dia-diem/' + location.slug })">{{
-                                location.name }}</div>
+                    location.name }}</div>
                         </div>
                     </div>
                 </div>
@@ -32,7 +32,7 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ tour.title }}</h5>
                             <p>Giá: <span style="font-weight: bold; color: #ff6b00;">{{ numeralFormat(tour.adult_price)
-                            }}</span>
+                                    }}</span>
                                 VNĐ </p>
                         </div>
                     </div>
@@ -42,7 +42,7 @@
                 <div class="sort-container">
                     <p class="sort-text" style="font-size: larger;">Sắp xếp theo: &nbsp;<span
                             style="color: #1f8726;font-weight: bolder;">{{
-                                orderLabel }}</span>
+                    orderLabel }}</span>
                     </p>
                     <div class="sort-types">
                         <div class="sort-type" @click="recommend">Hoàng Hà đề xuất</div>
@@ -61,7 +61,7 @@
                     <div class="image-container" @click="router.push({ path: '/' + tour.slug })">
                         <!-- <img src="https://www.state.gov/wp-content/uploads/2023/07/shutterstock_245773270v2.jpg"
                             style="width: 100%;" alt=""> -->
-                        <v-img style="height: 100%;" cover :width="50" class="thumbnail" :src=tour.thumbnail>
+                        <v-img style="height: 12rem;" cover :width="50" class="thumbnail" :src=tour.thumbnail>
                             <template v-slot:placeholder>
                                 <div class="d-flex align-center justify-center fill-height">
                                     <v-progress-circular color="grey-lighten-4" indeterminate></v-progress-circular>
@@ -70,12 +70,13 @@
                     </div>
                     <div class="tour-detail-container">
                         <div class="title" @click="router.push({ path: '/' + tour.slug })"> {{
-                            tour.title }}</div>
+                    tour.title }}</div>
                         <div class="below-section" style="">
                             <div class="schedule"><b>Mức độ đề xuất: </b><span style="color: orange;">{{ tour.recommend
-                            }}</span>
+                                    }}</span>
                             </div>
-                            <div class="schedule"><b>Lịch trình: </b><span style="color: orange;">{{ tour.schedule }}</span>
+                            <div class="schedule"><b>Lịch trình: </b><span style="color: orange;">{{ tour.schedule
+                                    }}</span>
                             </div>
                         </div>
                         <div class="tourtype"><b>Loại tour: </b> <span style="color: green;">{{ tour.tourtype }} </span>
@@ -88,7 +89,8 @@
                         <div class="hot-and-discount">
                             <div v-if="tour.isdiscount"><i style="color: #1f8726;"
                                     class="fa-solid fa-tags fa-beat-fade "></i></div>
-                            <div v-if="tour.ishottour"><i style="color: orangered;" class="fa-solid fa-fire fa-bounce"></i>
+                            <div v-if="tour.ishottour"><i style="color: orangered;"
+                                    class="fa-solid fa-fire fa-bounce"></i>
                             </div>
                         </div>
                         <div class="price-container">
@@ -97,8 +99,8 @@
                                 {{ numeralFormat(tour.original_price) }} VNĐ</div>
                             <span class="real-price" style="font-size: x-large; color: orangered;">
                                 <b>{{
-                                    numeralFormat(tour.adult_price)
-                                }} </b>
+                    numeralFormat(tour.adult_price)
+                }} </b>
                                 <span style="color: orangered; font-weight: 200;"> VNĐ</span>
                             </span>
                         </div>

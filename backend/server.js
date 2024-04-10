@@ -32,6 +32,6 @@ app.use('/', cors(corsOptions), routes)
 app.timeout = 60000;
 app.listen(PORT, () => {
   console.log(
-    `Server is running on http://localhost:${PORT} and ENV is ${process.env.TEST}`
+    `Server is running on http://localhost:${PORT}`
   );
 });

@@ -1,0 +1,44 @@
+version: '3'
+services:
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+  mysql:
+    image: mysql:latest
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=123
+      - MYSQL_DATABASE=hoangha
+      - MYSQL_TCP_PORT=3308
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "3308:3308"
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: always
+    env_file:
+      - ./backend/.env
+    depends_on:
+      - mysql
+    ports:
+      - "3000:3000"
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      - VITE_BEURL=http://localhost:3000
+    depends_on:
+      - backend
+    ports:
+      - "5173:5173"
+volumes:
+  mysql_data:
+  redis_data:

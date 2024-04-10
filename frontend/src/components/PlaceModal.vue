@@ -166,16 +166,20 @@ function sendOrder() {
         baseUrl.post("/client/order", orderData)
             .then(response => {
                 showOverlay.value = false
-
-
-                toast.success("Đặt tour thành công", {
+                toast.success(response.data, {
                     autoClose: 2000,
                     theme: "colored",
                     position: toast.POSITION.BOTTOM_RIGHT,
                 });
             })
             .catch(error => {
-                console.error(error)
+                showOverlay.value = false
+                toast.error(error.response.data, {
+                    autoClose: 2000,
+                    theme: "colored",
+                    position: toast.POSITION.BOTTOM_RIGHT,
+                });
+                // console.error(error)
             })
     }
 }

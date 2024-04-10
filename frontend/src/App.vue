@@ -47,13 +47,33 @@ onMounted(() => {
   <MobileNav v-if="menuData" :menuData="menuData"></MobileNav>
   <DesktopNav v-if="menuData" :menuData="menuData"></DesktopNav>
   <div class="content-container">
-    <RouterView />
+    <transition name="slide-fade">
+      <RouterView />
+    </transition>
   </div>
   <PageFooter v-if="!route.meta.hideNavbar"></PageFooter>
   <MessengerBtn></MessengerBtn>
 </template>
 
 <style scoped>
+/*
+  Enter and leave animations can use different
+  durations and timing functions.
+*/
+.slide-fade-enter-active {
+  transition: all 0.3s ease-out;
+}
+
+.slide-fade-leave-active {
+  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translateX(20px);
+  opacity: 0;
+}
+
 .content-container {}
 
 .bounce-enter-active {

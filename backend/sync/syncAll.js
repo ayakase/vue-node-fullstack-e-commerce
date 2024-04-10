@@ -109,20 +109,6 @@ async function syncModelsSequentially() {
                 slug: "du-lich-ha-long"
             },
             {
-                id: 3,
-                name: "Du lịch Sapa",
-                note: "none",
-                region_id: 1,
-                slug: "du-lich-sapa"
-            },
-            {
-                id: 4,
-                name: "Du lịch Hà Nội",
-                note: "none",
-                region_id: 1,
-                slug: "du-lich-ha-noi"
-            },
-            {
                 id: 5,
                 name: "Du lịch Ninh Bình",
                 note: "none",
@@ -151,13 +137,6 @@ async function syncModelsSequentially() {
                 slug: "du-lich-tam-dao"
             },
             {
-                id: 9,
-                name: "Du lịch Đà Nẵng",
-                note: "none",
-                region_id: 2,
-                slug: "du-lich-da-nang"
-            },
-            {
                 id: 10,
                 name: "Du lịch Hội An",
                 note: "none",
@@ -171,27 +150,7 @@ async function syncModelsSequentially() {
                 region_id: 2,
                 slug: "du-lich-hue"
             },
-            {
-                id: 12,
-                name: "Du lịch Quy Nhơn",
-                note: "none",
-                region_id: 2,
-                slug: "du-lich-quy-nhon"
-            },
-            {
-                id: 13,
-                name: "Du lịch Lý Sơn",
-                note: "none",
-                region_id: 2,
-                slug: "du-lich-ly-son"
-            },
-            {
-                id: 14,
-                name: "Du lịch Nghệ An",
-                note: "none",
-                region_id: 2,
-                slug: "du-lich-nghe-an"
-            },
+           
             {
                 id: 15,
                 name: "Du lịch Quảng Bình",
@@ -263,34 +222,6 @@ async function syncModelsSequentially() {
                 slug: "du-lich-sai-gon"
             },
             {
-                id: 25,
-                name: "Du lịch Cam Ranh",
-                note: "none",
-                region_id: 3,
-                slug: "du-lich-cam-ranh"
-            },
-            {
-                id: 26,
-                name: "Du lịch Bình Phước",
-                note: "none",
-                region_id: 3,
-                slug: "du-lich-binh-phuoc"
-            },
-            {
-                id: 27,
-                name: "Du lịch Campuchia",
-                note: "none",
-                region_id: 4,
-                slug: "du-lich-campuchia"
-            },
-            {
-                id: 28,
-                name: "Du lịch Malaysia",
-                note: "none",
-                region_id: 4,
-                slug: "du-lich-malaysia"
-            },
-            {
                 id: 29,
                 name: "Du lịch Thái Lan",
                 note: "none",
@@ -324,13 +255,6 @@ async function syncModelsSequentially() {
                 note: "none",
                 region_id: 4,
                 slug: "du-lich-trung-quoc"
-            },
-            {
-                id: 34,
-                name: "Du lịch Vân Nam - Trung Quốc",
-                note: "none",
-                region_id: 4,
-                slug: "du-lich-van-nam-trung-quoc"
             },
             {
                 id: 35,

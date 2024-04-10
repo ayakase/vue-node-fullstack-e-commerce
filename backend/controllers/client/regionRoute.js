@@ -36,11 +36,12 @@ router.get('/side-bar-list/:region', (req, res) => {
         },
         include: {
             model: Location,
-            include: {
-                model: Tour
-            }
+            // include: {
+            //     model: Tour
+            // }
         }
     }).then((results) => {
+
         res.send(results)
     })
 })
