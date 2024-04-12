@@ -126,7 +126,6 @@ function deleteLocation(id) {
     if (confirm(text) == true) {
         baseUrl.delete("/admin/location/" + id)
             .then(response => {
-                console.log(response)
                 toast.info("Đã xóa", {
                     autoClose: 2000,
                     theme: "colored",
@@ -164,7 +163,6 @@ function addLocation() {
         }
         baseUrl.post('/admin/location', locationData)
             .then((response) => {
-                console.log(response)
                 toast.info(response.data, {
                     autoClose: 2000,
                     theme: "colored",

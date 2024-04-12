@@ -15,17 +15,14 @@
           <h5>Du lịch trong nước</h5> <i class="fa-solid fa-chevron-right"></i>
 
         </div>
-        <div class="travel-category-item" @click="router.push('/dia-diem/du-lich-trung-quoc')">
-          <h5>Du lịch Trung Quốc </h5><i class=" fa-solid fa-chevron-right"></i>
-        </div>
         <div class="travel-category-item" @click="router.push('/danh-muc/du-lich-quoc-te')">
           <h5>Du lịch quốc tế </h5><i class="fa-solid fa-chevron-right"></i>
         </div>
+        <div class="travel-category-item" @click="router.push('/dia-diem/du-lich-trung-quoc')">
+          <h5>Du lịch Trung Quốc </h5><i class=" fa-solid fa-chevron-right"></i>
+        </div>
         <div class="travel-category-item" @click="router.push('/cam-nang')">
           <h5>Cẩm nang </h5><i class="fa-solid fa-chevron-right"></i>
-        </div>
-        <div class="travel-category-item" @click="router.push('/tour-khuyen-mai')">
-          <h5>Khuyến mãi</h5> <i class="fa-solid fa-chevron-right"></i>
         </div>
       </div>
       <div class="slide">
@@ -38,14 +35,14 @@
         </Splide>
       </div>
       <div class="extended-category">
-        <div class="extent-item" @click="router.push({ path: '/tim-kiem/Hà Khẩu' })">
-          <h5>Hà Khẩu</h5>
+        <div class="extent-item" @click="router.push('/tour-khuyen-mai')">
+          <h5>Khuyến mãi</h5>
         </div>
-        <div class="extent-item">
-          <h5>DV Visa</h5>
+        <div class="extent-item" @click="router.push('/tour-hot')">
+          <h5>Tour hot</h5>
         </div>
-        <div class="extent-item">
-          <h5>KS / Dịch vụ</h5>
+        <div class="extent-item" @click="router.push('/about/gioi-thieu')">
+          <h5>Giới thiệu</h5>
         </div>
       </div>
     </div>

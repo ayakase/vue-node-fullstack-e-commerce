@@ -156,7 +156,6 @@ function fetchCount() {
 }
 function fetchGuestType() {
     baseUrl.get('/admin/chart/guest').then((response) => {
-        console.log(response.data)
         let guestNumber = Object.values(response.data)
         guestRatio.value = {
             labels: [
@@ -189,7 +188,6 @@ function fetchGuestType() {
 let revenuedata = ref(null)
 function fetchRevenueChart() {
     baseUrl.get('admin/chart/revenue').then((response) => {
-        console.log(response.data)
         const days = [];
         const revenue = [];
         response.data.forEach(item => {

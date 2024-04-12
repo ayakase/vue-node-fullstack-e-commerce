@@ -4,6 +4,7 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><i class="fa-solid fa-house"></i> <a href="/" class="home-breadcrumb">Trang
                         chủ</a></li>
+                <li class="breadcrumb-item">Danh mục</li>
                 <li class="breadcrumb-item">Du lịch trong nước</li>
             </ol>
         </nav>
@@ -65,7 +66,7 @@
                         <i class="fa-solid fa-arrow-right"></i>
                         <input v-model="maxDay" min="1" max="20" class="form-control me-2" type="number">
                     </div>
-                    <button @click=" fetchTour()" style="color: white;" type="button" class="btn btn-success">Lọc <i
+                    <button @click=" fetchTour()" style="color: white;" type="button" class="btn btn-success mt-4">Lọc <i
                             class="fa-solid fa-filter"></i></button>
                 </div>
                 <HotTours></HotTours>
@@ -189,7 +190,6 @@ function getTourbyPage() {
 }
 function fetchTour() {
     tourList.value = null;
-    console.log(hotFilter.value, discountFilter.value);
     baseUrl.get("/client/category/" + 1 + "/" + orderBy.value + "/" + sortOrder.value + "/" + pageNumber.value,
         {
             params: {

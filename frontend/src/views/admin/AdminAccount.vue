@@ -76,7 +76,6 @@ function requestChange() {
         password: oldPassword.value
     }
     baseUrl.post('/admin/user/request-change', submitData).then((response) => {
-        console.log(response.data);
         disabled.value = !response.data.allow
         if (response.data.allow == true) {
             toast.success(response.data.message,
@@ -107,15 +106,12 @@ watch(newPassword, (newValue, oldValue) => {
     }
 })
 function saveChange() {
-    console.log(username.value);
-    console.log(email.value);
     const submitData = {
         username: username.value,
         email: email.value,
     }
     if (newPassword.value === null || newPassword.value.length === 0) {
         baseUrl.post('/admin/user/save-change', submitData).then((response) => {
-            console.log(response.data);
             if (response.status == 200) {
                 toast.success("Cập nhật thông tin thành công",
                     {
@@ -132,7 +128,6 @@ function saveChange() {
         if (newPassword.value === confirmPassword.value) {
             submitData.password = newPassword.value
             baseUrl.post('/admin/user/save-change', submitData).then((response) => {
-                console.log(response.data);
                 if (response.status == 200) {
                     toast.success("Cập nhật thông tin thành công",
                         {

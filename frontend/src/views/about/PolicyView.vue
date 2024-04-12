@@ -122,13 +122,12 @@
             <li>
                 <p>Quy trình giải quyết tranh chấp, khiếu nại Ban quản trị Du Lịch Hoàng Hà có trách nhiệm tiếp nhận
                     khiếu
-                    nại từ người mua liên quan đến giao dịch tại website dulichhoangha.con . Khi có phát sinh tranh
+                    nại từ người mua liên quan đến giao dịch tại website. Khi có phát sinh tranh
                     chấp, Du
                     Lịch Hoàng Hà đề cao giải pháp thương lượng và hòa giải giữa các bên nhằm duy trì sự tin cậy của
                     khách
                     hàng vào chất lượng dịch vụ của Du Lịch Hoàng HàQuy trình giải quyết tranh chấp, khiếu nại thực hiện
-                    theo các bước sau: Bước 1: Người mua khiếu nại về sản phẩm dịch vụ được cùng cấp qua email:
-                    dlhoanghalaocai@gmail.com , hoặc người mua có thể phản ánh trực tiếp đến đến Ban quản trị công ty.
+                    theo các bước sau: Bước 1: Người mua khiếu nại về sản phẩm dịch vụ được cùng cấp qua email: , hoặc người mua có thể phản ánh trực tiếp đến đến Ban quản trị công ty.
                     Bước
                     2: Bộ phận Chăm Sóc Khách Hàng của công ty sẽ tiếp nhận các khiếu nại của người mua, tùy theo tính
                     chất
@@ -207,7 +206,6 @@
                     <li>
                         <p>Địa chỉ của đơn vị thu thập và quản lý thông tin cá nhân</p>
                         <p>Công ty lữ hành Quốc tế Du Lịch Hoàng Hà</p>
-                        <p>Email: dulichhoangha@gmail.com</p>
                     </li> <br>
 
                     <li>
@@ -263,9 +261,23 @@
 </template>
 
 <script>
-export default {
 
-}
 </script>
 
-<style scoped></style>
+<style scoped>
+h1 {
+    color: #3b6d43;
+}
+
+p {
+    line-height: 1.6;
+}
+
+ol {
+    padding-left: 20px;
+}
+
+li {
+    margin-bottom: 20px;
+}
+</style>

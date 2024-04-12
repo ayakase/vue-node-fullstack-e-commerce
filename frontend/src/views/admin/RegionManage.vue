@@ -103,9 +103,7 @@ let showOverlay = ref(false);
 const dialog = ref(false)
 function fetchRegion() {
     regionTable.value = null
-    console.log(categoryNumber.value)
     baseUrl.get('/admin/region/' + categoryNumber.value).then((response) => {
-        console.log(response)
         regionTable.value = response.data
     })
 }
@@ -113,12 +111,10 @@ onMounted(() => {
     fetchRegion()
 })
 function deleteRegion(id) {
-    console.log(id)
     let text = "Bạn có chắc chắn muốn xóa Tour " + id;
     if (confirm(text) == true) {
         baseUrl.delete("/admin/region/" + id)
             .then(response => {
-                console.log(response)
                 toast.info("Đã xóa", {
                     autoClose: 2000,
                     theme: "colored",
@@ -181,10 +177,8 @@ function addRegion() {
         note: newNote.value,
         category_id: addNumber.value
     }
-    console.log(regionData)
     baseUrl.post('/admin/region', regionData)
         .then((response) => {
-            console.log(response)
             toast.info(response.data, {
                 autoClose: 2000,
                 theme: "colored",

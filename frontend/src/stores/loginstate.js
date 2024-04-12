@@ -13,7 +13,6 @@ export const useLoginStore = defineStore('loginstate', {
                 const response = await baseUrl.post('/admin/login/state');
                 this.login = response.data.state
                 this.userInfo = response.data.userInfo
-                console.log(this.userInfo)
             } catch (error) {
                 console.error("Error in checkLogin:", error);
             }

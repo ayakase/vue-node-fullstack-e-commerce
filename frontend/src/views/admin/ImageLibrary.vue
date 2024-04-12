@@ -79,7 +79,6 @@ watch(isVisible, (newValue, oldValue) => {
         baseUrl.get('/admin/library/' + nextCursor.value)
             .then((response) => {
                 showOverlay.value = false
-                console.log(response.data.next_cursor)
                 images.value = images.value.concat(response.data.resources)
                 nextCursor.value = response.data.next_cursor
                 totalCount.value = response.data.total_count
@@ -170,7 +169,6 @@ function nextPage() {
     baseUrl.get('/admin/library/' + nextCursor.value)
         .then((response) => {
             showOverlay.value = false
-            console.log(response.data.next_cursor)
             images.value = images.value.concat(response.data.resources)
             nextCursor.value = response.data.next_cursor
             totalCount.value = response.data.total_count

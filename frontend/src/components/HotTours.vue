@@ -6,9 +6,11 @@
         <div style="padding: 0.5rem; display: flex;flex-direction: column;gap: 0.5rem;">
             <div v-for="tour in hotTour" @click="router.push({ path: '/' + tour.slug })" class="card"
                 style="border: none;">
-                <img :src=tour.thumbnail class="card-img-top" style="" alt="...">
+                <div class="thumbnail-container">
+                    <img :src=tour.thumbnail class="card-img-top" style="" alt="...">
+                </div>
                 <div class="card-body">
-                    <h5 class="card-title">{{ tour.title }}</h5>
+                    <h5 class="card-title" style="cursor: pointer;">{{ tour.title }}</h5>
                     <p>Giá: <span style="font-weight: bold; color: #ff6b00;">{{ numeralFormat(tour.adult_price)
                             }}</span>
                         VNĐ </p>
@@ -21,8 +23,9 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import baseUrl from '../connect';
+import { useRouter } from 'vue-router';
 const hotTour = ref()
-
+const router = useRouter()
 onMounted(() => {
     baseUrl.get("/client/hottour/hot-sidebar")
         .then(response => {
@@ -46,7 +49,21 @@ onMounted(() => {
 
 }
 
+.card-body {
+    background-color: #F1FAF4;
+}
+
+.thumbnail-container {
+    overflow: hidden;
+}
+
 .card-img-top {
     height: 12rem;
+    transition: transform 0.3s ease;
+
+}
+
+.card-img-top:hover {
+    transform: scale(1.1);
 }
 </style>

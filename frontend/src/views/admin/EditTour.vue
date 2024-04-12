@@ -376,7 +376,6 @@ let selectRegion = ref()
 let selectLocation = ref()
 function getTourbyId() {
     baseUrl.get('/admin/tour/load/' + route.query.id).then((response) => {
-        console.log(response.data);
         tourTitle.value = response.data.title
         tourSchedule.value = response.data.schedule
         tourType.value = response.data.tourtype
@@ -415,10 +414,8 @@ async function loadSelector() {
     try {
         const category = await baseUrl.get("/admin/tour/choose-category");
         tourCategory.value = category.data;
-        console.log(tourCategory.value);
         const location = await baseUrl.get('/admin/tour/locations');
         locationArray.value = location.data;
-        console.log(locationArray.value);
         getTourbyId()
     } catch (error) {
         console.error("Error fetching tour category:", error);

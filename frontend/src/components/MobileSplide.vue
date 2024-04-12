@@ -39,7 +39,6 @@ import { Splide, SplideSlide } from '@splidejs/vue-splide';
 import '@splidejs/vue-splide/css';
 
 onMounted(() => {
-    console.log(props.tourList)
 })
 const mobileOptions = {
     rewind: true,

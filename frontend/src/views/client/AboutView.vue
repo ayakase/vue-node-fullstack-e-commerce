@@ -2,15 +2,15 @@
   <div class="about-container">
     <div class="about-sidebar">
       <RouterLink class="about-sidebar-item" to="/about/gioi-thieu">Giới thiệu</RouterLink>
-      <RouterLink class="about-sidebar-item" to="/about/ve-chung-toi">Về chúng tôi</RouterLink>
-      <RouterLink class="about-sidebar-item" to="/about/chinh-sach-va-quy-dinh">Chính sách và quy định chung</RouterLink>
+      <RouterLink class="about-sidebar-item" to="/about/chinh-sach-va-quy-dinh">Chính sách và quy định chung
+      </RouterLink>
       <RouterLink class="about-sidebar-item" to="/about/bao-hiem-dich-vu">Bảo hiểm dịch vụ</RouterLink>
       <RouterLink class="about-sidebar-item" to="/about/quy-trinh">Quy trình đặt dịch vụ và thanh toán</RouterLink>
     </div>
     <div class="mobile-sidebar">
       <RouterLink class="mobile-sidebar-item" to="/about/gioi-thieu">Giới thiệu</RouterLink>
-      <RouterLink class="mobile-sidebar-item" to="/about/ve-chung-toi">Về chúng tôi</RouterLink>
-      <RouterLink class="mobile-sidebar-item" to="/about/chinh-sach-va-quy-dinh">Chính sách và quy định chung</RouterLink>
+      <RouterLink class="mobile-sidebar-item" to="/about/chinh-sach-va-quy-dinh">Chính sách và quy định chung
+      </RouterLink>
       <RouterLink class="mobile-sidebar-item" to="/about/bao-hiem-dich-vu">Bảo hiểm dịch vụ</RouterLink>
       <RouterLink class="mobile-sidebar-item" to="/about/quy-trinh">Quy trình đặt dịch vụ và thanh toán</RouterLink>
     </div>

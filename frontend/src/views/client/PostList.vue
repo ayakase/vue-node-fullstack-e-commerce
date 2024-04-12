@@ -11,63 +11,30 @@
 
         <div class="section-container">
             <div class="side-bar-container">
-                <div v-if="categoryList" class="category-list">
-                    <div
-                        style="display: flex;align-items: center; height: 3rem; padding-left: 1rem; font-size: 20px;font-weight: bold;">
-                        Địa điểm &nbsp; <span style="color:#ff6b00;">HOT</span> &nbsp; trong
-                        nước</div>
-                    <div v-if="categoryList.Regions" v-for="region in categoryList.Regions" :key="region">
-                        <div class="region-list" @click="router.push({ path: '/khu-vuc/' + region.slug })">{{
-                    region.name }}
-                        </div>
-                        <div v-if="region.Locations" v-for="location in region.Locations">
-                            <div class="location-list" @click="router.push({ path: '/dia-diem/' + location.slug })">{{
-                    location.name }}</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="hot-tour" v-if="hotTour">
-                    <h2 style="padding-left: 1rem;">Tour hot &nbsp; <i style="color: orangered;"
-                            class="fa-solid fa-fire fa-bounce"></i></h2>
-                    <div v-for="tour in hotTour" @click="router.push({ path: '/' + tour.slug })" class="card"
-                        style="border: none;">
-                        <img :src=tour.thumbnail class="card-img-top" style="height: 20rem;" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ tour.title }}</h5>
-                            <p>Giá: <span style="font-weight: bold; color: #ff6b00;">{{ numeralFormat(tour.adult_price)
-                                    }}</span>
-                                VNĐ </p>
-                            <!-- <hr class="hr" /> -->
-                        </div>
-                    </div>
-                </div>
+                <CategoryList></CategoryList>
             </div>
             <div>
                 <section class="blog-area">
                     <div class="container">
-                        <div class="post-container row justify-content-center">
-                            <div v-if="tourList" v-for="tour in  tourList " :key="tour" class="each-post">
+                        <div class="post-container">
+                            <div v-if="postList" v-for="post in  postList " :key="post" class="each-post">
                                 <div class="single-blog blog-style-one">
                                     <div class="blog-image">
-                                        <a href="javascript:void(0)"><img :src="tour.thumbnail" alt="Blog" /></a>
-                                        <a href="javascript:void(0)" class="category">Technology</a>
+                                        <a><img @click="router.push('/bai-viet/' + post.slug)" class="post-thumbnail"
+                                                style="cursor: pointer;" :src="post.thumbnail" alt="Blog" /></a>
                                     </div>
                                     <div class="blog-content">
                                         <h5 class="blog-title">
-                                            <a href="javascript:void(0)">
-                                                {{ tour.title }}
+                                            <a style="cursor: pointer;" @click="router.push('/bai-viet/' + post.slug)">
+                                                {{ post.title }}
                                             </a>
                                         </h5>
-                                        <span><i class="lni lni-calendar"></i> Mar 23, 2022</span>
-                                        <span><i class="lni lni-comments-alt"></i> 24 Comment</span>
-                                        <p class="text">
-                                            Create a workspace your team will love with these money-saving
-                                            interior Ui/Ux design tips Learn how People.
-                                        </p>
-                                        <a class="more" href="javascript:void(0)">READ MORE</a>
+                                        <span><i class="lni lni-calendar"></i> {{
+                                convertDate(post.createdAt) }}</span>
+                                        <a style="cursor: pointer;" class="more"
+                                            @click="router.push('/bai-viet/' + post.slug)">Chi tiết</a>
                                     </div>
                                 </div>
-                                <!-- single blog -->
                             </div>
 
                         </div>
@@ -78,13 +45,15 @@
                     :total-visible="5" prev-icon="fa-solid fa-chevron-left"
                     next-icon="fa-solid fa-chevron-right"></v-pagination>
             </div>
+            <!-- <HotTours></HotTours> -->
         </div>
-
     </div>
 </template>
 
 <script setup>
 import LoadingComponent from '../../components/LoadingComponent.vue';
+import CategoryList from '../../components/CategoryList.vue';
+import HotTours from '../../components/HotTours.vue';
 import baseUrl from '../../connect';
 import { onMounted, ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
@@ -93,7 +62,7 @@ const router = useRouter();
 // let posts = ref()
 let totalPage = ref()
 let pageNumber = ref(1)
-let tourList = ref()
+let postList = ref()
 let orderBy = ref("createdAt")
 let orderLabel = ref("Mới nhất")
 let sortOrder = ref("DESC")
@@ -117,20 +86,30 @@ function getTourbyPage() {
     fetchPost()
     window.scrollTo(0, 0);
 }
+function convertDate(dateTimeString) {
+    const months = [
+        'Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6',
+        'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'
+    ];
+
+    const dateTime = new Date(dateTimeString);
+    const day = dateTime.getDate();
+    const month = months[dateTime.getMonth()];
+    const year = dateTime.getFullYear();
+    const hours = dateTime.getHours();
+    const minutes = dateTime.getMinutes();
+    const seconds = dateTime.getSeconds();
+
+    const vietnameseDateTime = `Đăng ngày ${day} ${month} ${year}, lúc ${hours}:${minutes}:${seconds}`;
+
+    return vietnameseDateTime;
+}
 function fetchPost() {
-    tourList.value = null;
+    postList.value = null;
     baseUrl.get("/client/post/" + 1 + "/" + orderBy.value + "/" + sortOrder.value + "/" + pageNumber.value)
         .then(response => {
-            tourList.value = response.data.rows
-            // response.data.rows[0].Regions.forEach(Region => {
-            //     Region.Locations.forEach(Location => {
-            //         Location.Tours.forEach(Tour => {
-            //             console.log(Tour)
-            //             tourList.value.push(Tour)
-            //         })
-            //     })
-            // })
-            // tourList.value = response.data.rows
+            postList.value = response.data.rows
+            console.log(postList.value)
             totalPage.value = response.data.count / 10 + 1
         }).catch((error) => {
             console.error(error);
@@ -138,19 +117,6 @@ function fetchPost() {
 }
 </script>
 <style scoped>
-.hot-tour {
-    margin-top: 1rem;
-    width: 18rem;
-    background-color: #F1FAF4;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-
-}
-
 .post-view-container {
     padding-top: 2rem;
     width: 90%;
@@ -211,6 +177,9 @@ p {
     color: #ff6b10;
 }
 
+.side-bar-container {
+    width: 16rem;
+}
 
 .inner-container {
     display: flex;
@@ -236,48 +205,9 @@ p {
     transform: scale(1.3);
 }
 
-.hot-tour {
+.hot-post {
     position: sticky;
     top: 0;
-}
-
-.category-list {
-    background-color: #97CBB4;
-    /* padding-left: 2rem; */
-    width: 18rem;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-
-}
-
-.region-list {
-    height: 2rem;
-    padding-left: 1rem;
-    font-size: large;
-    font-weight: bold;
-    background-color: #F1FAF4;
-    display: flex;
-    align-items: center;
-}
-
-.location-list {
-    height: 2rem;
-    padding-left: 1rem;
-    background-color: #F1FAF4;
-    display: flex;
-    align-items: center;
-}
-
-.region-list:hover {
-    background-color: rgb(69, 169, 147);
-    cursor: pointer;
-    color: white;
-}
-
-.location-list:hover {
-    background-color: rgb(69, 169, 147);
-    cursor: pointer;
-    color: white;
-
 }
 
 .card-title {
@@ -294,13 +224,14 @@ p {
 }
 
 .post-container {
-    /* width: 30rem; */
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .each-post {
     background-color: #F1FAF4;
     margin: 1rem;
-    width: 100%;
+    width: 20rem;
 }
 
 
@@ -309,11 +240,11 @@ p {
         display: none;
     }
 
-    .tour-container {
+    .post-container {
         width: 100%;
     }
 
-    .tour-individual {
+    .post-individual {
         width: 100%;
     }
 
@@ -325,9 +256,7 @@ p {
 }
 
 /*===== BLOG STYLE ONE =====*/
-.blog-style-one {
-    margin-top: 12px;
-}
+.blog-style-one {}
 
 .blog-style-one .blog-image {
     overflow: hidden;
@@ -339,10 +268,7 @@ p {
     background-color: var(--primary);
     color: var(--white);
     font-size: 13px;
-    padding: 7px 20px;
     position: absolute;
-    right: 20px;
-    top: 20px;
     border-radius: 30px;
 }
 
@@ -364,7 +290,7 @@ p {
 }
 
 .blog-style-one .blog-content {
-    padding: 30px;
+    padding: 10px;
     border: 1px solid var(--light-1);
     border-radius: 0 0 8px 8px;
     border-top: none;
@@ -389,7 +315,7 @@ p {
 
 .blog-style-one .blog-content .blog-title a {
     font-weight: 600;
-    color: var(--black);
+    color: #045B48;
     -webkit-transition: all 0.3s ease-out 0s;
     -moz-transition: all 0.3s ease-out 0s;
     -ms-transition: all 0.3s ease-out 0s;
@@ -425,13 +351,18 @@ p {
 .blog-style-one .blog-content .more {
     text-transform: uppercase;
     font-weight: 600;
-    color: var(--primary);
+    color: #045B48;
     margin-top: 30px;
     display: inline-block;
 }
 
 .blog-style-one .blog-content .more:hover {
-    color: var(--primary-dark);
+    color: #ff6b10;
+}
+
+.post-thumbnail {
+    height: 15rem;
+    width: 10rem;
 }
 
 /*# sourceMappingURL=blog-01.css.map */

@@ -32,8 +32,8 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <a class="btn" style="background-color: #97CBB4;" target="_blank" @click.prevent="sendInfo">Đặt
-                            Tour</a>
+                        <a class="btn" style="background-color: #97CBB4;" target="_blank" @click.prevent="sendInfo">Yêu
+                            cầu tư vấn</a>
                     </div>
                 </div>
             </div>
@@ -52,7 +52,6 @@ const name = ref()
 const phone = ref()
 const email = ref()
 const note = ref()
-console.log(props)
 const showOverlay = ref(false)
 function sendInfo() {
     if (!name.value || !phone.value || !email.value || !note.value) {
@@ -74,15 +73,20 @@ function sendInfo() {
         baseUrl.post("/client/advisory", formData)
             .then(response => {
                 showOverlay.value = false
-
-                toast.success("Đã nhận thông tin", {
+                toast.success(response.data, {
                     autoClose: 2000,
-                    theme: "dark",
+                    theme: "colored",
                     position: toast.POSITION.BOTTOM_RIGHT,
                 });
             })
             .catch(error => {
-                console.error(error)
+                showOverlay.value = false
+                toast.error(error.response.data, {
+                    autoClose: 2000,
+                    theme: "colored",
+                    position: toast.POSITION.BOTTOM_RIGHT,
+                });
+                // console.error(error)
             })
     }
 }

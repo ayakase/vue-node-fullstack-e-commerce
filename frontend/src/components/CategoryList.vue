@@ -29,7 +29,6 @@ const domesticList = ref()
 const foreignList = ref()
 onMounted(() => {
     baseUrl.get("/client/initial/menu").then(response => {
-        console.log(response.data);
         categoryList.value = response.data
         domesticList.value = response.data[0]
         foreignList.value = response.data[1]
@@ -40,8 +39,6 @@ onMounted(() => {
 <style scoped>
 .category-list {
     background-color: #97CBB4;
-    /* padding-left: 2rem; */
-    /* width: 18rem; */
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 

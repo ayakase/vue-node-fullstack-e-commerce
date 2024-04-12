@@ -47,9 +47,9 @@ onMounted(() => {
   <MobileNav v-if="menuData" :menuData="menuData"></MobileNav>
   <DesktopNav v-if="menuData" :menuData="menuData"></DesktopNav>
   <div class="content-container">
-    <transition name="slide-fade">
+    <!-- <transition name="slide-fade"> -->
       <RouterView />
-    </transition>
+    <!-- </transition> -->
   </div>
   <PageFooter v-if="!route.meta.hideNavbar"></PageFooter>
   <MessengerBtn></MessengerBtn>

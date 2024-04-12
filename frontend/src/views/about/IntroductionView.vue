@@ -45,4 +45,42 @@
 
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    color: #343a40;
+}
+
+.container {
+    margin-top: 50px;
+}
+
+h1 {
+    color: #3b6d43; /* Primary color */
+}
+
+.lead {
+    font-size: 18px;
+}
+
+.card {
+    margin-bottom: 20px;
+}
+
+.card-header {
+    background-color: #3b6d43; /* Primary color */
+    color: #fff;
+}
+
+.card-body {
+    background-color: #fff;
+}
+
+.footer {
+    background-color: #343a40;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+</style>

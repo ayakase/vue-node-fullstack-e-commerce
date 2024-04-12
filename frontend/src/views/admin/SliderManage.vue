@@ -38,7 +38,6 @@ function deleteSlide(id) {
 }
 function getSlider() {
     baseUrl.get('/admin/slider').then((response) => {
-        console.log(response.data.rows)
         slideItem.value = response.data.rows
     }).catch((error) => {
         console.log(error)

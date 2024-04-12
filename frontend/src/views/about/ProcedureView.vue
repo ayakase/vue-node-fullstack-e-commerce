@@ -84,8 +84,7 @@
 
     <p><strong>Bước 5</strong></p>
 
-    <p>Quý khách sử dụng dịch vụ, phản hồi dịch vụ thông qua email: <a href="">DULICHHOANGHA@GMAIL.COM</a> hoặc số
-        điện thoại CSKH 0904.678.168.
+    <p>Quý khách sử dụng dịch vụ, phản hồi dịch vụ thông qua email:
         Nếu phát sinh trường hợp Hoàn tiền. Quý khách làm theo Quy trình Hoàn tiền của chúng tôi. Hợp đồng được thanh lý
         khi quá trình hoàn tiền kết thúc!</p>
 </template>

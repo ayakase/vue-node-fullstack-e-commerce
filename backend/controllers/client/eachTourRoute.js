@@ -3,7 +3,6 @@ const router = express.Router();
 const Tour = require('../../models/TourModel')
 const Category = require('../../models/CategoryModel')
 router.get('/:slug', (req, res) => {
-    console.log(req.params.slug)
     Tour.findAll({
         where: { slug: req.params.slug },
     }).then((result) => {

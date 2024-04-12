@@ -8,6 +8,7 @@ router.get('/:order/:page', (req, res) => {
         limit: 10,
         include: {
             model: Tour,
+            attributes: ['title', 'slug']
         },
         offset: (req.params.page - 1) * 10
     }).then((result) => {

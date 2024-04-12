@@ -33,8 +33,8 @@
             style="width: 80vw;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
             <thead>
                 <tr>
-                    <th style="vertical-align: top;" scope="col">Tour</th>
                     <th style="vertical-align: top;" scope="col">Tên khách hàng</th>
+                    <th style="vertical-align: top;" scope="col">Tour</th>
                     <th style="vertical-align: top;" scope="col">Đặt lúc</th>
                     <th>Chi tiết</th>
                     <th style="vertical-align: top;" scope="col">Hành động</th>
@@ -42,8 +42,8 @@
             </thead>
             <tbody>
                 <tr v-for="order in orderTable" :key="order" class="each-tour-row">
-                    <td>{{ order.Tour.title }}</td>
                     <td>{{ order.name }}</td>
+                    <td @click="router.push('/' + order.Tour.slug)">{{ order.Tour.title }}</td>
                     <td>{{ formatDate(order.createdAt) }}</td>
                     <td>
                         <v-dialog max-width="500">
@@ -126,7 +126,7 @@
 </tbody>
 </table>
 <TableLoading v-else></TableLoading>
-<v-pagination @click="getOrderbyPage" v-model="pageNumber" :length="totalPage" :total-visible="5"
+<v-pagination @click="getOrderbyPage" v-model="pageNumber" :length="parseInt(totalPage)" :total-visible="5"
     prev-icon="fa-solid fa-chevron-left" next-icon="fa-solid fa-chevron-right"></v-pagination>
 </div>
 </template>
@@ -149,10 +149,8 @@ function fetchOrder() {
     orderTable.value = null;
     baseUrl.get("/admin/order/" + sortOrder.value + "/" + solveState.value + "/" + pageNumber.value)
         .then(response => {
-
             orderTable.value = response.data.rows
             totalPage.value = response.data.count / 10 + 1
-
         }).catch((error) => {
             console.error(error);
         });

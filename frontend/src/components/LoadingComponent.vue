@@ -13,6 +13,8 @@
     width: 100%;
     display: flex;
     justify-content: center;
+    padding-top: 20vh;
+    padding-bottom: 30vh;
 }
 
 .lds-dual-ring,

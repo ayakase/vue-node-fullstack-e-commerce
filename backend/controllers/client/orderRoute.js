@@ -11,7 +11,7 @@ router.use(express.urlencoded({ extended: true }));
 const client = require('../../redisClient');
 
 router.post('/', upload.none(), (req, res) => {
-    const key = `rate_limit:${req.ip}`;
+    const key = `order_limit:${req.ip}`;
     console.log(key);
     client.exists(key, (err, exists) => {
         if (err) {
@@ -43,7 +43,7 @@ router.post('/', upload.none(), (req, res) => {
                 }
             });
         } else {
-            client.setex(key, 120, 1, (err) => {
+            client.setex(key, 30, 1, (err) => {
                 if (err) {
                     console.error('Redis error:', err);
                     res.status(500).send('Internal Server Error');

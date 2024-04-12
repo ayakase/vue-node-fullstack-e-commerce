@@ -15,6 +15,7 @@ const upload = multer({ storage: storage });
 const Post = require("../../models/PostModel");
 const Category = require("../../models/CategoryModel");
 router.post("/", upload.single("postThumbnail"), (req, res) => {
+  console.log(req.body.postContent);
   if (!req.file) {
     res.sendStatus(404)
   } else {
@@ -29,6 +30,7 @@ router.post("/", upload.single("postThumbnail"), (req, res) => {
         res.sendStatus(200);
       })
       .catch((err) => {
+        console.log(err)
         if (err.original && err.original.errno === 1062) {
           res.status(400).send("SlugConflict");
         } else {

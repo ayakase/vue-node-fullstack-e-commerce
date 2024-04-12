@@ -66,18 +66,13 @@ const router = createRouter({
       name: 'bai-viet',
       component: () => import('../views/client/PostView.vue')
     },
-    {
-      path: '/order/:id',
-      name: 'orderdetail',
-      component: () => import('../views/admin/OrderView.vue')
-    },
+
     {
       path: '/about',
       name: 'about',
       component: () => import('../views/client/AboutView.vue'),
       children: [
         { path: 'gioi-thieu', component: () => import('../views/about/IntroductionView.vue') },
-        { path: 've-chung-toi', component: () => import('../views/about/AboutUsView.vue') },
         { path: 'chinh-sach-va-quy-dinh', component: () => import('../views/about/PolicyView.vue') },
         { path: 'bao-hiem-dich-vu', component: () => import('../views/about/InsuranceView.vue') },
         { path: 'quy-trinh', component: () => import('../views/about/ProcedureView.vue') },

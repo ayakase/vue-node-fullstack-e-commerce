@@ -55,8 +55,8 @@ import { ref, computed, watch } from "vue";
 const publishState = ref(true);
 const showOverlay = ref(false);
 const thumbnailSrc = ref();
-const postTitle = ref();
-const postContent = ref();
+const postTitle = ref("");
+const postContent = ref("");
 const postThumbnail = ref();
 import slugify from 'slugify'
 

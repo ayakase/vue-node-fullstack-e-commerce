@@ -111,7 +111,6 @@ router.get('/fetch/:order/:page/', (req, res) => {
 })
 router.get('/load/:id', (req, res) => {
     // console.log(req.params.id)
-    console.log("requested")
     Tour.findOne({
         where: { id: req.params.id }
     }).then((result) => {
@@ -121,7 +120,6 @@ router.get('/load/:id', (req, res) => {
     })
 })
 router.get('/locations', (req, res) => {
-    console.log("hehe")
     Location.findAll().then((locations) => {
         res.send(locations)
     }).catch((error) => {

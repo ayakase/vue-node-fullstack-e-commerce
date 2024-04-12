@@ -6,6 +6,8 @@ import baseUrl from '../../connect';
 import LoadingComponent from '../../components/LoadingComponent.vue';
 import { useRoute } from 'vue-router';
 import { Splide, SplideSlide } from '@splidejs/vue-splide';
+import DesktopSplide from '../../components/DesktopSplide.vue';
+import MobileSplide from '../../components/MobileSplide.vue';
 const showOverlay = ref(false);
 const route = useRoute();
 const tourDetail = ref()
@@ -36,6 +38,12 @@ const headOption = {
 }
 function getUrl() {
     pageUrl.value = window.location.href
+    var textarea = document.createElement("textarea");
+    textarea.value = pageUrl.value;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textarea);
 }
 const hotTour = ref()
 onMounted(() => {
@@ -57,12 +65,9 @@ onMounted(() => {
     setTimeout(() => {
         renderVideo.value = true
     }, 1000);
-    baseUrl.get("/client/region/hot-sidebar")
-        .then(response => {
-            hotTour.value = response.data.rows
-        }).catch((error) => {
-            console.error(error);
-        });
+    baseUrl.get('/client/carousel/hottour').then((response) => {
+        hotTour.value = response.data.rows
+    })
 })
 let tabSec1 = ref()
 let tabSec2 = ref()
@@ -151,7 +156,7 @@ let tabSec2 = ref()
                     style="height: 3rem;width: 3rem;background-color:#86c5a9;font-size: large;color: white;">
                     <i class="fa-solid fa-link"></i>
                 </button>
-                <p>{{ pageUrl }}</p>
+                <p v-if="pageUrl"> Đã copy link </p>
             </div>
 
         </div>
@@ -172,24 +177,13 @@ let tabSec2 = ref()
                         vấn</button>
                 </div>
             </div>
-            <div class="hot-tour">
-                <h2 style="padding-left: 1rem;">Tour hot &nbsp; <i style="color: orangered;"
-                        class="fa-solid fa-fire fa-bounce"></i></h2>
-                <div v-for="tour in hotTour" @click="router.push({ path: '/' + tour.slug })" class="card"
-                    style="border: none;">
-                    <img :src=tour.thumbnail style="height: 10rem;" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ tour.title }}</h5>
-                        <p>Giá: <span style="font-weight: bold; color: #ff6b00;">{{ numeralFormat(tour.adult_price)
-                                }}</span>
-                            VNĐ </p>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
     <LoadingComponent v-else></LoadingComponent>
     <div>
+        <h3 style="text-align: center;"> Tour hot</h3>
+        <DesktopSplide :tourList="hotTour"></DesktopSplide>
+        <MobileSplide :tourList="hotTour"></MobileSplide>
     </div>
 </template>
 <style scoped>
@@ -350,8 +344,8 @@ let tabSec2 = ref()
     text-align: center;
     font-weight: bolder;
     font-size: 2.5rem;
-    margin-top: 2rem;
-    margin-bottom: 3rem;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
 }
 
 .separator {
@@ -361,15 +355,16 @@ let tabSec2 = ref()
 @media screen and (max-width: 1214px) {
     .content-container-outer {
         width: 100%;
-
+        flex-wrap: wrap;
     }
 
     .main-content {
-        width: 100%;
+        width: 95%;
     }
 
     .side-bar {
-        display: none;
+        /* display: none; */
+        width: 100%;
     }
 
 

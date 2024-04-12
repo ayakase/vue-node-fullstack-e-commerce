@@ -15,7 +15,8 @@
                         Trạng thái &nbsp; <i class="fa-solid fa-check-to-slot">: </i> {{ stateLabel }}
                     </button>
                     <div class="dropdown-menu">
-                        <button class="dropdown-item" @click="unsolved">Chưa xử lí &nbsp; <i class="fa-solid fa-xmark"></i>
+                        <button class="dropdown-item" @click="unsolved">Chưa xử lí &nbsp; <i
+                                class="fa-solid fa-xmark"></i>
                         </button>
                         <button class="dropdown-item" @click="solved">Đã xử lí &nbsp;<i
                                 class="fa-solid fa-check"></i></button>
@@ -30,7 +31,8 @@
         </div>
 
 
-        <table class="table table-success table-striped" style="width: 80vw;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
+        <table class="table table-success table-striped"
+            style="width: 80vw;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
             <thead>
                 <tr>
                     <th scope="col">ID</th>
@@ -39,19 +41,19 @@
                     <th scope="col">Số điện thoại</th>
                     <th scope="col">Email</th>
                     <th scope="col">Ghi chú</th>
-                    <th scope="col"> Chi tiết</th>
+                    <!-- <th scope="col"> Chi tiết</th> -->
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="info in formInfo" :key="info" class="each-tour-row">
                     <td scope="row">{{ info.id }}</td>
                     <td scope="row">{{ info.name }}</td>
-                    <td scope="row" v-if="info.Tour"> {{info.Tour.title}}</td>
-                    <td v-else>Không </td>
+                    <td scope="row" v-if="info.Tour"> {{ info.Tour.title }}</td>
+                    <td v-else><i class="fa-solid fa-ban"></i> </td>
                     <td scope="row">{{ info.phone }}</td>
                     <td scope="row">{{ info.email }}</td>
                     <td scope="row">{{ info.note }}</td>
-                    <td scope="row">{{ info.id }}</td>
+                    <!-- <td scope="row">{{ info.id }}</td> -->
                 </tr>
             </tbody>
         </table>
