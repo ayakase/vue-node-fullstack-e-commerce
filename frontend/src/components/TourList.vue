@@ -38,7 +38,7 @@
                         <div v-if="tour.ishottour"><i style="color: orangered;" class="fa-solid fa-fire fa-bounce"></i>
                         </div>
                     </div>
-                    <div class="">
+                    <div class="mobile-price">
                         <div class="" v-if="tour.isdiscount"
                             style="text-decoration: line-through;font-size: 1.2rem;color: #1f8726;">
                             {{ numeralFormat(tour.original_price) }} VNĐ</div>
@@ -179,8 +179,15 @@ const router = useRouter();
     display: none;
 }
 
+.mobile-price {
+    display: none;
+}
+
 @media screen and (max-width: 1136px) {
 
+    .mobile-price {
+        display: block;
+    }
 
     .side-bar-container {
         display: none;
