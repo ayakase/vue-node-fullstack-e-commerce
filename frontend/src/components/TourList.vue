@@ -266,5 +266,9 @@ const router = useRouter();
         flex-direction: row;
         gap: 1rem;
     }
+
+    .days {
+        display: none;
+    }
 }
 </style>

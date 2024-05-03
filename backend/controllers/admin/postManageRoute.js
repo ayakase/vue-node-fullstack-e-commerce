@@ -14,6 +14,9 @@ const storage = new CloudinaryStorage({
 const upload = multer({ storage: storage });
 const Post = require("../../models/PostModel");
 const Category = require("../../models/CategoryModel");
+router.get("/", (req, res) => {
+  res.send('in')
+})
 router.post("/", upload.single("postThumbnail"), (req, res) => {
   console.log(req.body.postContent);
   if (!req.file) {
