@@ -54,6 +54,7 @@ router.post('/info', (req, res) => {
 });
 router.post('/state', (req, res) => {
     const token = req.cookies.token;
+    console.log("requested")
     if (!token) {
         return res.send({ state: false });
     }

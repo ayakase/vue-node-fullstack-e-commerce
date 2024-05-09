@@ -12,13 +12,13 @@ onMounted(() => {
     }).catch((error) => {
         console.error(error);
     });
-    baseUrl.get("/client/category/hot-sidebar")
-        .then(response => {
+    // baseUrl.get("/client/category/hot-sidebar")
+    //     .then(response => {
 
-            hotTour.value = response.data.rows
-        }).catch((error) => {
-            console.error(error);
-        });
+    //         hotTour.value = response.data.rows
+    //     }).catch((error) => {
+    //         console.error(error);
+    //     });
 })
 
 </script>

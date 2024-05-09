@@ -1,5 +1,5 @@
 <template>
-    <div class="header-container" v-if="!route.meta.hideNavbar">
+    <div class="header-container" v-if="route.meta.showNavbar">
         <div v-if="loginStore.login">
             <div><button @click="logout" class=" btn btn-danger active admin-button" aria-current="page" href="#">Logout
                 </button>

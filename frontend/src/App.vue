@@ -10,10 +10,15 @@ import { useLoginStore } from './stores/loginstate';
 import { useRoute } from 'vue-router';
 import baseUrl from './connect';
 import { toast } from 'vue3-toastify';
+import { useCookies } from "vue3-cookies";
+let { cookies } = useCookies()
+
 const route = useRoute()
 const loginStore = useLoginStore()
 const menuData = ref()
+const showLayout = ref()
 onMounted(() => {
+  console.log(route.meta.showNavbar)
   loginStore.checkLogin()
   baseUrl.post("/client/initial/count").then(() => { }).catch((error) => {
     console.log(error)
@@ -26,7 +31,7 @@ onMounted(() => {
     })
   baseUrl.get("client/initial/connect")
     .then((response) => {
-      toast.success("Đã kết nối với server", {
+      toast.success("Server on", {
         autoClose: 2000,
         theme: "colored",
         position: toast.POSITION.BOTTOM_RIGHT,
@@ -40,6 +45,18 @@ onMounted(() => {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
     });
+  if (cookies.get('layout') == undefined) {
+    cookies.set('layout', true);
+    // console.log(cookies.get('layout'))
+    // showLayout.value = cookies.get('layout')
+    // console.log(showLayout.value);
+  }
+  if (cookies.get('layout') == 'false') {
+    showLayout.value = false
+  } else {
+    showLayout.value = true
+  }
+
 })
 </script>
 
@@ -48,18 +65,59 @@ onMounted(() => {
   <DesktopNav v-if="menuData" :menuData="menuData"></DesktopNav>
   <div class="content-container">
     <!-- <transition name="slide-fade"> -->
-      <RouterView />
+    <RouterView />
     <!-- </transition> -->
   </div>
-  <PageFooter v-if="!route.meta.hideNavbar"></PageFooter>
+  <PageFooter v-if="route.meta.showNavbar"></PageFooter>
   <MessengerBtn></MessengerBtn>
+  <div v-if="showLayout" class="layout">
+    <v-card variant="outlined" style="font-size: 2rem;color: white;width: 90%;padding: 1rem;">
+      <div>
+        Đây chỉ là một trang web Demo, được build bằng VueJS, Bootstrap, ChartJS, NodeJS, JWT, Redis, MySQL, Sequelize,
+        Cloudinary
+      </div>
+      <div>
+        Để vào trang admin,hãy truy cập <a
+          href="https://dulichhoangha.netlify.app/login">https://dulichhoangha.netlify.app/login</a>
+      </div>
+      <div>
+        Username và mật khẩu admin là: admin, admin
+      </div>
+      <v-btn @click="cookies.set('layout', false); showLayout = false">
+        Không hiển thị nữa
+      </v-btn>
+    </v-card>
+    <i @click="showLayout = false" class="exit-layout fa-regular fa-x"></i>
+  </div>
 </template>
 
 <style scoped>
-/*
-  Enter and leave animations can use different
-  durations and timing functions.
-*/
+.layout {
+  position: fixed;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.734);
+  width: 100vw;
+  height: 100vh;
+  z-index: 999999999999;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.exit-layout {
+  color: rgb(182, 0, 0);
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 3rem;
+  font-weight: bolder;
+}
+
+.exit-layout:hover {
+  color: white;
+}
+
 .slide-fade-enter-active {
   transition: all 0.3s ease-out;
 }

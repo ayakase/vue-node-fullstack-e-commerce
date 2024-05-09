@@ -165,12 +165,8 @@ function sendOrder() {
         }
         baseUrl.post("/client/order", orderData)
             .then(response => {
-                showOverlay.value = false
-                toast.success(response.data, {
-                    autoClose: 2000,
-                    theme: "colored",
-                    position: toast.POSITION.BOTTOM_RIGHT,
-                });
+                   console.log(response.data);
+                   window.location.href = response.data
             })
             .catch(error => {
                 showOverlay.value = false

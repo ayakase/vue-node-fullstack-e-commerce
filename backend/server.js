@@ -5,11 +5,13 @@ const PORT = 3000;
 const cors = require("cors");
 const cookieParser = require('cookie-parser');
 const routes = require('./routes');
+app.use(express.static('payment'));
+
 require('./cronjobs/countAdd.js')
 require('./cronjobs/fetchMenu.js')
 require("dotenv").config();
 
-var whitelist = [process.env.FE_URL, process.env.FE_LOCAL_URL, process.env.FE_NGINX_URL]
+var whitelist = [process.env.FE_URL, process.env.FE_LOCAL_URL]
 var corsOptions = {
   origin: function (origin, callback) {
     if (!origin) {

@@ -1,5 +1,5 @@
 <script setup>
-import PlaceModal from '../../components/PlaceModal.vue'
+import OrderModal from '../../components/OrderModal.vue'
 import AdvisoryModal from '../../components/AdvisoryModal.vue';
 import { onMounted, ref } from 'vue';
 import baseUrl from '../../connect';
@@ -86,9 +86,9 @@ let tabSec2 = ref()
 
         </ol>
     </nav>
-    <PlaceModal v-if="tourDetail" :tourId="tourId" :childPrice="childPrice" :adultPrice="adultPrice"
+    <OrderModal v-if="tourDetail" :tourId="tourId" :childPrice="childPrice" :adultPrice="adultPrice"
         :teenagerPrice="teenagerPrice" :infantPrice="infantPrice" :tourTitle="tourTitle">
-    </PlaceModal>
+    </OrderModal>
     <AdvisoryModal v-if="tourDetail" :tourId="tourId" :tourTitle="tourTitle"></AdvisoryModal>
     <hr class="hr" />
     <div v-if="tourDetail" class="content-container-outer">

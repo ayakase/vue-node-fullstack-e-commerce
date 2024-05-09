@@ -9,49 +9,64 @@ const upload = multer({ storage: storage });
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 const client = require('../../redisClient');
-
-router.post('/', upload.none(), (req, res) => {
-    const key = `order_limit:${req.ip}`;
-    console.log(key);
-    client.exists(key, (err, exists) => {
-        if (err) {
-            console.error('Redis error:', err);
-            res.status(500).send('Internal Server Error');
+const DOMAIN = 'http://localhost:3000'
+const PayOS = require("@payos/node");
+const payos = new PayOS(process.env.PAYOS_CLIENT_ID, process.env.PAYOS_API_KEY, process.env.PAYOS_CHECKSUM_KEY);
+router.post('/', upload.none(), async (req, res) => {
+    try {
+        const order = {
+            amount: 5000,
+            description: 'Thanh toán đơn hàng',
+            orderCode: 7,
+            returnUrl: `${DOMAIN}/success.html`,
+            cancelUrl: `${DOMAIN}/cancel.html`
         }
-        if (exists) {
-            client.incr(key, (err, count) => {
-                if (err) {
-                    console.error('Redis error:', err);
-                    res.status(500).send('Internal Server Error');
-                }
-                if (count > 5) {
-                    client.ttl(key, (err, ttl) => {
-                        if (err) {
-                            console.error('Error:', err);
-                            return;
-                        }
-                        let timeLeft
-                        if (ttl < 60) {
-                            timeLeft = `${ttl} giây`
-                        } else {
-                            timeLeft = `${Math.round(ttl / 60)} phút`
-                        }
-                        res.status(429).send(`Quá nhiều yêu cầu, thử lại sau ${timeLeft}`);
-                    });
-                } else {
-                    addToDatabase()
-                }
-            });
-        } else {
-            client.setex(key, 30, 1, (err) => {
-                if (err) {
-                    console.error('Redis error:', err);
-                    res.status(500).send('Internal Server Error');
-                }
-                addToDatabase()
-            });
-        }
-    })
+        const paymentLink = await payos.createPaymentLink(order)
+        res.send(paymentLink.checkoutUrl)
+    } catch (err) {
+        console.error(err)
+        res.status(500).send('Lỗi gì đấy idk');
+    }
+    // const key = `order_limit:${req.ip}`;
+    // client.exists(key, (err, exists) => {
+    //     if (err) {
+    //         console.error('Redis error:', err);
+    //         res.status(500).send('Internal Server Error');
+    //     }
+    //     if (exists) {
+    //         client.incr(key, (err, count) => {
+    //             if (err) {
+    //                 console.error('Redis error:', err);
+    //                 res.status(500).send('Internal Server Error');
+    //             }
+    //             if (count > 5) {
+    //                 client.ttl(key, (err, ttl) => {
+    //                     if (err) {
+    //                         console.error('Error:', err);
+    //                         return;
+    //                     }
+    //                     let timeLeft
+    //                     if (ttl < 60) {
+    //                         timeLeft = `${ttl} giây`
+    //                     } else {
+    //                         timeLeft = `${Math.round(ttl / 60)} phút`
+    //                     }
+    //                     res.status(429).send(`Quá nhiều yêu cầu, thử lại sau ${timeLeft}`);
+    //                 });
+    //             } else {
+    //                 addToDatabase()
+    //             }
+    //         });
+    //     } else {
+    //         client.setex(key, 30, 1, (err) => {
+    //             if (err) {
+    //                 console.error('Redis error:', err);
+    //                 res.status(500).send('Internal Server Error');
+    //             }
+    //             addToDatabase()
+    //         });
+    //     }
+    // })
     function addToDatabase() {
         // console.log('add to database')
         // res.status(200).send('Added')

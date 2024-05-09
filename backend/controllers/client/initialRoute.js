@@ -12,7 +12,7 @@ router.post("/count", (req, res) => {
             return;
         }
         if (result === 1) {
-            client.incr("count", (err, value) => {
+            client.incrby("count", 7, (err, value) => {
                 if (err) {
                     console.error('Error incrementing key:', err);
                 } else {
