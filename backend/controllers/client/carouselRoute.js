@@ -99,4 +99,20 @@ router.get("/post-grid", (req, res) => {
             console.error(error);
         });
 });
+router.get("/posts", (req, res) => {
+    Post.findAndCountAll({
+        where: {
+            publish: true,
+        },
+        order: [["createdAt", 'DESC']],
+        limit: 10,
+    })
+        .then((result) => {
+            const { count, rows } = result;
+            res.send(result);
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+});
 module.exports = router;

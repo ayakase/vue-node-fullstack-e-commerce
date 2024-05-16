@@ -89,9 +89,9 @@ const router = createRouter({
     {
       path: '/that-bai',
       name: 'dat tour that bai',
-      component: () => import('../views/client/DiscountView.vue'),
+      component: () => import('../views/client/OrderFailed.vue'),
       meta: {
-        showNavbar: true,
+        showNavbar: false,
       },
     },
 

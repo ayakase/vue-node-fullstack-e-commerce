@@ -45,6 +45,20 @@ router.get("/revenue", (req, res) => {
             console.error('Error:', err);
         });
 });
+router.get("/cancel-rate", async (req, res) => {
+    let paid = await Order.count({
+        where: {
+            paid: true
+        }
+    })
+    let cancel = await Order.count({
+        where: {
+            paid: false
+        }
+    })
+    console.log(paid, cancel)
+    res.json({paid: paid, cancel: cancel})
+})
 router.get("/guest", async (req, res) => {
     try {
         const [sumAdult, sumTeenager, sumChildren, sumInfant] = await Promise.all([

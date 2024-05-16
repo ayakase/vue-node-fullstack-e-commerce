@@ -28,15 +28,14 @@
             <i v-if="publishState" style="color: rgb(0, 102, 255)" class="fa-regular fa-paper-plane"></i>
         </div>
         <div>
-            <Editor style="height: 50rem" v-model="postContent" api-key="8gzqmdnsiplu2pd33s0doas4xo8735024fznwlgttd4ldri6"
-                :init="{
-                    plugins:
-                        '  lists advlist link image table code help wordcount autosave emoticons',
-                    toolbar:
-                        ' forecolor backcolor | undo redo | styleselect | bold italic | ' +
-                        'alignleft aligncenter alignright alignjustify | ' +
-                        'outdent indent | numlist bullist | emoticons',
-                }" />
+            <Editor style="height: 50rem" v-model="postContent" :api-key="tinyMceKey" :init="{
+        plugins:
+            '  lists advlist link image table code help wordcount autosave emoticons',
+        toolbar:
+            ' forecolor backcolor | undo redo | styleselect | bold italic | ' +
+            'alignleft aligncenter alignright alignjustify | ' +
+            'outdent indent | numlist bullist | emoticons',
+    }" />
         </div>
         <div class="mt-10 mb-2"></div>
         <div @click="editPost" class="btn btn-success" style="margin-top: 1rem; right: 0; float: right">
@@ -44,7 +43,7 @@
         </div>
     </div>
 </template>
-  
+
 <script setup>
 import LoadingOverlay from "../../components/LoadingOverlay.vue";
 import baseUrl from "../../connect";
@@ -53,7 +52,8 @@ import "vue3-toastify/dist/index.css";
 import Editor from "@tinymce/tinymce-vue";
 import { ref, onMounted, watch } from "vue";
 import { useRoute } from "vue-router";
-import slugify from 'slugify'
+const tinyMceKey = import.meta.env.VITE_TINYMCE
+
 const publishState = ref(true);
 const showOverlay = ref(false);
 const thumbnailSrc = ref();
@@ -121,7 +121,7 @@ function editPost() {
         });
 }
 </script>
-  
+
 <style scoped>
 .add-container {
     width: 75vw;
@@ -149,4 +149,3 @@ function editPost() {
     color: rgb(75, 75, 75);
 }
 </style>
-  

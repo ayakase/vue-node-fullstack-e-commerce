@@ -1,33 +1,52 @@
 <template>
     <div class="outer-container">
         <div class="first-section">
-
-            <div style="display: flex;flex-direction: column;gap: 1.65rem;">
-                <div class="access-number">
+            <div style="display: flex;flex-direction: row;gap: 1.65rem;justify-content: space-between;width:100%">
+                <div class="count-container">
+                    <h4 style="text-align: center;">Tổng doanh thu</h4>
+                    <count-up class="count-number" :start-val="revenueCountStart" :end-val="revenueCount"
+                        :duration="2"></count-up>
+                    <h4 style="text-align: center;color: red;">VNĐ</h4>
+                </div>
+                <div class="count-container">
                     <h4 style="text-align: center;">Tổng lượt truy cập</h4>
-                    <count-up class="count-number" :end-val="viewCount" :duration="1"></count-up>
+                    <count-up class="count-number" :start-val="viewCountStart" :end-val="viewCount"
+                        :duration="1"></count-up>
                 </div>
-                <div class="access-number">
-                    <h4 style="text-align: center;">Tổng số đặt tour</h4>
-                    <count-up class="count-number" :end-val="orderCount" :duration="1"></count-up>
+                <div class="count-container">
+                    <h4 style="text-align: center;">Tổng số lượt đặt tour</h4>
+                    <count-up class="count-number" :start-val="orderCountStart" :end-val="orderCount"
+                        :duration="1"></count-up>
                 </div>
-                <div class="advise-number">
+                <div class="count-container">
                     <h4 style="text-align: center;">Tổng yêu cầu tư vấn</h4>
-                    <count-up class="count-number" :end-val="adviseCount" :duration="1"></count-up>
+                    <count-up class="count-number" :start-val="adviseCountStart" :end-val="adviseCount"
+                        :duration="1"></count-up>
                 </div>
             </div>
-            <div class="second-column">
-                <div class="revenue-number">
-                    <h4 style="text-align: center;">Tổng doanh thu</h4>
-                    <count-up class="count-number" :end-val="revenueCount" :duration="2"></count-up>
-                    <h4 style="text-align: center;color: red;">VNĐ</h4>
-
+        </div>
+        <div class="second-section">
+            <div style="width:35%; display: flex;flex-direction: column; gap:1rem;">
+                <div class="day-chart" v-if="daydata">
+                    <h4 style="text-align: center;">Thống kê lượt đặt tour theo ngày</h4>
+                    <Bar :data="daydata" :options="orderChartOption" />
                 </div>
                 <div class="ratio-order-chart">
                     <h4 style="text-align: center;margin-top: 1rem;">Tỉ lệ đặt tour, yêu cầu tư vấn/ lượt truy cập</h4>
                     <Pie v-if="orderRatio" :data="orderRatio" :options="options"></Pie>
                 </div>
-
+            </div>
+            <div style="width: 35%;display: flex;flex-direction: column; gap:1rem;">
+                <div class="revenue-chart" v-if="revenuedata">
+                    <h4 style="text-align: center;">Biến động doanh thu theo ngày</h4>
+                    <Line :data="revenuedata" :options="orderChartOption" />
+                </div>
+                <div class="ratio-order-chart">
+                    <h4 style="text-align: center;padding-top: 1rem;">Tỉ lệ thanh toán/ hủy, chưa thanh toán
+                    </h4>
+                    <Pie v-if="cancelRatio" :data="cancelRatio" :options="options">
+                    </Pie>
+                </div>
             </div>
             <div class="notification">
                 <div
@@ -37,33 +56,32 @@
                         style="margin-right: 2rem;font-size: large;"><i
                             class="fa-solid fa-arrow-rotate-right"></i></button>
                 </div>
-                <div class=" noti-container">
+                <div class="noti-container">
                     <div v-if="notification" class="each-noti" v-for="item in notification" :key="item.id">
                         <p v-html="item.action"></p>
-                        <p style="color: rgb(75, 75, 75);text-align: end;">vào lúc {{
+                        <p style="color: rgb(75, 75, 75);text-align: end;">{{
                         formatDate(item.createdAt) }}</p>
                     </div>
                     <TableLoading v-else></TableLoading>
+
                 </div>
                 <v-pagination @click="fetchNotification" v-model="notiPage" :length=notiTotalPage :total-visible="3"
                     prev-icon="fa-solid fa-chevron-left" next-icon="fa-solid fa-chevron-right"></v-pagination>
             </div>
-        </div>
-        <div class="chart-container">
-            <div class="day-chart">
-                <Bar v-if="daydata" :data="daydata" :options="orderChartOption" />
-            </div>
-            <div class="revenue-chart">
-                <Line v-if="revenuedata" :data="revenuedata" :options="orderChartOption" />
-            </div>
+            <!-- <div class="ratio-order-chart">
+                <h4 style="text-align: center;margin-top: 1rem;">Tỉ lệ đặt tour, yêu cầu tư vấn/ lượt truy cập</h4>
+                <Pie v-if="orderRatio" :data="orderRatio" :options="options"></Pie>
 
+            </div> -->
         </div>
+
         <div class="lower-section">
             <div class="ratio-guest-chart">
                 <h4 style="text-align: center;padding-top: 1rem;">Tệp khách hàng</h4>
                 <Doughnut v-if="guestRatio" :data="guestRatio" :options="options">
                 </Doughnut>
             </div>
+
         </div>
     </div>
 </template>
@@ -85,19 +103,26 @@ import {
     LineElement,
     ArcElement
 } from 'chart.js'
-import { onMounted, ref, watch } from 'vue';
+import { onMounted, onUnmounted, ref, watch } from 'vue';
 import { Bar, Line, Pie, Doughnut } from 'vue-chartjs'
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, LineElement, PointElement, ArcElement, Legend)
+
 let viewCount = ref(null)
+let viewCountStart = ref(0)
 let orderCount = ref(null)
+let orderCountStart = ref(0)
 let adviseCount = ref(null)
+let adviseCountStart = ref(0)
 let revenueCount = ref()
+let revenueCountStart = ref(0)
 let notification = ref()
 let notiTotalPage = ref()
 let notiPage = ref(1)
 let daydata = ref()
 const orderRatio = ref(null)
 const guestRatio = ref(null)
+const cancelRatio = ref(null)
+
 watch([viewCount, orderCount, adviseCount], async ([newViewCount, newOrderCount, newAdviseCount], [oldViewCount, oldOrderCount, oldAdviseCount]) => {
     if (newViewCount !== null && newOrderCount !== null && adviseCount !== null) {
         orderRatio.value = {
@@ -123,8 +148,8 @@ watch([viewCount, orderCount, adviseCount], async ([newViewCount, newOrderCount,
         }
     }
 })
+
 function fetchNotification() {
-    notification.value = null
     baseUrl.get('/admin/notification/' + notiPage.value).then((response) => {
         notification.value = response.data.rows
         notiTotalPage.value = response.data.count / 10 + 1
@@ -132,7 +157,12 @@ function fetchNotification() {
         console.log(error)
     });
 }
+
 function fetchCount() {
+    viewCountStart.value = viewCount.value
+    orderCountStart.value = orderCount.value
+    adviseCountStart.value = adviseCount.value
+    revenueCountStart.value = revenueCount.value
     baseUrl.get('/admin/count/view').then((response) => {
         viewCount.value = response.data.count
     }).catch((error) => {
@@ -154,6 +184,7 @@ function fetchCount() {
         console.log(error)
     })
 }
+
 function fetchGuestType() {
     baseUrl.get('/admin/chart/guest').then((response) => {
         let guestNumber = Object.values(response.data)
@@ -185,6 +216,34 @@ function fetchGuestType() {
         console.log(error)
     })
 }
+
+function fetchCancelRate() {
+    baseUrl.get('/admin/chart/cancel-rate').then((response) => {
+        let cancelNumber = Object.values(response.data)
+        console.log(cancelNumber)
+        cancelRatio.value = {
+            labels: [
+                'Đã thanh toán',
+                'Chưa thanh toán/ hủy tour',
+            ],
+            datasets: [{
+                labels: [
+                    'Đã thanh toán',
+                    'Chưa thanh toán/ hủy tour',
+                ],
+                data: cancelNumber,
+                backgroundColor: [
+                    '#41B883',
+                    'rgb(255, 99, 132)',
+                ],
+                hoverOffset: 4
+            }]
+        }
+    }).catch((error) => {
+        console.log(error)
+    })
+}
+
 let revenuedata = ref(null)
 function fetchRevenueChart() {
     baseUrl.get('admin/chart/revenue').then((response) => {
@@ -252,6 +311,11 @@ function fetchDayChart() {
 
 let options = {
     responsive: true,
+    plugins: {
+        legend: {
+            position: 'bottom'
+        }
+    }
 }
 let orderChartOption = {
     plugins: {
@@ -260,20 +324,32 @@ let orderChartOption = {
         }
     }
 }
-onMounted(() => {
+function callAll() {
     fetchCount()
     fetchGuestType()
     fetchNotification()
     fetchDayChart()
     fetchRevenueChart()
+    fetchCancelRate()
+}
+let intervalId
+onMounted(() => {
+    callAll();
+    intervalId = setInterval(() => {
+        callAll();
+    }, 60000);
 })
+onUnmounted(() => {
+    if (intervalId) {
+        clearInterval(intervalId);
+    }
 
+})
 function formatDate(date) {
     const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
     return new Date(date).toLocaleString('vi-VN', options).replace(' tháng ', '/').replace('lúc', '').replace(', ', '/');
 }
 </script>
-
 <style scoped>
 p {
     margin: 0;
@@ -288,43 +364,39 @@ p {
     flex-wrap: wrap;
 }
 
+.second-section {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    /* justify-content: space-between; */
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
 .notification {
-    height: 51rem;
-    width: 45%;
     background-color: #cdecde;
-    border-radius: 1rem;
-    overflow: hidden;
+    border-radius: .3rem;
     padding-left: 1rem;
     padding-top: 1rem;
-    padding-bottom: 2rem;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-
-}
-
-.ratio-order-chart {
-    background-color: #cdecde;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    border-radius: 1rem;
-}
-
-.ratio-guest-chart {
-    width: 50%;
-    background-color: #cdecde;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    border-radius: 1rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .noti-container {
-    height: 88%;
+    /* height: 100%; */
+    flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 0.2rem;
-
+    gap: .2rem;
+    /* justify-content: space-between; */
 }
 
 .each-noti {
     width: 98%;
-    border-radius: 0.3rem;
+    font-size: .8rem;
+    border-radius: .3.3rem;
     /* height: 8rem; */
     background-color: #bbdccd;
     padding: 0.5rem;
@@ -333,51 +405,48 @@ p {
     justify-content: space-between;
 }
 
-.access-number {
-    height: 10rem;
+.ratio-order-chart {
+    width: 100%;
+    height: 100%;
     background-color: #cdecde;
-    width: 10rem;
-    padding: 0.5rem;
-    padding-top: 1.5rem;
-    border-radius: 1rem;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-
+    border-radius: .3rem;
 }
 
-.revenue-number {
+.ratio-guest-chart {
+    width: 40%;
+    background-color: #cdecde;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: .3rem;
+}
+
+
+
+.count-container {
     height: 10rem;
     background-color: #cdecde;
     width: 100%;
     padding: 0.5rem;
     padding-top: 1.5rem;
-    border-radius: 1rem;
+    border-radius: .3rem;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 
 }
 
-.advise-number {
-    height: 10rem;
-    background-color: #cdecde;
-    width: 10rem;
-    padding: 0.5rem;
-    padding-top: 1.5rem;
-    border-radius: 1rem;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-
-}
 
 .count-number {
     text-align: center;
-    font-size: 2rem;
+    font-size: 2.5rem;
     font-weight: bold;
+    /* width: 20rem; */
     color: red;
 }
 
 .day-chart,
 .revenue-chart {
-    width: 49%;
-    padding: 2rem;
-    border-radius: 1rem;
+    width: 100%;
+    padding: 1rem;
+    border-radius: .3rem;
     background-color: #cdecde;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
@@ -389,15 +458,7 @@ p {
     margin-top: 2rem;
 }
 
-.chart-container {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    margin-top: 1rem;
-}
+
 
 .each-noti p:first-child {
     /* width: 33rem; */
@@ -407,15 +468,10 @@ p {
     white-space: initial;
 }
 
-.second-column {
-    width: 35%;
-    height: inherit;
-    display: flex;
-    flex-direction: column;
-    gap: 3rem;
-}
+
 
 .lower-section {
+    display: flex;
     margin-top: 2rem;
 }
 </style>

@@ -1,9 +1,7 @@
 <template>
-    <div style="display: flex;flex-direction: row;justify-content: center;">
-        <div class="lds-ripple">
-            <div></div>
-            <div></div>
-        </div>
+    <div style="display: flex;flex-direction: row;justify-content: center;align-items:center;height: 10rem;">
+        <div class="loader"></div>
+
     </div>
 </template>
 
@@ -13,61 +11,62 @@ export default {
 }
 </script>
 <style scoped>
-.lds-ripple,
-.lds-ripple div {
-    box-sizing: border-box;
-}
-
-.lds-ripple {
-    display: inline-block;
-    position: relative;
-    width: 80px;
-    height: 80px;
-}
-
-.lds-ripple div {
-    position: absolute;
-    border: 4px solid currentColor;
-    opacity: 1;
+/* HTML: <div class="loader"></div> */
+.loader {
+    width: 50px;
+    aspect-ratio: 1;
     border-radius: 50%;
-    animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+    border: 8px solid #128c72;
+    animation:
+        l20-1 0.8s infinite linear alternate,
+        l20-2 1.6s infinite linear;
 }
 
-.lds-ripple div:nth-child(2) {
-    animation-delay: -0.5s;
-}
-
-@keyframes lds-ripple {
+@keyframes l20-1 {
     0% {
-        top: 36px;
-        left: 36px;
-        width: 8px;
-        height: 8px;
-        opacity: 0;
+        clip-path: polygon(50% 50%, 0 0, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%)
     }
 
-    4.9% {
-        top: 36px;
-        left: 36px;
-        width: 8px;
-        height: 8px;
-        opacity: 0;
+    12.5% {
+        clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 0%, 100% 0%, 100% 0%)
     }
 
-    5% {
-        top: 36px;
-        left: 36px;
-        width: 8px;
-        height: 8px;
-        opacity: 1;
+    25% {
+        clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 100%, 100% 100%, 100% 100%)
+    }
+
+    50% {
+        clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 100%, 50% 100%, 0% 100%)
+    }
+
+    62.5% {
+        clip-path: polygon(50% 50%, 100% 0, 100% 0%, 100% 0%, 100% 100%, 50% 100%, 0% 100%)
+    }
+
+    75% {
+        clip-path: polygon(50% 50%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 50% 100%, 0% 100%)
     }
 
     100% {
-        top: 0;
-        left: 0;
-        width: 80px;
-        height: 80px;
-        opacity: 0;
+        clip-path: polygon(50% 50%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 0% 100%)
+    }
+}
+
+@keyframes l20-2 {
+    0% {
+        transform: scaleY(1) rotate(0deg)
+    }
+
+    49.99% {
+        transform: scaleY(1) rotate(135deg)
+    }
+
+    50% {
+        transform: scaleY(-1) rotate(0deg)
+    }
+
+    100% {
+        transform: scaleY(-1) rotate(-135deg)
     }
 }
 </style>

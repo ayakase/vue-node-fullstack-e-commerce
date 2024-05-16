@@ -28,6 +28,7 @@ var corsOptions = {
 app.use(cookieParser());
 app.set("trust proxy", true);
 app.get("/", (req, res) => {
+  console.log("request main")
   res.send("Server running")
 })
 app.use('/', cors(corsOptions), routes)

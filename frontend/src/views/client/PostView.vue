@@ -3,53 +3,67 @@ import { onMounted, ref } from 'vue';
 import baseUrl from '../../connect';
 import { useRoute } from 'vue-router';
 import HotTours from '../../components/HotTours.vue';
+import CategoryList from '../../components/CategoryList.vue';
 const route = useRoute();
 const hotTour = ref()
 let postDetail = ref()
+import DesktopSplide from '../../components/DesktopSplide.vue';
+import MobileSplide from '../../components/MobileSplide.vue';
+let postArray = ref()
 onMounted(() => {
     baseUrl.get("client/each-post/" + route.params.slug).then(response => {
         postDetail.value = response.data[0]
     }).catch((error) => {
         console.error(error);
     });
-    // baseUrl.get("/client/category/hot-sidebar")
-    //     .then(response => {
-
-    //         hotTour.value = response.data.rows
-    //     }).catch((error) => {
-    //         console.error(error);
-    //     });
+    baseUrl.get('/client/carousel/posts').then((response) => {
+        postArray.value = response.data.rows
+    })
 })
 
 </script>
 <template>
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><i class="fa-solid fa-house"></i> <a href="/" class="home-breadcrumb">Trang
-                    chủ</a></li>
+    <div class="post-container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><i class="fa-solid fa-house"></i> <a href="/" class="home-breadcrumb">Trang
+                        chủ</a></li>
 
-            <li class="breadcrumb-item">Bài viết</li>
-            <li v-if="postDetail" class="breadcrumb-item">{{ postDetail.title }} </li>
+                <li class="breadcrumb-item">Bài viết</li>
+                <li v-if="postDetail" class="breadcrumb-item">{{ postDetail.title }} </li>
 
-        </ol>
-    </nav>
-    <!-- :title="gameTitle" :description="gameDescription" :download="downloadUrl" -->
-    <hr class="hr" />
-    <div v-if="postDetail" class="content-container-outer">
+            </ol>
+        </nav>
+        <hr class="hr" />
+        <div v-if="postDetail" class="content-container-outer">
+            <div class="left-side-bar">
+                <CategoryList style="position: sticky;top: 5rem;"></CategoryList>
+            </div>
+            <div class="main-content">
+                <h1 style="margin-bottom: 5rem;"> {{ postDetail.title }}</h1>
+                <div v-html="postDetail.content"></div>
 
-        <div class="main-content">
-            <h1 style="margin-bottom: 5rem;"> {{ postDetail.title }}</h1>
-            <div v-html="postDetail.content"></div>
+            </div>
+            <div class="right-side-bar">
+                <HotTours style="position: sticky;top: 5rem;"></HotTours>
+            </div>
         </div>
-        <div class="side-bar">
-            <HotTours></HotTours>
+        <DesktopSplide :itemList="postArray"></DesktopSplide>
+        <MobileSplide :itemList="postArray"></MobileSplide>
+        <!-- <LoadingComponent v-else></LoadingComponent> -->
+        <div>
         </div>
-    </div>
-    <LoadingComponent v-else></LoadingComponent>
-    <div>
     </div>
 </template>
 <style scoped>
+.post-container {
+    width: 90%;
+    margin: auto;
+
+}
+
+
+
 .breadcrumb {
     margin-top: 1rem;
 }
@@ -69,11 +83,11 @@ onMounted(() => {
     padding-top: 1rem;
     margin: auto;
     padding: auto;
-    width: 90%;
-    overflow: hidden;
+    /* width: ; */
+    /* overflow: hidden; */
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: space-between;
     gap: 2rem;
 }
@@ -104,17 +118,34 @@ onMounted(() => {
     background-color: #86c5a9;
 }
 
-.side-bar {
+.left-side-bar,
+.right-side-bar {
     width: 25rem;
-    height: 100%;
     box-sizing: border-box;
+    /* height: 100vh; */
     padding: 1rem;
+    /* position: sticky;
+    top: 0; */
     border-radius: 1rem;
 }
 
 @media screen and (max-width: 1136px) {
-    /* .side-bar {
+
+    /* .right-side-bar {
         display: none;
     } */
+    .left-side-bar,
+    .right-side-bar {
+        display: none;
+    }
+
+    .main-content {
+        width: 100%;
+    }
+
+    :deep(img) {
+        width: 100%;
+        object-fit: contain;
+    }
 }
 </style>

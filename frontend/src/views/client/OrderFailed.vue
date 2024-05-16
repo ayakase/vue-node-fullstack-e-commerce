@@ -1,15 +1,15 @@
 <template>
     <div style="display: flex;justify-content: center;align-items: center;height: 100vh;">
-        <div class="payment-success">
+        <div class="payment-failed">
             <div class="icon">
                 <!-- You can replace this with your own success icon -->
-                <v-icon style="font-size: 10rem;color:green;" icon="fa-solid fa-check fa-beat-fade">
+                <v-icon style="font-size: 10rem;color:red;" icon="fa-solid fa-xmark fa-beat-fade">
 
                 </v-icon>
             </div>
-            <h1>Thanh toán thành công!</h1>
-            <p>Hóa đơn đã được gửi về email của bạn. Chúng tôi sẽ liên lạc lại trong thời gian sớm nhất</p>
+            <h1>Đã hủy thanh toán</h1>
             <a style="font-size: x-large;" href="/">Quay về trang chủ</a>
+
         </div>
     </div>
 </template>
@@ -19,7 +19,7 @@
 </script>
 
 <style scoped>
-.payment-success {
+.payment-failed {
     width: 40%;
     text-align: center;
     padding: 20px;
@@ -33,7 +33,7 @@
 }
 
 h1 {
-    color: #4caf50;
+    color: red;
 }
 
 p {
@@ -41,7 +41,7 @@ p {
 }
 
 button {
-    background-color: #4caf50;
+    background-color: red;
     color: white;
     border: none;
     padding: 10px 20px;

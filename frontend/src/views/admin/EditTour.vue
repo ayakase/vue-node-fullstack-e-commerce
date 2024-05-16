@@ -205,7 +205,7 @@
                     </button>
                 </h2>
                 <div id="accordion-special" class="accordion-collapse collapse show">
-                    <Editor v-model="tourSpecial" api-key="8gzqmdnsiplu2pd33s0doas4xo8735024fznwlgttd4ldri6" :init="{
+                    <Editor v-model="tourSpecial" :api-key="tinyMceKey" :init="{
         plugins:
             '  lists advlist link image table code help wordcount autosave emoticons',
         toolbar:
@@ -223,7 +223,7 @@
                     </button>
                 </h2>
                 <div id="accordion-bonus" class="accordion-collapse collapse">
-                    <Editor v-model="tourBonus" api-key="8gzqmdnsiplu2pd33s0doas4xo8735024fznwlgttd4ldri6" :init="{
+                    <Editor v-model="tourBonus" :api-key="tinyMceKey" :init="{
         plugins:
             '  lists advlist link image table code help wordcount autosave emoticons',
         toolbar:
@@ -241,7 +241,7 @@
                     </button>
                 </h2>
                 <div id="accordion-visa" class="accordion-collapse collapse">
-                    <Editor v-model="tourVisa" api-key="8gzqmdnsiplu2pd33s0doas4xo8735024fznwlgttd4ldri6" :init="{
+                    <Editor v-model="tourVisa" :api-key="tinyMceKey" :init="{
         plugins:
             '  lists advlist link image table code help wordcount autosave emoticons',
         toolbar:
@@ -259,7 +259,7 @@
                     </button>
                 </h2>
                 <div id="accordion-detail" class="accordion-collapse collapse">
-                    <Editor v-model="tourDetail" api-key="8gzqmdnsiplu2pd33s0doas4xo8735024fznwlgttd4ldri6" :init="{
+                    <Editor v-model="tourDetail" :api-key="tinyMceKey" :init="{
         plugins:
             '  lists advlist link image table code help wordcount autosave emoticons',
         toolbar:
@@ -278,7 +278,7 @@
                     </button>
                 </h2>
                 <div id="accordion-price-service" class="accordion-collapse collapse">
-                    <Editor v-model="tourPriceService" api-key="8gzqmdnsiplu2pd33s0doas4xo8735024fznwlgttd4ldri6" :init="{
+                    <Editor v-model="tourPriceService" :api-key="tinyMceKey" :init="{
         plugins:
             ' lists advlist link image table code help wordcount autosave emoticons',
         toolbar:
@@ -296,7 +296,7 @@
                     </button>
                 </h2>
                 <div id="accordion-guide" class="accordion-collapse collapse">
-                    <Editor v-model="tourGuide" api-key="8gzqmdnsiplu2pd33s0doas4xo8735024fznwlgttd4ldri6" :init="{
+                    <Editor v-model="tourGuide" :api-key="tinyMceKey" :init="{
         plugins:
             '  lists advlist link image table code help wordcount autosave emoticons',
         toolbar:
@@ -325,8 +325,8 @@ import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
 import Editor from "@tinymce/tinymce-vue";
 import { ref, computed, onMounted, watch } from "vue";
+const tinyMceKey = import.meta.env.VITE_TINYMCE
 const publishState = ref(true);
-
 let images = ref()
 let files = ref([])
 let showOverlay = ref(false)

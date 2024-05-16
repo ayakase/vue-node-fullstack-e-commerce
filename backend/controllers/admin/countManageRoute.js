@@ -27,7 +27,11 @@ router.get("/advisory", (req, res) => {
     })
 })
 router.get("/revenue", (req, res) => {
-    Order.sum("price").then((sum) => {
+    Order.sum("price", {
+        where: {
+            paid: true
+        }
+    }).then((sum) => {
         res.send(sum.toString());
     }).catch((err) => {
         console.log(err)

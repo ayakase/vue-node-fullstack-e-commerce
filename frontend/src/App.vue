@@ -18,7 +18,7 @@ const loginStore = useLoginStore()
 const menuData = ref()
 const showLayout = ref()
 onMounted(() => {
-  console.log(route.meta.showNavbar)
+  // console.log(route.meta.showNavbar)
   loginStore.checkLogin()
   baseUrl.post("/client/initial/count").then(() => { }).catch((error) => {
     console.log(error)
@@ -70,7 +70,7 @@ onMounted(() => {
   </div>
   <PageFooter v-if="route.meta.showNavbar"></PageFooter>
   <MessengerBtn></MessengerBtn>
-  <div v-if="showLayout" class="layout">
+  <div v-if="showLayout && route.meta.showNavbar" class="layout">
     <v-card variant="outlined" style="font-size: 2rem;color: white;width: 90%;padding: 1rem;">
       <div>
         Đây chỉ là một trang web Demo, được build bằng VueJS, Bootstrap, ChartJS, NodeJS, JWT, Redis, MySQL, Sequelize,
@@ -95,7 +95,9 @@ onMounted(() => {
 .layout {
   position: fixed;
   top: 0;
-  background-color: rgba(0, 0, 0, 0.734);
+  /* background-color: rgba(0, 0, 0, 0.734); */
+  background-color: rgba(0, 0, 0, 0.672);
+
   width: 100vw;
   height: 100vh;
   z-index: 999999999999;

@@ -74,7 +74,7 @@ let tabSec2 = ref()
 
 </script>
 <template>
-    <LoadingOverlay v-if="showOverlay"></LoadingOverlay>
+    <!-- <LoadingOverlay v-if="showOverlay"></LoadingOverlay> -->
 
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -96,9 +96,7 @@ let tabSec2 = ref()
             <h2 class="tour-title">{{ tourDetail.title }}</h2>
             <Splide class="slide-container " v-if="imageArray && imageArray[0] != ''" :options=options aria-label="">
                 <SplideSlide v-for=" slide  in  imageArray " :key="slide">
-                    <a>
-                        <v-img class="slide-image" :src="slide"></v-img>
-                    </a>
+                    <v-img cover class="slide-image" :src="slide"></v-img>
                 </SplideSlide>
             </Splide>
 
@@ -169,7 +167,7 @@ let tabSec2 = ref()
                 <p>Khởi hành: <span style="color: #ff6b00;">{{ tourDetail.departure }}</span></p>
                 <p>Vận chuyển: <span style="color: #ff6b00;">{{ tourDetail.transportation }}</span></p>
                 <div style="height: 5rem;"></div>
-                <p>Gia goc <span style="color: #ff6b00;">{{ numeralFormat(tourDetail.original_price) }}</span></p>
+                <p>Giá gốc: <span style="color: #ff6b00;">{{ numeralFormat(tourDetail.original_price) }}</span></p>
                 <p>Giá tour: <span style="color: #ff6b00;">{{ numeralFormat(tourDetail.adult_price) }}</span></p>
                 <div class="action-button">
                     <button class="btn place-btn" data-bs-toggle="modal" data-bs-target="#placeModal">Đặt tour</button>
@@ -182,8 +180,8 @@ let tabSec2 = ref()
     <LoadingComponent v-else></LoadingComponent>
     <div>
         <h3 style="text-align: center;"> Tour hot</h3>
-        <DesktopSplide :tourList="hotTour"></DesktopSplide>
-        <MobileSplide :tourList="hotTour"></MobileSplide>
+        <DesktopSplide :itemList="hotTour"></DesktopSplide>
+        <MobileSplide :itemList="hotTour"></MobileSplide>
     </div>
 </template>
 <style scoped>
@@ -280,7 +278,7 @@ let tabSec2 = ref()
 
 .side-bar {
     position: sticky;
-    top: 0rem;
+    top: 4rem;
     width: 20%;
     min-width: 200px;
     height: 100%;
@@ -337,6 +335,7 @@ let tabSec2 = ref()
 
 .slide-image {
     border-radius: 1rem;
+    width: 100%;
     height: 50rem;
 }
 
@@ -356,6 +355,11 @@ let tabSec2 = ref()
     .content-container-outer {
         width: 100%;
         flex-wrap: wrap;
+    }
+
+    :deep(img) {
+        width: 100%;
+        object-fit: contain;
     }
 
     .main-content {

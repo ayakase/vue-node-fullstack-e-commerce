@@ -50,7 +50,7 @@
                                 </v-main>
                         </v-layout>
                 </v-card>
-                <div class=" admin-content">
+                <div class="admin-content">
 
                         <RouterView></RouterView>
 
@@ -87,8 +87,10 @@ function logout() {
 </script>
 <style scoped>
 .admin-container {
+        height: 100%;
         display: flex;
         flex-direction: row;
+
 }
 
 .admin-side-item {
@@ -117,7 +119,7 @@ function logout() {
 }
 
 .admin-content {
-        height: 100vh;
+        height: 100%;
         padding-left: 4rem;
         padding-right: 4rem;
         width: 100%;

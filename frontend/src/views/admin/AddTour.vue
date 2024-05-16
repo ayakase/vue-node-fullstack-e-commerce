@@ -207,7 +207,7 @@
                     </button>
                 </h2>
                 <div id="accordion-special" class="accordion-collapse collapse show">
-                    <Editor v-model="tourSpecial" api-key="8gzqmdnsiplu2pd33s0doas4xo8735024fznwlgttd4ldri6" :init="{
+                    <Editor v-model="tourSpecial" :api-key="tinyMceKey" :init="{
         plugins:
             '  lists advlist link image table code help wordcount autosave emoticons',
         toolbar:
@@ -225,7 +225,7 @@
                     </button>
                 </h2>
                 <div id="accordion-bonus" class="accordion-collapse collapse">
-                    <Editor v-model="tourBonus" api-key="8gzqmdnsiplu2pd33s0doas4xo8735024fznwlgttd4ldri6" :init="{
+                    <Editor v-model="tourBonus" :api-key="tinyMceKey" :init="{
         plugins:
             '  lists advlist link image table code help wordcount autosave emoticons',
         toolbar:
@@ -243,7 +243,7 @@
                     </button>
                 </h2>
                 <div id="accordion-visa" class="accordion-collapse collapse">
-                    <Editor v-model="tourVisa" api-key="8gzqmdnsiplu2pd33s0doas4xo8735024fznwlgttd4ldri6" :init="{
+                    <Editor v-model="tourVisa" :api-key="tinyMceKey" :init="{
         plugins:
             '  lists advlist link image table code help wordcount autosave emoticons',
         toolbar:
@@ -261,7 +261,7 @@
                     </button>
                 </h2>
                 <div id="accordion-detail" class="accordion-collapse collapse">
-                    <Editor v-model="tourDetail" api-key="8gzqmdnsiplu2pd33s0doas4xo8735024fznwlgttd4ldri6" :init="{
+                    <Editor v-model="tourDetail" :api-key="tinyMceKey" :init="{
         plugins:
             '  lists advlist link image table code help wordcount autosave emoticons',
         toolbar:
@@ -280,7 +280,7 @@
                     </button>
                 </h2>
                 <div id="accordion-price-service" class="accordion-collapse collapse">
-                    <Editor v-model="tourPriceService" api-key="8gzqmdnsiplu2pd33s0doas4xo8735024fznwlgttd4ldri6" :init="{
+                    <Editor v-model="tourPriceService" :api-key="tinyMceKey" :init="{
         plugins:
             ' lists advlist link image table code help wordcount autosave emoticons',
         toolbar:
@@ -298,7 +298,7 @@
                     </button>
                 </h2>
                 <div id="accordion-guide" class="accordion-collapse collapse">
-                    <Editor v-model="tourGuide" api-key="8gzqmdnsiplu2pd33s0doas4xo8735024fznwlgttd4ldri6" :init="{
+                    <Editor v-model="tourGuide" :api-key="tinyMceKey" :init="{
         plugins:
             '  lists advlist link image table code help wordcount autosave emoticons',
         toolbar:
@@ -325,13 +325,13 @@ import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
 import Editor from "@tinymce/tinymce-vue";
 import { ref, computed, onMounted, watch } from "vue";
+const tinyMceKey = import.meta.env.VITE_TINYMCE
 const publishState = ref(true);
-
-let images = ref()
-let files = ref([])
-let showOverlay = ref(false)
-let loadMore = ref(false)
-let imageArray = ref([])
+const images = ref()
+const files = ref([])
+const showOverlay = ref(false)
+const loadMore = ref(false)
+const imageArray = ref([])
 import { useElementVisibility } from '@vueuse/core'
 const target = ref(null)
 const isVisible = useElementVisibility(target)
@@ -339,27 +339,27 @@ let showGallery = ref()
 function toggleGallery() {
     showGallery.value = !showGallery.value
 }
-let tourTitle = ref("");
-let tourThumbnail = ref(null);
-let tourSchedule = ref("");
-let tourType = ref("");
-let tourFrom = ref("");
-let tourLength = ref(1);
-let isHot = ref(false);
-let tourTransport = ref();
-let adultPrice = ref(0);
-let teenagerPrice = ref(0);
-let childPrice = ref(0);
-let infantPrice = ref(0)
-let tourSpecial = ref('');
-let tourBonus = ref('');
-let tourVisa = ref('');
-let tourDetail = ref('');
-let tourPriceService = ref('');
-let tourGuide = ref('');
-let recommendText = ref(0);
-let isDiscount = ref(false);
-let originalPrice = ref(0);
+const tourTitle = ref("");
+const tourThumbnail = ref(null);
+const tourSchedule = ref("");
+const tourType = ref("");
+const tourFrom = ref("");
+const tourLength = ref(1);
+const isHot = ref(false);
+const tourTransport = ref();
+const adultPrice = ref(0);
+const teenagerPrice = ref(0);
+const childPrice = ref(0);
+const infantPrice = ref(0)
+const tourSpecial = ref('');
+const tourBonus = ref('');
+const tourVisa = ref('');
+const tourDetail = ref('');
+const tourPriceService = ref('');
+const tourGuide = ref('');
+const recommendText = ref(0);
+const isDiscount = ref(false);
+const originalPrice = ref(0);
 function turnSlug(slug) {
     return slugify(slug, {
         locale: 'vi',

@@ -4,9 +4,10 @@
             <div style="font-size: larger; width: 6rem">Bộ lọc:</div>
             <div class="sorting-button-container">
                 <form class="d-flex search-container">
-                    <button class="btn btn-outline-success" @click.prevent=""><i class="fas fa-search"></i></button>
-                    <input @keydown.enter.prevent="" class="form-control me-2 search-box" type="search"
-                        placeholder="Tìm kiếm theo tên" aria-label="Search">
+                    <button class="btn btn-outline-success" @click.prevent="fetchOrder"><i
+                            class="fas fa-search"></i></button>
+                    <input @keydown.enter.prevent="fetchOrder" class="form-control me-2 search-box" type="search"
+                        placeholder="Tìm kiếm theo tên" aria-label="Search" v-model="searchTerm">
                 </form>
 
                 <div class="btn-group">
@@ -36,6 +37,10 @@
                     <th style="vertical-align: top;" scope="col">Tên khách hàng</th>
                     <th style="vertical-align: top;" scope="col">Tour</th>
                     <th style="vertical-align: top;" scope="col">Đặt lúc</th>
+                    <th style="vertical-align: top;" scope="col">Ngày khởi hành</th>
+
+                    <th scope="col">Thanh toán</th>
+                    <th>Mã giao dịch</th>
                     <th>Chi tiết</th>
                     <th style="vertical-align: top;" scope="col">Hành động</th>
                 </tr>
@@ -45,6 +50,12 @@
                     <td>{{ order.name }}</td>
                     <td @click="router.push('/' + order.Tour.slug)">{{ order.Tour.title }}</td>
                     <td>{{ formatDate(order.createdAt) }}</td>
+                    <td>{{ order.date }}</td>
+
+                    <td>
+                        {{ paymentState(order.paid) }}
+                    </td>
+                    <td>{{ order.order_id }}</td>
                     <td>
                         <v-dialog max-width="500">
                             <template v-slot:activator="{ props: activatorProps }">
@@ -139,15 +150,16 @@ import { ref, onMounted } from 'vue';
 import baseUrl from '../../connect';
 import { useRouter } from 'vue-router';
 const router = useRouter();
-let pageNumber = ref(1)
-let totalPage = ref()
-let sortOrder = ref("DESC");
-let orderTable = ref()
-let stateLabel = ref("Chưa xử lý")
-let solveState = ref(0)
+const pageNumber = ref(1)
+const totalPage = ref()
+const sortOrder = ref("DESC");
+const orderTable = ref()
+const stateLabel = ref("Chưa xử lý")
+const solveState = ref(0)
+const searchTerm = ref('')
 function fetchOrder() {
     orderTable.value = null;
-    baseUrl.get("/admin/order/" + sortOrder.value + "/" + solveState.value + "/" + pageNumber.value)
+    baseUrl.get("/admin/order/" + sortOrder.value + "/" + solveState.value + "/" + pageNumber.value, { params: { keyword: searchTerm.value } })
         .then(response => {
             orderTable.value = response.data.rows
             totalPage.value = response.data.count / 10 + 1
@@ -186,6 +198,15 @@ function formatDate(date) {
 function getOrderbyPage() {
     fetchOrder()
 }
+
+function paymentState(state) {
+    if (state) {
+        return 'Đã thanh toán'
+    } else {
+        return 'Chưa thanh toán'
+    }
+}
+
 function solveOrder(id) {
     baseUrl.put("/admin/order/" + id).then((response) => {
         fetchOrder()

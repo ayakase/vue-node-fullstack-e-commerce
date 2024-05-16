@@ -13,7 +13,7 @@
             <div class="side-bar-container">
                 <CategoryList></CategoryList>
             </div>
-            <div>
+            <div style="flex:1">
                 <section class="blog-area">
                     <div class="container">
                         <div class="post-container">

@@ -95,4 +95,10 @@ onMounted(() => {
     color: white;
 
 }
+
+@media screen and (max-width: 1136px) {
+    .category-list {
+        display: none;
+    }
+}
 </style>

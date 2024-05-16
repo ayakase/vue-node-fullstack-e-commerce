@@ -1,9 +1,9 @@
 <template>
     <div class="mobile-carousel" style="width: 95%;margin: auto;">
         <Splide :options=mobileOptions aria-label="Vue Splide Example">
-            <SplideSlide v-for="tour in props.tourList" @click="router.push({ path: '/' + tour.slug })"
+            <SplideSlide v-for="item in props.itemList" @click="router.push({ path: '/' + item.slug })"
                 style="cursor: pointer; background-color: rgba(240, 250, 243, 0.68);padding: 1rem;border-radius: 1rem;">
-                <v-img style=" border-radius: 0.5rem; height: 12rem;width: 100%;" :src=tour.thumbnail>
+                <v-img cover style=" border-radius: 0.5rem; height: 12rem;width: 100%;" :src=item.thumbnail>
                     <template v-slot:placeholder>
                         <div class="d-flex align-center justify-center fill-height">
                             <v-progress-circular color="grey-lighten-4" indeterminate></v-progress-circular>
@@ -12,17 +12,17 @@
                 </v-img>
                 <h5
                     style="width: 90%;padding-top: 0.8rem; white-space: nowrap;overflow: hidden !important;text-overflow: ellipsis;">
-                    {{ tour.title }}</h5>
+                    {{ item.title }}</h5>
                 <div style="display: flex; flex-direction: row; justify-content: space-between;">
                     <div>
-                        <h5 v-if="tour.isdiscount"><span style="color: orange;text-decoration: line-through;">{{
-            numeralFormat(tour.original_price)
+                        <h5 v-if="item.isdiscount"><span style="color: orange;text-decoration: line-through;">{{
+            numeralFormat(item.original_price)
         }} VNĐ</span></h5>
-                        <h5><span style="color: red;">{{ numeralFormat(tour.adult_price) }} VNĐ</span></h5>
+                        <h5><span style="color: red;">{{ numeralFormat(item.adult_price) }} VNĐ</span></h5>
                     </div>
                     <div style="display: flex;gap: 0.7rem;font-size: 1.5rem;">
-                        <i v-if="tour.ishottour" class="fa-solid fa-fire" style="color: #ff6600;"></i>
-                        <i v-if="tour.isdiscount" class="fa-solid fa-tags" style="color: #4fd858;"></i>
+                        <i v-if="item.ishotitem" class="fa-solid fa-fire" style="color: #ff6600;"></i>
+                        <i v-if="item.isdiscount" class="fa-solid fa-tags" style="color: #4fd858;"></i>
                     </div>
                 </div>
             </SplideSlide>
@@ -34,7 +34,7 @@
 import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 const router = useRouter()
-const props = defineProps(['tourList'],)
+const props = defineProps(['itemList'],)
 import { Splide, SplideSlide } from '@splidejs/vue-splide';
 import '@splidejs/vue-splide/css';
 
@@ -52,6 +52,10 @@ const mobileOptions = {
 .slide {
     width: 60%;
     height: 25rem;
+}
+
+img {
+    width: 30%;
 }
 
 .slide-image {

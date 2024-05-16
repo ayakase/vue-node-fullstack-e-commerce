@@ -89,7 +89,6 @@ router.get('/choose-category', (req, res) => {
     })
 })
 router.get('/fetch/:order/:page/', (req, res) => {
-
     Tour.findAndCountAll({
         where: {
             title: {

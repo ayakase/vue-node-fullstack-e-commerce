@@ -109,14 +109,7 @@ let totalPage = ref()
 let publishLabel = ref("Đã xuất bản")
 let publishState = ref()
 const searchTerm = ref("")
-function published() {
-    publishState.value = 1;
-    publishLabel.value = "Đã xuất bản";
-}
-function unpublished() {
-    publishState.value = 0;
-    publishLabel.value = "Chưa xuất bản";
-}
+
 function fetchTour() {
     tourTable.value = null
     baseUrl.get("/admin/tour/fetch/" + sortOrder.value + "/" + pageNumber.value, { params: { keyword: searchTerm.value } })

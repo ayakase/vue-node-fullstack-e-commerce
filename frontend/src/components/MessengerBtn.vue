@@ -1,10 +1,9 @@
 <template>
     <div class="messenger-btn">
-        <a type="button" class="messenger-icon" @click="scrollToTop" href="https://www.messenger.com/t/dulichhoanghalaocai"
-            target="_blank">
+        <a type="button" class="messenger-icon" @click="scrollToTop" target="_blank">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
-                <radialGradient id="a" cx="101.9" cy="809" r="1.1" gradientTransform="matrix(800 0 0 -800 -81386 648000)"
-                    gradientUnits="userSpaceOnUse">
+                <radialGradient id="a" cx="101.9" cy="809" r="1.1"
+                    gradientTransform="matrix(800 0 0 -800 -81386 648000)" gradientUnits="userSpaceOnUse">
                     <stop offset="0" style="stop-color:#09f" />
                     <stop offset=".6" style="stop-color:#a033ff" />
                     <stop offset=".9" style="stop-color:#ff5280" />

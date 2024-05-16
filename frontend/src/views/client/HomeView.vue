@@ -4,7 +4,7 @@
       <Splide :options=headSplideOption aria-label="">
         <SplideSlide v-for="slide in sliderItem" :key="slide">
           <a :href="slide.tour_url">
-            <v-img class="mobile-slide-image" :src="slide.image_src"></v-img>
+            <v-img cover class="mobile-slide-image" :src="slide.image_src"></v-img>
           </a>
         </SplideSlide>
       </Splide>
@@ -29,7 +29,7 @@
         <Splide :options=headSplideOption aria-label="">
           <SplideSlide v-for="slide in sliderItem" :key="slide">
             <a :href="slide.tour_url">
-              <v-img class="slide-image" style=" border-radius: 1rem;" :src="slide.image_src"></v-img>
+              <v-img cover class="slide-image" style=" border-radius: 1rem;" :src="slide.image_src"></v-img>
             </a>
           </SplideSlide>
         </Splide>
@@ -50,8 +50,8 @@
       <h2 class="section-title" @click="router.push('/tour-hot')">Hot Tour
         &nbsp; <i class="fa-solid fa-fire fa-bounce" style="color: #ff6600;"></i>&nbsp;
       </h2>
-      <DesktopSplide :tourList="hotTour"></DesktopSplide>
-      <MobileSplide :tourList="hotTour"></MobileSplide>
+      <DesktopSplide :itemList="hotTour"></DesktopSplide>
+      <MobileSplide :itemList="hotTour"></MobileSplide>
 
     </div>
 
@@ -63,8 +63,8 @@
           class="fa-solid fa-vihara"></i>&nbsp;
 
       </h2>
-      <DesktopSplide :tourList="china"></DesktopSplide>
-      <MobileSplide :tourList="china"></MobileSplide>
+      <DesktopSplide :itemList="china"></DesktopSplide>
+      <MobileSplide :itemList="china"></MobileSplide>
     </div>
     <HeartLoading v-else> </HeartLoading>
     <div v-if="domestic"
@@ -73,8 +73,8 @@
           class="fa-solid fa-flag"></i>&nbsp;
 
       </h2>
-      <DesktopSplide :tourList="domestic"></DesktopSplide>
-      <MobileSplide :tourList="domestic"></MobileSplide>
+      <DesktopSplide :itemList="domestic"></DesktopSplide>
+      <MobileSplide :itemList="domestic"></MobileSplide>
     </div>
     <HeartLoading v-else> </HeartLoading>
 
@@ -84,9 +84,9 @@
           class="fa-solid fa-globe"></i>&nbsp;
 
       </h2>
-      <DesktopSplide :tourList="foreign"></DesktopSplide>
+      <DesktopSplide :itemList="foreign"></DesktopSplide>
 
-      <MobileSplide :tourList="foreign"></MobileSplide>
+      <MobileSplide :itemList="foreign"></MobileSplide>
 
     </div>
     <div v-if="posts && posts.length >= 6">
@@ -183,7 +183,7 @@ onMounted(() => {
 
 </script>
 
-<style>
+<style scoped>
 .slide {
   width: 60%;
   height: 25rem;

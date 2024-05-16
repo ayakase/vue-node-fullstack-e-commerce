@@ -7,6 +7,9 @@ const Order = sequelize.define('Order', {
         primaryKey: true,
         autoIncrement: true,
     },
+    order_id: {
+        type: DataTypes.STRING,
+    },
     tour_id: {
         type: DataTypes.INTEGER,
     },
@@ -34,8 +37,15 @@ const Order = sequelize.define('Order', {
     price: {
         type: DataTypes.INTEGER(11)
     },
+    date: {
+        type: DataTypes.DATEONLY
+    },
     note: {
         type: DataTypes.STRING(255)
+    },
+    paid: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
     },
     solved: {
         type: DataTypes.BOOLEAN,

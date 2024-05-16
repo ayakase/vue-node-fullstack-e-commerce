@@ -28,8 +28,7 @@
       <i v-if="publishState" style="color: rgb(0, 102, 255)" class="fa-regular fa-paper-plane"></i>
     </div>
     <div>
-      <Editor style="height: 50rem" v-model="postContent" api-key="8gzqmdnsiplu2pd33s0doas4xo8735024fznwlgttd4ldri6"
-        :init="{
+      <Editor style="height: 50rem" v-model="postContent" :api-key="tinyMceKey" :init="{
     plugins:
       '  lists advlist link image table code help wordcount autosave emoticons',
     toolbar:
@@ -59,11 +58,13 @@ const postTitle = ref("");
 const postContent = ref("");
 const postThumbnail = ref();
 import slugify from 'slugify'
+const tinyMceKey = import.meta.env.VITE_TINYMCE
 
 function turnSlug(slug) {
   return slugify(slug, {
     locale: 'vi',
     lower: true,
+    remove: '.',
   })
 }
 let slug = ref()

@@ -4,18 +4,31 @@
             Thêm Slider
         </button>
         <div class="slider-list">
-            <div class="slider-item" v-for="(slide, index) in slideItem" :key="index">
+            <!-- <div class="slider-item" v-for="(slide, index) in slideItem" :key="index">
                 <div class="slider-item-img">
                     <button @click="deleteSlide(slide.id)" type="button" class="btn btn-danger delete-btn"><i
                             class="fa-solid fa-xmark"></i></button>
                     <v-img class="slider-img" :src="slide.image_src" alt="" style="width: 100%;"></v-img>
                 </div>
                 <div class="slider-content">
-                    <p>ID: {{ slide.id }} </p>
-                    <p>Tiêu đề: {{ slide.title }}</p>
-                    <p>Liên kết: {{ slide.tour_url }}</p>
+                    <p>ID: </p>
+                    <p>Tiêu đề:</p>
+                    <p></p>
                 </div>
-            </div>
+            </div> -->
+            <v-card class="" style="width: 25rem;position: relative;" v-for="(slide, index) in slideItem" :key="index">
+                <v-img class="align-end text-white" height="" :src="slide.image_src" cover>
+                </v-img>
+                <v-card-title> {{ slide.title }}</v-card-title>
+                <v-card-subtitle class="">
+                    ID: {{ slide.id }}
+                </v-card-subtitle>
+                <v-card-text>
+                    <div>Liên kết: {{ slide.tour_url }}</div>
+                </v-card-text>
+                <button @click="deleteSlide(slide.id)" type="button" class="btn btn-danger delete-btn"><i
+                        class="fa-solid fa-xmark"></i></button>
+            </v-card>
         </div>
     </div>
 </template>
@@ -27,7 +40,7 @@ import baseUrl from '../../connect';
 let router = useRouter()
 let slideItem = ref()
 function deleteSlide(id) {
-    let text = "Bạn có chắc chắn muốn xóa Tour " + id;
+    let text = "Bạn có chắc chắn muốn xóa slider " + id;
     if (confirm(text) == true) {
         baseUrl.delete('/admin/slider/' + id).then((response) => {
             getSlider()

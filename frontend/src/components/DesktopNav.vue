@@ -113,7 +113,7 @@
 import { RouterLink } from 'vue-router'
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 import baseUrl from '../connect';
 import { useLoginStore } from '../stores/loginstate';
 const loginStore = useLoginStore()
@@ -131,6 +131,8 @@ onMounted(() => {
     // loginStore.checkLogin()
     domesticMenu.value = props.menuData[0]
     foreignMenu.value = props.menuData[1]
+    window.addEventListener('scroll', handleScroll);
+
     // baseUrl
     //     .get("/client/initial/menu").then((response) => {
     //         domesticMenu.value = response.data[0]
@@ -138,17 +140,31 @@ onMounted(() => {
     //     }).catch((error) => {
     //         console.log(error)
     //     })
-    showChatbox = false;
+    // showChatbox = false;
     // notify()
 })
-let chatBoxValue = ref(false)
-let showChatbox = () => {
-    if (chatBoxValue.value == false) {
-        chatBoxValue.value = true;
-    } else if (chatBoxValue.value == true) {
-        chatBoxValue.value = false;
+onBeforeUnmount(() => {
+    window.removeEventListener('scroll', handleScroll);
+})
+function handleScroll() {
+    const nav = document.querySelector('.navbar');
+    if (nav) {
+        const offsetTop = nav.offsetTop;
+        if (window.scrollY > 271) {
+            nav.classList.add('fixed-nav');
+        } else {
+            nav.classList.remove('fixed-nav');
+        }
     }
 }
+// let chatBoxValue = ref(false)
+// let showChatbox = () => {
+//     if (chatBoxValue.value == false) {
+//         chatBoxValue.value = true;
+//     } else if (chatBoxValue.value == true) {
+//         chatBoxValue.value = false;
+//     }
+// }
 function logout() {
     baseUrl.get('/admin/login/logout').then((response) => {
         cookies.remove('token')
@@ -188,10 +204,18 @@ nav {
     width: 100%;
     position: absolute;
     bottom: 0;
-    background-color: #cefecabd;
     -webkit-backdrop-filter: blur(5px);
     backdrop-filter: blur(5px);
     z-index: 100;
+    background-color: #cefecabd;
+
+}
+
+.fixed-nav {
+    position: fixed;
+    top: 0;
+    height: 4rem;
+
 }
 
 .domestic-category {
@@ -315,9 +339,6 @@ p {
     cursor: pointer;
 }
 
-/* .navbar-nav {
-    display: flex;
-} */
 
 /* @media all and (min-width: 992px) { */
 .navbar .nav-item .dropdown-menu {
@@ -336,6 +357,7 @@ p {
 .navbar .nav-item .dropdown-menu {
     margin-top: 0;
 }
+
 
 /* } */
 </style>
