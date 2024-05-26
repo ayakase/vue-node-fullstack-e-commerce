@@ -6,7 +6,8 @@ router.get('/:category/:orderby/:order/:page', (req, res) => {
         order: [["createdAt", "DESC"]],
         limit: 10,
         // separate: true,
-        offset: (req.params.page - 1) * 10
+        offset: (req.params.page - 1) * 10,
+        attributes: ['id', 'title', 'thumbnail', 'createdAt', 'slug']
     }).then((result) => {
         const { count, rows } = result;
         res.send(result)

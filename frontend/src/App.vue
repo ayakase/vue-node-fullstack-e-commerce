@@ -73,15 +73,11 @@ onMounted(() => {
   <div v-if="showLayout && route.meta.showNavbar" class="layout">
     <v-card variant="outlined" style="font-size: 2rem;color: white;width: 90%;padding: 1rem;">
       <div>
-        Đây chỉ là một trang web Demo, được build bằng VueJS, Bootstrap, ChartJS, NodeJS, JWT, Redis, MySQL, Sequelize,
-        Cloudinary
-      </div>
-      <div>
         Để vào trang admin,hãy truy cập <a
           href="https://dulichhoangha.netlify.app/login">https://dulichhoangha.netlify.app/login</a>
       </div>
       <div>
-        Username và mật khẩu admin là: admin, admin
+        Username và mật khẩu admin: admin, admin
       </div>
       <v-btn @click="cookies.set('layout', false); showLayout = false">
         Không hiển thị nữa

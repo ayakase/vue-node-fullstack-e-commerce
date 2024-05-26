@@ -73,6 +73,7 @@ router.get('/:orderby/:order/:page', (req, res) => {
             }
         },
         where: whereClause,
+        attributes: { exclude: ['images', 'special', 'bonus', 'priceservice', 'visa', 'detail', 'guide'] },
         order: [[req.params.orderby, req.params.order]],
         limit: 10,
         // separate: true,

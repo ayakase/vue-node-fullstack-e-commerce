@@ -137,9 +137,6 @@ import { useRouter } from 'vue-router';
 import { onMounted, ref } from 'vue';
 import '@splidejs/vue-splide/css';
 import baseUrl from '../../connect';
-
-
-
 let hotTour = ref()
 let china = ref()
 let domestic = ref()
@@ -172,11 +169,9 @@ onMounted(() => {
     china.value = response.data.rows
   })
   baseUrl.get('/client/carousel/domestic').then((response) => {
-
     domestic.value = response.data.rows
   })
   baseUrl.get('/client/carousel/foreign').then((response) => {
-
     foreign.value = response.data.rows
   })
 })

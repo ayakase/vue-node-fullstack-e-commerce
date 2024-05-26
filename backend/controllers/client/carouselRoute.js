@@ -12,6 +12,7 @@ router.get('/hottour', (req, res) => {
         },
         order: [['createdAt', 'DESC']],
         limit: 10,
+        attributes: ['id', 'title', 'isdiscount', 'ishottour', 'original_price', 'adult_price', 'thumbnail', 'slug']
     }).then((result) => {
         const { count, rows } = result;
         res.send(result)
@@ -24,6 +25,7 @@ router.get('/china', (req, res) => {
         where: { location_id: 33 },
         order: [['createdAt', 'DESC']],
         limit: 10,
+        attributes: ['id', 'title', 'isdiscount', 'ishottour', 'original_price', 'adult_price', 'thumbnail', 'slug']
     }).then((result) => {
         const { count, rows } = result;
         res.send(result)
@@ -50,6 +52,7 @@ router.get('/domestic', (req, res) => {
         },
         order: [['createdAt', 'DESC']],
         limit: 10,
+        attributes: ['id', 'title', 'isdiscount', 'ishottour', 'original_price', 'adult_price', 'thumbnail', 'slug']
     }).then((result) => {
         const { count, rows } = result;
         res.send(result)
@@ -76,6 +79,7 @@ router.get('/foreign', (req, res) => {
         },
         order: [['createdAt', 'DESC']],
         limit: 10,
+        attributes: ['id', 'title', 'isdiscount', 'ishottour', 'original_price', 'adult_price', 'thumbnail', 'slug']
     }).then((result) => {
         const { count, rows } = result;
         res.send(result)
@@ -88,8 +92,10 @@ router.get("/post-grid", (req, res) => {
         where: {
             publish: true,
         },
+
         order: [["createdAt", 'DESC']],
         limit: 6,
+        attributes: ['id', 'title', 'thumbnail', 'slug']
     })
         .then((result) => {
             const { count, rows } = result;
@@ -106,6 +112,7 @@ router.get("/posts", (req, res) => {
         },
         order: [["createdAt", 'DESC']],
         limit: 10,
+
     })
         .then((result) => {
             const { count, rows } = result;

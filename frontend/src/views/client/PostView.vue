@@ -7,18 +7,16 @@ import CategoryList from '../../components/CategoryList.vue';
 const route = useRoute();
 const hotTour = ref()
 let postDetail = ref()
-import DesktopSplide from '../../components/DesktopSplide.vue';
-import MobileSplide from '../../components/MobileSplide.vue';
+
 let postArray = ref()
 onMounted(() => {
     baseUrl.get("client/each-post/" + route.params.slug).then(response => {
         postDetail.value = response.data[0]
+        console.log(response.data)
     }).catch((error) => {
         console.error(error);
     });
-    baseUrl.get('/client/carousel/posts').then((response) => {
-        postArray.value = response.data.rows
-    })
+
 })
 
 </script>
@@ -48,8 +46,6 @@ onMounted(() => {
                 <HotTours style="position: sticky;top: 5rem;"></HotTours>
             </div>
         </div>
-        <DesktopSplide :itemList="postArray"></DesktopSplide>
-        <MobileSplide :itemList="postArray"></MobileSplide>
         <!-- <LoadingComponent v-else></LoadingComponent> -->
         <div>
         </div>

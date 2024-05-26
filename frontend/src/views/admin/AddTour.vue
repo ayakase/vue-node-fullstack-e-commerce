@@ -34,9 +34,7 @@
                         class="fa-solid fa-cloud-arrow-up"></i></button>
             </div>
             <div>
-                <p>Chỉ nhận định dạng .png, .jpg, .jpeg, .gif, .webp. Mỗi lần tải lên không quá 10 files để đảm bảo
-                    đường
-                    truyền</p>
+                <p>Chỉ nhận định dạng .png, .jpg, .jpeg, .gif, .webp.</p>
             </div>
             <div style="display: flex; gap: 1rem;width: 100%;flex-wrap: wrap;">
                 <div v-for="image in imageArray" :key="image" class="each-image" @click=" addImg(image)">
@@ -49,6 +47,7 @@
                 </div>
             </div>
             <p><b>Đang hiển thị {{ displayCount }} trong số {{ totalCount }} ảnh</b></p>
+            <button @click="reloadGalery()" class="btn btn-success" style="color:white;">Tải lại</button>
             <!-- <LoadingOverlay v-if="showOverlay"></LoadingOverlay> -->
             <div class="library-container">
                 <div class="images-section">
@@ -557,16 +556,7 @@ function uploadImage() {
 
         }).then(() => {
             setTimeout(() => {
-                baseUrl.get('/admin/library')
-                    .then((response) => {
-                        images.value = response.data.resources
-                        nextCursor.value = response.data.next_cursor
-                        showOverlay.value = false
-                        totalCount.value = response.data.total_count
-                        displayCount.value = images.value.length
-                    }).catch((error) => {
-                        console.log(error)
-                    })
+                reloadGalery()
             }, 1000);
         })
         .catch(error => {
@@ -577,6 +567,18 @@ function uploadImage() {
                 theme: "colored",
                 position: toast.POSITION.BOTTOM_RIGHT,
             });
+        })
+}
+function reloadGalery() {
+    baseUrl.get('/admin/library')
+        .then((response) => {
+            images.value = response.data.resources
+            nextCursor.value = response.data.next_cursor
+            showOverlay.value = false
+            totalCount.value = response.data.total_count
+            displayCount.value = images.value.length
+        }).catch((error) => {
+            console.log(error)
         })
 }
 let nextCursor = ref(null)
